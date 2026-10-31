@@ -1,0 +1,8 @@
+[out:json][timeout:90];
+(
+  way["natural"="water"](10.93,76.88,11.10,77.05);
+  way["waterway"~"^(river|canal)$"](10.93,76.88,11.10,77.05);
+  way["leisure"~"^(park|garden)$"](10.93,76.88,11.10,77.05);
+  way["landuse"~"^(forest|grass|recreation_ground)$"](10.93,76.88,11.10,77.05);
+);
+out geom tags;

@@ -1,0 +1,217 @@
+<div class="util">
+  <div class="wrap">
+    <button id="locBtn">${I('map-pin')} Deliver to <b>Coimbatore 641018</b> ${I('chevron-down')}</button>
+    <span class="hide-m">${I('shield-check')} Fitment promise: free returns if it doesn't fit</span>
+    <span class="sp"></span>
+    <a href="#" class="hide-m">Fitwise Pro for garages</a>
+    <a href="#" class="hide-m">Become a dealer</a>
+    <a href="#" class="hide-m">Help</a>
+    <button id="langBtn">${I('languages')} English ${I('chevron-down')}</button>
+  </div>
+</div>
+
+<header class="top" id="top">
+  <div class="wrap hdr">
+    <a class="logo" href="#home" data-go="home" aria-label="Fitwise home"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Fitwise</a>
+    <div class="search" id="search">
+      <div class="sbox" id="sbox">
+        <button class="sopen" id="sopen" aria-label="Search parts, tyres and tracks" aria-keyshortcuts="/ Control+K Meta+K">${I('search')}<span class="ph" id="sph" aria-hidden="true"></span></button>
+        <button class="tb" data-act="scan" title="Search with a photo" aria-label="Search with a photo">${I('camera')}</button>
+        <button class="tb" data-act="voice" title="Search by voice" aria-label="Search by voice">${I('mic')}</button>
+        <span class="div"></span>
+        <button class="ask" data-ask="" title="Ask Fitwise"><span class="orb" aria-hidden="true"></span><span class="t">Ask Fitwise</span></button>
+      </div>
+    </div>
+    <div style="position:relative">
+      <button class="veh-btn" id="gBtn" aria-haspopup="true">
+        <span class="th"><img id="gImg" alt=""></span>
+        <span><small>Shopping for</small><b id="gName"></b></span>
+        ${I('chevron-down')}
+      </button>
+      <div class="pop" id="gPop"></div>
+    </div>
+    <div class="hact">
+      <button class="ask-m" data-ask="" title="Ask Fitwise" aria-label="Ask Fitwise"><span class="orb" style="width:22px;height:22px" aria-hidden="true"></span></button>
+      <div style="position:relative"><button class="acct" id="acctBtn" aria-haspopup="true"><span class="av">AK</span><span><small>Hello,</small><b>Arjun</b></span>${I('chevron-down')}</button>
+        <div class="amenu" id="amenu"><div class="who"><span class="av">AK</span><div><b style="font-weight:600">Arjun Kumar</b><div class="muted" style="font-size:12px">+91 98•••• 4821</div></div></div>
+          <a href="#">${I('package')}My orders<em>2 active</em></a><a href="#" id="amGarage">${I('car')}My garage<em>4 vehicles</em></a><a href="#">${I('heart')}Wishlist</a><a href="#">${I('ticket')}Coupons<em>3</em></a><a href="#">${I('wrench')}Fitwise Pro</a><a href="#">${I('log-out')}Sign out</a></div></div>
+      <button title="Cart" id="cartBtn">${I('shopping-cart')}<span class="badge" id="cartN">2</span><span class="lbl">Cart</span></button>
+    </div>
+  </div>
+  <nav class="cnav" id="cnav">
+    <div class="wrap">
+      <a href="#" class="all" data-mega="1">${I('menu')} All categories</a>
+      <span class="sep"></span>
+      <a href="#" data-plp="brakes">Brakes</a>
+      <a href="#" data-plp="tyres">Tyres</a>
+      <a href="#">Batteries</a>
+      <a href="#">Engine oil</a>
+      <a href="#">Filters</a>
+      <a href="#">Lighting</a>
+      <a href="#">Accessories</a>
+      <span class="sep"></span>
+      <a href="#" data-plp="tyres" data-v="m575">Tractor &amp; farm</a>
+      <a href="#" data-plp="tyres" data-v="signa">Truck &amp; bus</a>
+      <a href="#" data-plp="tracks">Construction</a>
+      <a href="#" class="deal">Offers</a>
+      <span class="bar" id="nbar"></span>
+    </div>
+    <div class="mega" id="mega">
+      <div class="wrap">
+        <div class="vl"><h6>Vehicle type</h6>
+          <a href="#" class="on">Cars &amp; SUVs ${I('chevron-right')}</a><a href="#">Two-wheelers ${I('chevron-right')}</a><a href="#">Trucks &amp; buses ${I('chevron-right')}</a><a href="#">Tractors ${I('chevron-right')}</a><a href="#">Construction ${I('chevron-right')}</a><a href="#">Three-wheelers ${I('chevron-right')}</a>
+        </div>
+        <div><h6>Popular for your <span id="megaV">Creta</span></h6><div class="sys" id="megaSys"></div></div>
+        <a class="promo" href="#" data-ask="My brakes make a noise, what should I check?">
+          <img src="${PH('mech-hands')}" alt="">
+          <b style="font-size:17px">Not sure what you need?</b>
+          <p>Describe the problem in your own words, in English, Hindi or Tamil.</p>
+          <span class="btn sun sm" style="align-self:flex-start">Ask Fitwise</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= HOME ================= -->
+<main class="view" id="v-home">
+  <section class="hero5">
+    <div class="wrap h5">
+      <div class="l">
+        <h1>Spare parts that fit, first time.</h1>
+        <p class="sub">Checked against your exact vehicle. Delivered, or ready at a store near you.</p>
+        <div class="f3" id="f3">
+        <div class="vt3" id="vt3">
+          <button class="on" data-t="car">${I('car')}<span>Car</span></button>
+          <button data-t="bike">${I('bike')}<span>Bike</span></button>
+          <button data-t="truck">${I('truck')}<span>Truck</span></button>
+          <button data-t="tractor">${I('tractor')}<span>Tractor</span></button>
+          <button data-t="excavator">${I('construction')}<span>Machine</span></button>
+        </div>
+        <div class="body">
+          <div class="frow3">
+            <label class="cplate" id="cplate"><span class="ind"><svg viewBox="0 0 24 24" fill="#fff">${Array.from({length:12},(_, i)=>{const a=i*Math.PI/6;return `<circle cx="${(12+9*Math.cos(a)).toFixed(2)}" cy="${(12+9*Math.sin(a)).toFixed(2)}" r="1.2"/>`}).join('')}<rect x="8.2" y="8.2" width="7.6" height="7.6" rx=".6"/></svg><b>IND</b></span><input id="plateIn" maxlength="13" autocomplete="off" spellcheck="false" placeholder="AB 12 CD 3456" aria-label="Vehicle registration number"></label>
+            <button class="btn sun" id="findBtn">Find parts ${I('arrow-right')}</button>
+          </div>
+          <div class="mm" id="mm">
+            <select class="sel" id="mk"><option>Brand</option></select>
+            <select class="sel" id="md"><option>Model</option></select>
+            <select class="sel" id="yr" disabled><option>Year</option></select>
+            <button class="btn sun lg" id="findBtn2" style="height:56px">Show parts</button>
+          </div>
+          <div class="fnote3"><span class="fn-priv">${I('shield-check')}<span>We read make, model and variant from the RC.</span></span><button class="link fn-back" id="modeBtn">Use number plate instead</button><div class="saved3" id="saved3"></div></div>
+          <div class="found" id="found"></div>
+          <div class="brandsel"><h6><span>Or pick your brand</span><button class="link" id="allBrands">View all brands</button></h6><div class="logos" id="logos"></div></div>
+        </div>
+      </div>
+        <div class="proof"><div><b>4 lakh+</b><span>parts, tyres and tracks</span></div><div><b>1,240</b><span>stores with live stock</span></div><div><b>98.6%</b><span>fitted first time</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="trust" style="margin-top:20px">
+      <div><span class="ic">${I('badge-check')}</span><span><b>Fitment guaranteed</b><small>Free return if it doesn't fit</small></span></div>
+      <div><span class="ic">${I('shield-check')}</span><span><b>100% genuine</b><small>QR-verified from the factory</small></span></div>
+      <div><span class="ic">${I('store')}</span><span><b>Pick up in 2 hours</b><small>From 1,240 stores near you</small></span></div>
+      <div><span class="ic">${I('wrench')}</span><span><b>Fitting from ₹199</b><small>At 600+ partner garages</small></span></div>
+    </div>
+
+    <section class="gsec">
+      <div class="sec-h"><div><h2 class="h2">My garage</h2></div><a class="link" href="#">Manage garage</a></div>
+      <div class="gsw" id="gsw"></div>
+      <div class="vcard" id="vcard"></div>
+    </section>
+
+    <section class="cband">
+      <div class="sec-h"><div><h2 class="h2">Shop parts for your <span id="catV">Creta</span></h2><p>Counts show what fits your vehicle.</p></div><a class="link" href="#">All categories</a></div>
+      <div class="cats4" id="cats4"></div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-h"><div><h2 class="h2">Offers for you</h2></div></div>
+      <div class="offers">
+        <div class="offer-c blue" data-plp="brakes"><span class="k">BRAKE CARE WEEK</span><h3>Discs and pads, fitted today</h3><p>Up to 25% off brake parts, plus a free brake check with every fitting.</p><span class="cta">Shop brake parts ${I('arrow-right')}</span><img class="oi" src="${C('rotor-dsl')}" alt="" style="left:56%;top:20%;width:58%"></div>
+        <div class="offer-c peach"><span class="k">CLUTCH CARE</span><h3>Complete clutch kit, one fitting</h3><p>Flywheel, pressure plate and disc matched to your gearbox. 20% off with fitting.</p><span class="cta">Shop clutch kits ${I('arrow-right')}</span><img class="oi" src="${C('clutch-kit')}" alt="" style="left:57%;top:40%;width:64%"></div>
+        <div class="offer-c green"><span class="k">SERVICE MONTH</span><h3>Your next service, in one order</h3><p>Filters, plugs, bearings and pads together. Free 30-point check at a partner garage.</p><span class="cta">Build a service kit ${I('arrow-right')}</span><img class="oi" src="${C('service-kit')}" alt="" style="left:61%;top:22%;width:45%"></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-h"><div><h2 class="h2">Shop by vehicle</h2><p>Parts, tyres and tracks for everything on Indian roads and fields.</p></div></div>
+      <div class="vtiles" id="vtiles"></div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-h"><div><h2 class="h2">Bestsellers for your <span id="bsV">Creta</span></h2><p>What owners of the same vehicle bought this month. All checked to fit.</p></div><div class="rarr"><button data-rail="-1" aria-label="Scroll left">${I('chevron-left')}</button><button data-rail="1" aria-label="Scroll right">${I('chevron-right')}</button></div></div>
+      <div class="rail-in" id="rail"></div>
+    </section>
+
+    <section class="sec local">
+      <div class="mapbox" id="hmap"></div>
+      <div class="r">
+        <h2>Buy online. Pick up nearby.</h2>
+        <p>Every part on Fitwise is stocked by verified stores in your city. Reserve online, pay at the counter, and get it fitted while you wait.</p>
+        <div class="kpis"><div><b>1,240</b><small>stores in India</small></div><div><b>14</b><small>near 641018</small></div><div><b>2 hrs</b><small>typical pickup</small></div></div>
+        <button class="btn line" data-go="pdp">See what's in stock near you ${I('arrow-right')}</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="proband">
+        <div class="l">
+          <span class="k">${I('wrench')} Fitwise Pro</span>
+          <h2>Run a garage? Order faster, on credit, by part number.</h2>
+          <ul>
+            <li>${I('indian-rupee')}<span><b>Trade prices</b>Up to 18% below retail</span></li>
+            <li>${I('calendar-clock')}<span><b>30-day credit</b>One GST invoice a month</span></li>
+            <li>${I('message-circle')}<span><b>Order on WhatsApp</b>Send a part number or a photo</span></li>
+            <li>${I('clipboard-list')}<span><b>Job cards</b>One basket per customer vehicle</span></li>
+          </ul>
+          <button class="btn sun">Apply in 2 minutes ${I('arrow-right')}</button>
+        </div>
+        <div class="r"><img src="${PH('mech-engine')}" alt="Mechanic inspecting a car engine"></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-h"><div><h2 class="h2">Top part brands</h2></div><a class="link" href="#">All brands ${I('chevron-right')}</a></div>
+      <div class="brands"><span>Bosch</span><span>MRF</span><span>Brembo</span><span>CEAT</span><span>Apollo</span><span>Exide</span><span>Castrol</span><span>Minda</span></div>
+    </section>
+  </div>
+</main>
+
+<main class="view" id="v-plp"><div class="wrap" id="plp"></div></main>
+<main class="view" id="v-pdp"><div class="wrap" id="pdp"></div></main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-g">
+      <div><a class="logo" href="#home" data-go="home"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Fitwise</a><p style="margin-top:12px;max-width:290px">Spare parts, tyres and tracks for cars, bikes, trucks, tractors and construction machines. Checked to fit, sold through local stores.</p><div class="pay"><span>UPI</span><span>RuPay</span><span>Visa</span><span>Mastercard</span><span>EMI</span><span>Cash at store</span></div></div>
+      <div><h6>Shop</h6><a href="#">Car parts</a><a href="#">Tyres</a><a href="#">Rubber tracks</a><a href="#">Tractor &amp; farm</a><a href="#">Truck &amp; bus</a></div>
+      <div><h6>Help</h6><a href="#">Fitment promise</a><a href="#">Returns</a><a href="#">Track order</a><a href="#">Warranty claims</a></div>
+      <div><h6>Business</h6><a href="#">Fitwise Pro</a><a href="#">Fleet accounts</a><a href="#">Become a dealer</a><a href="#">Brand partners</a></div>
+      <div><h6>Company</h6><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Contact</a></div>
+    </div>
+    <div class="base"><span>© 2026 Fitwise (concept). Prices include GST.</span><span>Photos: Unsplash and Wikimedia Commons contributors. Map © OpenStreetMap contributors.</span></div>
+  </div>
+</footer>
+
+<!-- overlays -->
+<div class="mbuy" id="mbuy"></div>
+<div class="scrim" id="scrim"></div>
+<div class="cmd" id="cmd" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="cmd-in">${I('search')}<input id="cmdIn" role="combobox" aria-expanded="true" aria-controls="cmdB" aria-autocomplete="list" aria-label="Search a part, a size, a part number, or describe a problem" placeholder="Search a part, a size, a part number, or describe a problem" autocomplete="off"><kbd>Esc</kbd></div>
+  <div class="cmd-ctx" id="cmdCtx"></div>
+  <div class="cmd-b" id="cmdB" role="listbox" aria-label="Suggestions"></div>
+  <div class="cmd-f"><span><kbd>↑</kbd><kbd>↓</kbd> to move</span><span><kbd>↵</kbd> to open</span><span style="margin-left:auto">${I('languages')} Works in English, हिन्दी, தமிழ் and 6 more</span></div>
+</div>
+<aside class="copilot" id="copilot" role="dialog" aria-modal="true" aria-label="Ask Fitwise">
+  <div class="cp-h"><span class="orb" aria-hidden="true"></span><span><b>Ask Fitwise</b><small>Parts expert · replies instantly</small></span><span class="acts"><button id="cpNew" title="New chat" aria-label="New chat">${I('rotate-ccw')}</button><button id="cpX" title="Close" aria-label="Close Ask Fitwise">${I('x')}</button></span></div>
+  <div class="cp-ctx" id="cpCtx"></div>
+  <div class="cp-b" id="cpB" aria-live="polite"></div>
+  <form class="cp-f" id="cpF"><div class="ai-in"><input id="cpIn" aria-label="Ask Fitwise a question" placeholder="Ask about a problem, a part or a fit"><button type="button" class="tb" data-act="voice" aria-label="Ask by voice" style="width:36px;height:36px;display:grid;place-items:center;color:var(--ink-3)">${I('mic')}</button><button class="send" aria-label="Send">${I('arrow-up')}</button></div><div class="cp-legal">Suggestions, not a diagnosis. Fitment is checked against the parts catalogue.</div></form>
+</aside>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Details"></aside>
+<div class="tray" id="tray"></div>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
