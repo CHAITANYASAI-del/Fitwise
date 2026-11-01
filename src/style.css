@@ -846,6 +846,15 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .step.done i::after{content:"";width:6px;height:3px;border:solid #fff;border-width:0 0 1.5px 1.5px;transform:rotate(-45deg) translate(1px,-1px)}
 .step b{color:var(--ink);font-weight:600}
 .shim{background:linear-gradient(90deg,var(--ink-3) 0,var(--ink) 50%,var(--ink-3) 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shim 1.5s linear infinite}
+/* "AI chat loading": a small pixel-grid wavefront (pattern: beautifului.dev loading state), a shimmering
+   label and a live elapsed timer in tabular mono. Cells share one pulse, staggered by --i so the highlight
+   travels left to right and loops continuously, two trails overlapping once the sweep outruns one cycle. */
+.pgload{display:flex;align-items:center;gap:10px;min-height:16px}
+.pgrid{display:flex;gap:3px;flex:none}
+.pgrid i{width:6px;height:6px;border-radius:2px;background:var(--line-2);animation:pgpulse 1.1s ease-in-out infinite;animation-delay:calc(var(--i, 0) * 90ms)}
+@keyframes pgpulse{0%,24%,100%{background:var(--line-2)}10%{background:var(--ink)}}
+.pgt{margin-left:auto;font-size:11px;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){.pgrid i{animation:none;background:var(--line-2)}}
 .understood{display:flex;flex-wrap:wrap;gap:6px}
 .ma{font-size:14.5px;line-height:1.65;color:var(--ink-2)}
 .ma b{color:var(--ink);font-weight:600}

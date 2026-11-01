@@ -516,6 +516,7 @@ $('#cpF').addEventListener('submit', e => { e.preventDefault(); const q = $('#cp
 let aiRun = 0;
 async function runAI(q) {
   const key = pick(q), sc = SCN[key], run = ++aiRun, b = $('#cpB'), wait = ms => new Promise(r => setTimeout(r, ms));
+  let tmr;
   if (sc.veh && sc.veh !== S.vehicle && ['tractor', 'track', 'truck', 'links'].includes(key)) { S.vehicle = sc.veh; syncGarage(); cpIdle(); }
   const v = V(), cp = S.view === 'pdp' ? P(S.pdp) : null, kk = cp ? (cp.cat === 'tyres' ? ptype(cp) : cp.cat) : S.cat === 'tracks' ? 'tracks' : v.type === 'car' ? 'car' : v.type;
   if (key === 'life' || key === 'pair') { sc.a = (key === 'life' ? LIFE : PAIR)[kk] || (key === 'life' ? LIFE : PAIR).car; }
@@ -523,12 +524,16 @@ async function runAI(q) {
   if (b.querySelector('.cp-hello')) b.innerHTML = '';
   $('.cp-h .orb').classList.add('think');
   const u = document.createElement('div'); u.className = 'mu'; u.textContent = q; b.appendChild(u);
-  const st = document.createElement('div'); st.className = 'steps'; st.innerHTML = `<div class="step run"><i></i><span class="shim">Thinking…</span></div>`; b.appendChild(st);
-  b.scrollTop = b.scrollHeight; await wait(600); if (run !== aiRun) return; st.innerHTML = '';
-  for (const s of sc.steps) { const el = document.createElement('div'); el.className = 'step run'; el.innerHTML = `<i></i><span>${s}</span>`; st.appendChild(el); b.scrollTop = b.scrollHeight; await wait(420); if (run !== aiRun) return; el.className = 'step done'; }
+  const st = document.createElement('div'); st.className = 'steps'; const t0 = performance.now();
+  const cells = Array.from({ length: 12 }, (_, i) => `<i style="--i:${i}"></i>`).join('');
+  st.innerHTML = `<div class="pgload"><span class="pgrid" aria-hidden="true">${cells}</span><span class="shim">Thinking…</span><span class="pgt mono" aria-hidden="true">0.0s</span></div>`;
+  b.appendChild(st);
+  const pgt = st.querySelector('.pgt'); tmr = setInterval(() => { pgt.textContent = ((performance.now() - t0) / 1000).toFixed(1) + 's'; }, 100);
+  b.scrollTop = b.scrollHeight; await wait(600); if (run !== aiRun) { clearInterval(tmr); return; } clearInterval(tmr); st.innerHTML = '';
+  for (const s of sc.steps) { const el = document.createElement('div'); el.className = 'step run'; el.innerHTML = `<i></i><span>${s}</span>`; st.appendChild(el); b.scrollTop = b.scrollHeight; await wait(420); if (run !== aiRun) { clearInterval(tmr); return; } el.className = 'step done'; }
   const a = document.createElement('div'); a.className = 'ma'; b.appendChild(a); b.setAttribute('aria-busy', 'true');
   const parts = sc.a.split(/(<[^>]+>|\s+)/).filter(Boolean); let out = '';
-  for (const p of parts) { if (run !== aiRun) return; out += p; a.innerHTML = out + '<span class="cur"></span>'; if (!p.startsWith('<') && p.trim()) await wait(22); b.scrollTop = b.scrollHeight; }
+  for (const p of parts) { if (run !== aiRun) { clearInterval(tmr); return; } out += p; a.innerHTML = out + '<span class="cur"></span>'; if (!p.startsWith('<') && p.trim()) await wait(22); b.scrollTop = b.scrollHeight; }
   a.innerHTML = out; b.setAttribute('aria-busy', 'false'); $('.cp-h .orb').classList.remove('think');
   if (sc.recs.length) { const r = document.createElement('div'); r.className = 'recs'; r.innerHTML = sc.recs.map((id, i) => { const p = P(id); return `<button class="rec" data-pdp="${id}" style="animation-delay:${i * 80}ms"><div class="im">${img(p)}</div><small>${p.brand}</small><b>${p.name}</b><div class="p">${fmt(p.price)}</div></button>`; }).join(''); b.appendChild(r); }
   if (sc.more) { const c = document.createElement('div'); c.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap'; c.innerHTML = `<button class="btn sun sm" id="aiMore">${sc.more} ${I('arrow-right')}</button>${key === 'brake' ? `<button class="btn line sm">${I('wrench')} Book a brake check · ₹199</button>` : ''}`; b.appendChild(c); icons();
