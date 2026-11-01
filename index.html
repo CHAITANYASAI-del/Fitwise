@@ -119,6 +119,8 @@ h3 .tag{font-family:var(--f-mono);font-size:.68rem;font-weight:500;letter-spacin
 .stats .v small{font-size:.45em;color:var(--ink-3);letter-spacing:0;margin-left:.2rem}
 .stats p{font-size:.88rem;margin:.6rem 0 0;max-width:18rem}
 .stats .src{display:block;font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);margin-top:.5rem;letter-spacing:.02em}
+.cite{color:#1A56DB;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+.cite:hover{color:#1140A8}
 @media(max-width:760px){.stats{grid-template-columns:1fr}}
 
 /* tables */
@@ -410,7 +412,7 @@ footer a{color:var(--ink-2)}
     <p class="col">These are three catalogues with different shapes. The design has to handle all three without becoming three different websites.</p>
     <div class="grid g3">
       <div class="card"><span class="k">Spare parts</span><h4>Identified by vehicle + variant + part number</h4><p>Lakhs of SKUs. Fit depends on make, model, year, engine, and sometimes trim (a disc-brake rear on the top variant only). OE, OES and aftermarket numbers all point to the same physical part.</p></div>
-      <div class="card"><span class="k">Tyres</span><h4>Identified by a size code</h4><p><span class="mono">205/65 R16 95H</span>. The vehicle only narrows it down: a 2024 Creta SX manual leaves the factory on 16-inch wheels, the automatic on 17-inch. People can also legally go up or down a size. Fit is a range, not a yes/no.</p></div>
+      <div class="card"><span class="k">Tyres</span><h4>Identified by a size code</h4><p><span class="mono">205/65 R16 95H</span>. The vehicle only narrows it down: a 2024 Creta SX manual leaves the factory on 16-inch wheels, the automatic on 17-inch. <a class="cite" href="https://autocarindia.com/auto-features/hyundai-creta-facelift-price-variants-features-explained-430371" target="_blank" rel="noopener">(source)</a> People can also legally go up or down a size. Fit is a range, not a yes/no.</p></div>
       <div class="card"><span class="k">Rubber tracks</span><h4>Identified by width × pitch × links</h4><p><span class="mono">300 × 52.5 × 80</span> for mini excavators and some tractors. High ticket, low frequency, and one link off means it won't tension.</p></div>
     </div>
     <h3>Assumptions I made <span class="tag">to confirm with you</span></h3>
@@ -431,9 +433,9 @@ footer a{color:var(--ink-2)}
   </div></div>
   <div class="inset">
     <div class="stats">
-      <div><div class="v">₹99,948<small>crore</small></div><p>Indian auto component aftermarket in FY25, about $11.8 billion, up about 6% on the year.</p><span class="src">ACMA FY25 review</span></div>
-      <div><div class="v">10.9<small>lakh</small></div><p>Domestic tractor sales in India in calendar 2025, the first year they crossed one million. Every one of them needs tyres, filters and clutch plates.</p><span class="src">TMA data via MaquinAC</span></div>
-      <div><div class="v">5–40<small>%</small></div><p>Share of fake parts in the aftermarket, depending on who measured and when. The exact figure is disputed; the trust problem isn't.</p><span class="src">ACMA and press estimates, 2012–2017</span></div>
+      <div><div class="v">₹99,948<small>crore</small></div><p>Indian auto component aftermarket in FY25, about $11.8 billion, up about 6% on the year. <a class="cite" href="https://www.businesstoday.in/auto/story/domestic-auto-component-industry-grows-10-in-fy25-acma-483592-2025-07-08" target="_blank" rel="noopener">(ACMA FY25 review)</a></p></div>
+      <div><div class="v">10.9<small>lakh</small></div><p>Domestic tractor sales in India in calendar 2025, the first year they crossed one million. Every one of them needs tyres, filters and clutch plates. <a class="cite" href="https://maquinac.com/english/india-set-new-record-with-1-09-million-tractor-sales-in-2025/" target="_blank" rel="noopener">(TMA data via MaquinAC)</a></p></div>
+      <div><div class="v">5–40<small>%</small></div><p>Share of fake parts in the aftermarket, depending on who measured and when. The exact figure is disputed; the trust problem isn't. <a class="cite" href="https://www.autocarpro.in/news-national/acma-study-36-percent-aftermarket-components-fake-1519" target="_blank" rel="noopener">(ACMA study)</a> <a class="cite" href="https://www.business-standard.com/article/companies/40-of-auto-parts-sold-are-fake-114061200885_1.html" target="_blank" rel="noopener">(2014)</a> <a class="cite" href="https://www.autocarpro.in/news/counting-the-cost-how-counterfeit-car-parts-are-draining-the-auto-industry-123221" target="_blank" rel="noopener">(2024)</a></p></div>
     </div>
 
     <h3>How a part reaches a vehicle today</h3>
@@ -487,7 +489,7 @@ footer a{color:var(--ink-2)}
     <div class="tbl"><table>
       <thead><tr><th>Platform</th><th>Built for</th><th>What it does well</th><th>Where it breaks</th><th>What I'm taking</th></tr></thead>
       <tbody>
-        <tr><td>Boodmo</td><td>Indian car owners and garages</td><td>Deep OE catalogue; search by car, VIN, part number or number plate; OE and aftermarket options for the same part.</td><td>Speaks catalogue language. Assumes you know what the part is called. Little local context.</td><td class="take">OE cross-reference as the backbone of fitment.</td></tr>
+        <tr><td>Boodmo</td><td>Indian car owners and garages</td><td>Deep OE catalogue; search by car, VIN, part number or number plate; OE and aftermarket options for the same part. <a class="cite" href="https://help.boodmo.com/knowledge/article/7" target="_blank" rel="noopener">(source)</a></td><td>Speaks catalogue language. Assumes you know what the part is called. Little local context.</td><td class="take">OE cross-reference as the backbone of fitment.</td></tr>
         <tr><td>RockAuto</td><td>US DIYers</td><td>Exhaustive year/make/model tree; clear quality tiers side by side.</td><td>Dense, dated, overwhelming on mobile.</td><td class="take">Visible quality tiers, relabelled for India (OE, OES, aftermarket, value).</td></tr>
         <tr><td>AutoZone / Advance</td><td>US owners</td><td>“My Garage”, “fits your vehicle” badges, buy online and pick up in store.</td><td>Fitment is a badge with no reasoning; one active vehicle at a time.</td><td class="take">The garage as persistent context; pickup as a first-class option.</td></tr>
         <tr><td>Amazon (vehicle fit)</td><td>Everyone</td><td>Fit confirmation banner right at the top of the product page.</td><td>Marketplace noise; unclear where the fitment claim comes from.</td><td class="take">Fit confirmation above the fold, plus <b>how we know</b>.</td></tr>
@@ -750,7 +752,7 @@ footer a{color:var(--ink-2)}
         <tr><td>Inside search</td><td>Amazon (Rufus), Flipkart</td><td>Questions arrive where people already type</td><td class="take">Use: the search box understands questions</td></tr>
         <tr><td>Contextual prompts on product pages</td><td>Amazon (Rufus questions on product pages)</td><td>Answering the exact doubt at the moment of decision</td><td class="take">Use: “Ask about this part”</td></tr>
         <tr><td>AI review summaries</td><td>Amazon “Customers say”</td><td>Turning hundreds of reviews into a 10-second read</td><td class="take">Use: “Customers say” by theme</td></tr>
-        <tr><td>Floating chat bubble</td><td>Retail assistants such as Jio Copilot, support widgets</td><td>Always available</td><td>Reads as customer support, fights the mobile buy bar, gets ignored. Not used.</td></tr>
+        <tr><td>Floating chat bubble</td><td>Retail assistants such as <a class="cite" href="https://jio.copilot.live/" target="_blank" rel="noopener">Jio Copilot</a>, support widgets</td><td>Always available</td><td>Reads as customer support, fights the mobile buy bar, gets ignored. Not used.</td></tr>
         <tr><td>Big chat on the home page</td><td>AI-first startups</td><td>Novelty</td><td>Costs a third of the fold for something most visitors don't need. Not used.</td></tr>
       </tbody>
     </table></div>
@@ -801,7 +803,7 @@ footer a{color:var(--ink-2)}
   <div class="inset">
     <div class="screen-row">
       <ol class="anno">
-        <li><div><b>One job above the fold: find your vehicle</b><p>A calm studio hero, in the spirit of how Indian car sites present a car: a single-colour headline, the finder on the left, and the official Creta render on the right with three proof points. No auto-rotating carousel (in Baymard's testing, most people scroll past before the slides cycle). The finder with vehicle-type tabs and a number-plate field styled like a real Indian plate (a pattern apps like CRED use for vehicles, here in light mode) that formats itself as you type: <span class="mono">TN 09 BX 4821</span>.</p><span class="src">Pattern: number-plate vehicle input · UI Arc Segmented control</span></div></li>
+        <li><div><b>One job above the fold: find your vehicle</b><p>A calm studio hero, in the spirit of how Indian car sites present a car: a single-colour headline, the finder on the left, and the official Creta render on the right with three proof points. No auto-rotating carousel (in Baymard's testing, most people scroll past before the slides cycle <a class="cite" href="https://baymard.com/blog/homepage-carousel" target="_blank" rel="noopener">(source)</a>). The finder with vehicle-type tabs and a number-plate field styled like a real Indian plate (a pattern apps like CRED use for vehicles, here in light mode) that formats itself as you type: <span class="mono">TN 09 BX 4821</span>.</p><span class="src">Pattern: number-plate vehicle input · UI Arc Segmented control</span></div></li>
         <li><div><b>One way in without a number: your brand</b><p>The first version had two routes that said the same thing ("Don't know the number? Choose brand and model" and "Or choose your brand"). Now there is one: "No number handy? Pick your brand". The logo row changes with the vehicle type (Maruti, Hyundai, Tata… for cars; Hero, Bajaj, TVS… for bikes; Swaraj, Sonalika, John Deere… for tractors), and tapping a brand moves to model and year, similar to the brand-first fallback on used-car sites like Cars24 and Spinny. "Use number plate instead" appears only inside that step, as the way back.</p></div></li>
         <li><div><b>Say what the number is for, and what the shortcut is</b><p>Two lines used to confuse: "We never store your number" and "Try TN 09 BX 4821". People ask: if you don't store it, why ask? Is that a real vehicle? Whose details will it fill? The shortcut now reads "Use my Creta, TN 09 BX 4821": it is the signed-in shopper's own saved vehicle, one per vehicle type they have, and it is absent for types they haven't saved. The privacy line states the purpose ("We use your number to look up the make, model and variant from the registration record") and makes no promise about storage. In India that lookup typically goes to the national VAHAN registry through a licensed data provider, so the number does leave the app, and signed-in apps usually keep the vehicle in the garage; promising "we never store it" would be a claim the build probably couldn't keep. The result also says where the details came from: "saved in your garage" for the shopper's own vehicle, "from the registration record" for any other number.</p></div></li>
         <li><div><b>My garage, for signed-in users</b><p>A row of vehicle pills switches between saved vehicles. The selected one opens as a single large card, like a car-maker app: the official studio render (360° for the Creta), plate, odometer, last service, and what's coming up, each one tap from shopping.</p></div></li>
@@ -828,7 +830,7 @@ footer a{color:var(--ink-2)}
     <div class="screen-row">
       <ol class="anno">
         <li><div><b>Filtered for the vehicle, and saying so</b><p>The title names the vehicle. One neutral context bar says “7 brake discs fit your Creta”, what that's based on, and offers a switch to see everything. Colour is kept for the check icon only.</p></div></li>
-        <li><div><b>One question, only when it matters</b><p>“Are your Creta's wheels 16-inch or 17-inch?” The 2024 SX manual comes on 16s and the automatic on 17s, and both the disc and the tyre size follow from it. Answered once, it updates discs and tyres together. Tracks ask the same way: 80 or 84 links. Until it's answered, the context bar turns amber and says how many parts depend on it. “Not sure” opens Ask Vrom.</p></div></li>
+        <li><div><b>One question, only when it matters</b><p>“Are your Creta's wheels 16-inch or 17-inch?” The 2024 SX manual comes on 16s and the automatic on 17s, <a class="cite" href="https://www.ceat.com/blog/car-tyres/tyres-for-hyundai-creta-sizes-and-prices-for-all-variants.html" target="_blank" rel="noopener">(source)</a> and both the disc and the tyre size follow from it. Answered once, it updates discs and tyres together. Tracks ask the same way: 80 or 84 links. Until it's answered, the context bar turns amber and says how many parts depend on it. “Not sure” opens Ask Vrom.</p></div></li>
         <li><div><b>Help me choose, folded away</b><p>“Which brake disc should I choose?” is an AI answer grounded in the catalogue, collapsed by default so it never pushes products down. A follow-up opens the assistant.</p></div></li>
         <li><div><b>Same template, three catalogues</b><p>Brake discs, tyres and tracks share the layout. Filters change with the category: disc type, tyre size and speed rating, track width × pitch × links. Filters only list values that apply to your vehicle, and the help card changes too: a brake inspection, a free tyre-size check, or an on-site undercarriage check.</p></div></li>
         <li><div><b>Filters that never lead to zero</b><p>Live counts, disabled options that would empty the page, a price histogram, and removable chips for every applied filter.</p><span class="src">Pattern: UI Arc Range histogram slider · Filter toolbar</span></div></li>
@@ -999,31 +1001,16 @@ footer a{color:var(--ink-2)}
 
 <footer>
   <p><b style="color:var(--ink)">Vithyanela K</b> · Design assignment, October 2026. “Vrom” is a placeholder brand. Product names and brands are used for realism; prices, part numbers, dealers and statistics inside the prototype are illustrative.</p>
-  <p style="margin-top:1rem"><b style="color:var(--ink)">Sources</b></p>
-  <ul class="srcs">
-    <li><a href="https://www.businesstoday.in/auto/story/domestic-auto-component-industry-grows-10-in-fy25-acma-483592-2025-07-08" target="_blank" rel="noopener">ACMA FY25 industry review, Business Today</a></li>
-    <li><a href="https://www.republicworld.com/business/despite-tariffs-and-wars-india-s-auto-component-industry-grows-nearly-10-in-fy25-post-trade-surplus-of-453-million" target="_blank" rel="noopener">Auto component industry FY25, Republic World</a></li>
-    <li><a href="https://www.motorindiaonline.in/indian-auto-component-sector-nearly-doubles-in-5-years-hits-%e2%82%b96-73-lakh-crore-turnover-in-fy25/" target="_blank" rel="noopener">Auto component sector FY25, Motor India</a></li>
-    <li><a href="https://maquinac.com/english/india-set-new-record-with-1-09-million-tractor-sales-in-2025/" target="_blank" rel="noopener">India tractor sales 2025 (TMA data), MaquinAC</a></li>
-    <li><a href="https://www.mahindra.com/news-room/press-release/en/mahindra-farm-equipment-sector-registers-highest-ever-yearly-domestic-sales-of-407094-units-in-f25" target="_blank" rel="noopener">Mahindra Farm Equipment FY25 sales</a></li>
-    <li><a href="https://www.autocarpro.in/news-national/acma-study-36-percent-aftermarket-components-fake-1519" target="_blank" rel="noopener">ACMA study on fake components, Autocar Pro</a></li>
-    <li><a href="https://www.business-standard.com/article/companies/40-of-auto-parts-sold-are-fake-114061200885_1.html" target="_blank" rel="noopener">“40% of auto parts sold are fake”, Business Standard (2014)</a></li>
-    <li><a href="https://www.autocarpro.in/news/counting-the-cost-how-counterfeit-car-parts-are-draining-the-auto-industry-123221" target="_blank" rel="noopener">Counterfeit parts and the industry, Autocar Pro (2024)</a></li>
-    <li><a href="https://help.boodmo.com/knowledge/article/7" target="_blank" rel="noopener">Boodmo help centre: part number and number plate search</a></li>
-    <li><a href="https://autocarpro.in/news-national/indian-automotive-aftermarket-targets-usd13-billion-revenues-2019-24092" target="_blank" rel="noopener">ACMA “Road Ahead” aftermarket report (2017), Autocar Pro</a></li>
-    <li><a href="https://autocarindia.com/auto-features/hyundai-creta-facelift-price-variants-features-explained-430371" target="_blank" rel="noopener">Hyundai Creta facelift variants and wheel sizes, Autocar India</a></li>
-    <li><a href="https://www.ceat.com/blog/car-tyres/tyres-for-hyundai-creta-sizes-and-prices-for-all-variants.html" target="_blank" rel="noopener">Tyre sizes for the Hyundai Creta, CEAT</a></li>
-    <li><a href="https://baymard.com/blog/homepage-carousel" target="_blank" rel="noopener">Homepage carousels, Baymard Institute</a></li>
-    <li><a href="https://jio.copilot.live/" target="_blank" rel="noopener">Jio Copilot</a></li>
-  </ul>
-  <p style="margin-top:1rem"><b style="color:var(--ink)">Image credits</b></p>
-  <ul class="srcs">
-    <li>Photos via <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash</a> (Unsplash License): Creta, brake discs, tractors, tyre shop, mechanics, tracks.</li>
-    <li>Wikimedia Commons, CC BY-SA 4.0: Gold Metallic Honda Activa; EXCON 2025 Bangalore (Tata Signa); Mahindra tractor at Kukatpally; Indian JCB; Auto-rickshaw Bajaj; 2024 Mahindra Scorpio; Bosch Oil Filter; MRF Tyres and Tubes, Marthadam; Apollo Tyre 01; Lead-acid automotive battery 55 Ah; Worn metallic disc brake pads.</li>
-    <li>Wikimedia Commons, CC BY 4.0: Ventilated brake rotor series (plain, drilled, slotted). CC BY-SA 3.0: Rubber track. CC0: Deere excavator with rubber treads.</li>
-    <li>"Shop by vehicle" renders (Royal Enfield Classic, TVS King auto-rickshaw, Mahindra Thar ROXX, Eicher Pro 5016, SDJK mini excavator, Sonalika DI 450) are the manufacturers' own images, used here only to show vehicle types in a concept. They are the makers' copyright and would be licensed or replaced before any public launch.</li>
-    <li>Cut-outs are derivatives of the CC BY-SA originals and are shared under the same licence. Map data © OpenStreetMap contributors (ODbL), drawn from a bundled extract. Icons: Lucide (ISC). Vehicle brand logos: Wikimedia Commons; trademarks belong to their owners and are used only to identify vehicle makes. Garage vehicle renders: Hyundai Motor India (Creta 360° frames), Mahindra Tractors and JCB India official websites. These are manufacturer copyright, used here for a design concept only, and would need licensing or replacement before launch. Hero photo: Unsplash.</li>
-  </ul>
+  <details style="margin-top:1rem">
+    <summary style="cursor:pointer;color:var(--ink-3);font-size:.82rem">Image &amp; map credits</summary>
+    <ul class="srcs" style="margin-top:.8rem">
+      <li>Photos via <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash</a> (Unsplash License): Creta, brake discs, tractors, tyre shop, mechanics, tracks.</li>
+      <li>Wikimedia Commons, CC BY-SA 4.0: Gold Metallic Honda Activa; EXCON 2025 Bangalore (Tata Signa); Mahindra tractor at Kukatpally; Indian JCB; Auto-rickshaw Bajaj; 2024 Mahindra Scorpio; Bosch Oil Filter; MRF Tyres and Tubes, Marthadam; Apollo Tyre 01; Lead-acid automotive battery 55 Ah; Worn metallic disc brake pads.</li>
+      <li>Wikimedia Commons, CC BY 4.0: Ventilated brake rotor series (plain, drilled, slotted). CC BY-SA 3.0: Rubber track. CC0: Deere excavator with rubber treads.</li>
+      <li>"Shop by vehicle" renders (Royal Enfield Classic, TVS King auto-rickshaw, Mahindra Thar ROXX, Eicher Pro 5016, SDJK mini excavator, Sonalika DI 450) are the manufacturers' own images, used here only to show vehicle types in a concept. They are the makers' copyright and would be licensed or replaced before any public launch.</li>
+      <li>Cut-outs are derivatives of the CC BY-SA originals and are shared under the same licence. Map data © OpenStreetMap contributors (ODbL), drawn from a bundled extract. Icons: Lucide (ISC). Vehicle brand logos: Wikimedia Commons; trademarks belong to their owners and are used only to identify vehicle makes. Garage vehicle renders: Hyundai Motor India (Creta 360° frames), Mahindra Tractors and JCB India official websites. These are manufacturer copyright, used here for a design concept only, and would need licensing or replacement before launch. Hero photo: Unsplash.</li>
+    </ul>
+  </details>
 </footer>
 </div>
 
