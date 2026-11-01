@@ -6,23 +6,30 @@
 <meta name="color-scheme" content="light">
 <meta name="author" content="Vithyanela K">
 <meta name="description" content="Design assignment: an e-commerce concept for an auto care brand selling spare parts, tyres and tracks across cars, trucks, tractors and construction equipment. Research, personas, journeys, IA, AI search and a working Home, Listing and Product prototype.">
-<title>Fitwise Case Study</title>
+<link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+<title>Vrom Case Study</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
+@font-face{font-family:"Denton";src:local("Denton Test Bold"),local("DentonTest-Bold"),url(assets/fonts/denton-test-bold.otf) format("opentype");font-weight:400 800;font-style:normal;font-display:swap}
 :root{
   color-scheme:light;
   --ground:#FFFFFF; --ground-2:#F6F6F3; --ground-3:#EFEFEA;
   --ink:#0E0E0E; --ink-2:#474747; --ink-3:#6B6B6B; --rule:#DADAD5; --rule-2:#ECECE8;
-  --accent:#2B45E6; --accent-ink:#1D2F9C; --accent-tint:#EEF1FE; --offer:#F2621F;
-  --ok:#0B8A4C; --ok-tint:#E8F7EF; --warn:#A86400; --warn-tint:#FFF5DD; --bad:#C9353A; --bad-tint:#FDEEEE; --info:#2160E8;
+  /* Vrom's own red (the --cta gradient's base stop), so the document reads as the same brand as the prototype */
+  --accent:#C21C25; --accent-ink:#86121A; --accent-tint:#FCEDEE; --accent-dark-tint:#FF9DA3; --offer:#F2621F;
+  /* the prototype's actual primary-button treatment, copied verbatim so both documents' buttons read as one brand */
+  --cta:radial-gradient(110% 120% at 50% 150%,#C21C25 0%,#86121A 30%,#38090C 58%,#130909 80%,#0B0B0D 100%);
+  --cta-sh:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,92,92,.16),0 8px 18px -12px rgba(170,18,26,.55),0 2px 6px -2px rgba(0,0,0,.45);
+  --ok:#008A05; --ok-tint:#E6F6E9; --warn:#A85A00; --warn-tint:#FFF6EA; --bad:#C13515; --bad-tint:#FFF5F3; --info:#2160E8;
   --measure:42rem; --mid:60rem; --wide:76rem;
-  --f-display:"Inter",-apple-system,"Segoe UI",sans-serif;
-  --f-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --f-display:"Denton",Georgia,"Times New Roman",serif;
+  --f-body:"Figtree","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
-/* Light-only on purpose: a printed-document register that looks the same everywhere. */
+/* Light-only on purpose: a printed-document register that looks the same everywhere — but the same red and the same
+   display face (Denton) as the live prototype, so this reads as the same brand rather than a generic deck template. */
 *{box-sizing:border-box}
 html{background:var(--ground);scroll-behavior:smooth;scroll-padding-top:4.5rem}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;letter-spacing:-.011em;-webkit-font-smoothing:antialiased}
@@ -38,12 +45,14 @@ b,strong{color:var(--ink);font-weight:700}
 /* masthead */
 .masthead{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
 .mh{max-width:var(--wide);margin:0 auto;padding:.6rem 1.5rem;display:flex;align-items:center;gap:1rem;justify-content:space-between}
-.mh-name{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.mh-name{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;display:inline-flex;align-items:center;gap:.5rem}
+.mh-mk{width:18px;height:18px;flex:none}
 .mh-nav{display:flex;gap:.2rem;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .mh-nav a{font-size:.78rem;color:var(--ink-2);text-decoration:none;white-space:nowrap;padding:.3rem .6rem;border-radius:99px;transition:background .2s,color .2s}
 .mh-nav a:hover{color:var(--ink);background:var(--ground-2)}
 .mh-nav a.on{background:var(--ink);color:#fff}
-.mh-cta{font-size:.78rem;font-weight:700;text-decoration:none;background:var(--accent);color:#fff;padding:.4rem .85rem;border-radius:99px;white-space:nowrap}
+.mh-cta{font-size:.78rem;font-weight:700;text-decoration:none;background:var(--cta);box-shadow:var(--cta-sh);color:#fff;padding:.4rem .85rem;border-radius:99px;white-space:nowrap;transition:filter .2s}
+.mh-cta:hover{filter:brightness(1.12) saturate(1.05)}
 .progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0}
 @media(max-width:1100px){.mh-nav{display:none}}
 
@@ -61,7 +70,8 @@ h1 em{font-style:normal;color:var(--accent)}
 .ctas{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2rem}
 .btn{display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.3rem;border-radius:99px;font-weight:700;font-size:.95rem;text-decoration:none;transition:transform .15s}
 .btn:active{transform:scale(.97)}
-.btn.p{background:var(--ink);color:#fff}
+.btn.p{background:var(--cta);color:#fff;box-shadow:var(--cta-sh);transition:filter .2s,box-shadow .2s,transform .1s}
+.btn.p:hover{filter:brightness(1.12) saturate(1.05)}
 .btn.s{background:var(--ground);border:1px solid var(--rule);color:var(--ink)}
 .btn svg{width:16px;height:16px}
 
@@ -151,7 +161,7 @@ td.take::before{content:"→ ";color:var(--accent)}
 /* patterns */
 .gap-box{background:var(--ink);color:#fff;border-radius:22px;padding:2rem;margin:2rem 0;display:grid;grid-template-columns:1fr 1.3fr;gap:2rem;align-items:center}
 .gap-box h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:1.9rem;line-height:1.12;letter-spacing:-.025em;margin:0;color:#fff}
-.gap-box h4 em{color:#9DB0FF;font-style:normal}
+.gap-box h4 em{color:#FF9DA3;font-style:normal}
 .venn{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .venn div{border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:.9rem 1rem;font-size:.85rem;color:#C9C9C4}
 .venn div b{display:block;color:#fff;font-size:.95rem;margin-bottom:.2rem}
@@ -331,7 +341,7 @@ td.take::before{content:"→ ";color:var(--accent)}
 .ns{background:var(--ink);color:#fff;border-radius:24px;padding:2.2rem;margin:1.5rem 0;display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center}
 .ns h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:2.3rem;line-height:1.05;letter-spacing:-.03em;margin:.4rem 0 .8rem;color:#fff}
 .ns p{color:#C9C9C4;margin:0;font-size:.95rem}
-.ns .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#9DB0FF}
+.ns .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#FF9DA3}
 .ns .formula{font-family:var(--f-mono);font-size:.88rem;background:rgba(255,255,255,.07);border-radius:14px;padding:1.1rem 1.2rem;line-height:1.7;color:#E6E6E2}
 @media(max-width:760px){.ns{grid-template-columns:1fr}}
 
@@ -350,9 +360,14 @@ footer a{color:var(--ink-2)}
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <radialGradient id="logoGrad" cx="0.5" cy="1" r="1" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#C21C25"/><stop offset="30%" stop-color="#86121A"/><stop offset="58%" stop-color="#38090C"/><stop offset="80%" stop-color="#130909"/><stop offset="100%" stop-color="#0B0B0D"/>
+  </radialGradient>
+</defs></svg>
 <div class="masthead">
   <div class="mh">
-    <span class="mh-name">Vithyanela K · Auto parts e-commerce</span>
+    <span class="mh-name"><svg class="mh-mk" viewBox="0 0 100 100" aria-hidden="true"><path d="M 84.36 19.01 C 84.36 19.01 85.77 19.09 85.77 19.09 C 85.77 19.09 85.77 18.62 86.75 19.87 C 87.73 21.12 90.24 24.13 91.67 26.60 C 93.11 29.07 94.62 32.87 95.38 34.67 C 96.13 36.47 96.09 36.68 96.20 37.40 C 96.31 38.11 96.04 38.98 96.04 38.98 C 96.04 38.98 95.82 39.44 95.08 39.88 C 94.33 40.31 94.88 40.27 91.57 41.59 C 88.27 42.90 78.17 46.54 75.24 47.76 C 72.32 48.98 74.02 48.92 74.02 48.92 C 74.02 48.92 73.77 50.60 73.77 50.60 C 73.77 50.60 74.08 51.48 74.58 51.91 C 75.09 52.35 73.94 52.02 76.80 53.21 C 79.66 54.40 88.56 57.70 91.76 59.04 C 94.96 60.39 96.02 61.29 96.02 61.29 C 96.02 61.29 96.49 61.65 96.30 62.61 C 96.10 63.56 95.75 65.10 94.85 67.03 C 93.94 68.96 92.37 71.99 90.87 74.21 C 89.37 76.43 85.82 80.35 85.82 80.35 C 85.82 80.35 84.33 80.72 84.33 80.72 C 84.33 80.72 85.18 81.92 83.44 80.29 C 81.71 78.66 76.45 73.61 73.91 70.96 C 71.37 68.31 69.72 66.50 68.20 64.41 C 66.67 62.33 65.62 60.40 64.78 58.45 C 63.94 56.51 63.43 54.40 63.13 52.74 C 62.83 51.08 62.94 49.72 63.00 48.51 C 63.06 47.31 63.24 46.55 63.49 45.51 C 63.75 44.46 64.00 43.46 64.52 42.24 C 65.03 41.01 65.26 40.04 66.59 38.16 C 67.92 36.28 69.54 34.15 72.50 30.95 C 75.47 27.76 84.36 19.01 84.36 19.01 Z M 80.99 84.36 C 80.99 84.36 80.91 85.77 80.91 85.77 C 80.91 85.77 81.38 85.77 80.13 86.75 C 78.88 87.73 75.87 90.24 73.40 91.67 C 70.93 93.11 67.13 94.62 65.33 95.38 C 63.53 96.13 63.32 96.09 62.60 96.20 C 61.89 96.31 61.02 96.04 61.02 96.04 C 61.02 96.04 60.56 95.82 60.12 95.08 C 59.69 94.33 59.73 94.88 58.41 91.57 C 57.10 88.27 53.46 78.17 52.24 75.24 C 51.02 72.32 51.08 74.02 51.08 74.02 C 51.08 74.02 49.40 73.77 49.40 73.77 C 49.40 73.77 48.52 74.08 48.09 74.58 C 47.65 75.09 47.98 73.94 46.79 76.80 C 45.60 79.66 42.30 88.56 40.96 91.76 C 39.61 94.96 38.71 96.02 38.71 96.02 C 38.71 96.02 38.35 96.49 37.39 96.30 C 36.44 96.10 34.90 95.75 32.97 94.85 C 31.04 93.94 28.01 92.37 25.79 90.87 C 23.57 89.37 19.65 85.82 19.65 85.82 C 19.65 85.82 19.28 84.33 19.28 84.33 C 19.28 84.33 18.08 85.18 19.71 83.44 C 21.34 81.71 26.39 76.45 29.04 73.91 C 31.69 71.37 33.50 69.72 35.59 68.20 C 37.67 66.67 39.60 65.62 41.55 64.78 C 43.49 63.94 45.60 63.43 47.26 63.13 C 48.92 62.83 50.28 62.94 51.49 63.00 C 52.69 63.06 53.45 63.24 54.49 63.49 C 55.54 63.75 56.54 64.00 57.76 64.52 C 58.99 65.03 59.96 65.26 61.84 66.59 C 63.72 67.92 65.85 69.54 69.05 72.50 C 72.24 75.47 80.99 84.36 80.99 84.36 Z M 15.64 80.99 C 15.64 80.99 14.23 80.91 14.23 80.91 C 14.23 80.91 14.23 81.38 13.25 80.13 C 12.27 78.88 9.76 75.87 8.33 73.40 C 6.89 70.93 5.38 67.13 4.62 65.33 C 3.87 63.53 3.91 63.32 3.80 62.60 C 3.69 61.89 3.96 61.02 3.96 61.02 C 3.96 61.02 4.18 60.56 4.92 60.12 C 5.67 59.69 5.12 59.73 8.43 58.41 C 11.73 57.10 21.83 53.46 24.76 52.24 C 27.68 51.02 25.98 51.08 25.98 51.08 C 25.98 51.08 26.23 49.40 26.23 49.40 C 26.23 49.40 25.92 48.52 25.42 48.09 C 24.91 47.65 26.06 47.98 23.20 46.79 C 20.34 45.60 11.44 42.30 8.24 40.96 C 5.04 39.61 3.98 38.71 3.98 38.71 C 3.98 38.71 3.51 38.35 3.70 37.39 C 3.90 36.44 4.25 34.90 5.15 32.97 C 6.06 31.04 7.63 28.01 9.13 25.79 C 10.63 23.57 14.18 19.65 14.18 19.65 C 14.18 19.65 15.67 19.28 15.67 19.28 C 15.67 19.28 14.82 18.08 16.56 19.71 C 18.29 21.34 23.55 26.39 26.09 29.04 C 28.63 31.69 30.28 33.50 31.80 35.59 C 33.33 37.67 34.38 39.60 35.22 41.55 C 36.06 43.49 36.57 45.60 36.87 47.26 C 37.17 48.92 37.06 50.28 37.00 51.49 C 36.94 52.69 36.76 53.45 36.51 54.49 C 36.25 55.54 36.00 56.54 35.48 57.76 C 34.97 58.99 34.74 59.96 33.41 61.84 C 32.08 63.72 30.46 65.85 27.50 69.05 C 24.53 72.24 15.64 80.99 15.64 80.99 Z M 19.01 15.64 C 19.01 15.64 19.09 14.23 19.09 14.23 C 19.09 14.23 18.62 14.23 19.87 13.25 C 21.12 12.27 24.13 9.76 26.60 8.33 C 29.07 6.89 32.87 5.38 34.67 4.62 C 36.47 3.87 36.68 3.91 37.40 3.80 C 38.11 3.69 38.98 3.96 38.98 3.96 C 38.98 3.96 39.44 4.18 39.88 4.92 C 40.31 5.67 40.27 5.12 41.59 8.43 C 42.90 11.73 46.54 21.83 47.76 24.76 C 48.98 27.68 48.92 25.98 48.92 25.98 C 48.92 25.98 50.60 26.23 50.60 26.23 C 50.60 26.23 51.48 25.92 51.91 25.42 C 52.35 24.91 52.02 26.06 53.21 23.20 C 54.40 20.34 57.70 11.44 59.04 8.24 C 60.39 5.04 61.29 3.98 61.29 3.98 C 61.29 3.98 61.65 3.51 62.61 3.70 C 63.56 3.90 65.10 4.25 67.03 5.15 C 68.96 6.06 71.99 7.63 74.21 9.13 C 76.43 10.63 80.35 14.18 80.35 14.18 C 80.35 14.18 80.72 15.67 80.72 15.67 C 80.72 15.67 81.92 14.82 80.29 16.56 C 78.66 18.29 73.61 23.55 70.96 26.09 C 68.31 28.63 66.50 30.28 64.41 31.80 C 62.33 33.33 60.40 34.38 58.45 35.22 C 56.51 36.06 54.40 36.57 52.74 36.87 C 51.08 37.17 49.72 37.06 48.51 37.00 C 47.31 36.94 46.55 36.76 45.51 36.51 C 44.46 36.25 43.46 36.00 42.24 35.48 C 41.01 34.97 40.04 34.74 38.16 33.41 C 36.28 32.08 34.15 30.46 30.95 27.50 C 27.76 24.53 19.01 15.64 19.01 15.64 Z" fill="url(#logoGrad)"/></svg>Vithyanela K · Auto Care e-commerce</span>
     <nav class="mh-nav" id="mhnav">
       <a href="#brief">Brief</a><a href="#industry">Industry</a><a href="#market">Market</a><a href="#users">Users</a><a href="#journeys">Journeys</a><a href="#ia">IA</a><a href="#search">AI search</a><a href="#screens">Screens</a><a href="#system">System</a><a href="#metrics">Metrics</a><a href="#next">Next</a>
     </nav>
@@ -374,7 +389,7 @@ footer a{color:var(--ink-2)}
   <div class="meta">
     <div><span>My role</span><b>Research, product strategy, UX, UI and a working prototype</b></div>
     <div><span>Scope</span><b>Home · Listing (PLP) · Product (PDP), desktop and mobile</b></div>
-    <div><span>Concept brand</span><b>“Fitwise”, a placeholder name so the design has a voice</b></div>
+    <div><span>Concept brand</span><b>“Vrom”, a placeholder name so the design has a voice</b></div>
     <div><span>Read time</span><b>About 15 minutes, or 3 if you only read the bold parts</b></div>
   </div>
 
@@ -598,7 +613,7 @@ footer a{color:var(--ink-2)}
       <div>“Is this dangerous?”</div><div>“Pads? Discs? Both?”</div><div>“Is mine 16-inch or 17-inch? Does it matter?”</div><div>“Why are these ₹3,400 to ₹7,200?”</div><div>“Will this actually fit my car?”</div><div>“Who's going to fit it, and when?”</div><div>“What else is due?”</div>
       <div class="rh">Feeling</div>
       <div class="curve">
-        <svg viewBox="0 0 980 110" preserveAspectRatio="none" style="width:100%;height:110px" aria-label="Emotion curve today versus with Fitwise">
+        <svg viewBox="0 0 980 110" preserveAspectRatio="none" style="width:100%;height:110px" aria-label="Emotion curve today versus with Vrom">
           <line x1="0" y1="55" x2="980" y2="55" stroke="#ECECE8" stroke-dasharray="3 4"/>
           <path d="M70 60 C140 70 170 80 210 78 S330 96 350 98 S470 88 490 92 S610 100 630 96 S750 80 770 70 S890 60 910 62" fill="none" stroke="#C9353A" stroke-width="2.5"/>
           <path d="M70 60 C140 52 170 40 210 38 S330 32 350 30 S470 26 490 24 S610 22 630 22 S750 18 770 16 S890 20 910 18" fill="none" stroke="#0B8A4C" stroke-width="2.5"/>
@@ -607,12 +622,12 @@ footer a{color:var(--ink-2)}
           <text x="350" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#C9353A">variant confusion</text>
           <text x="630" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#C9353A">“will it fit?”</text>
         </svg>
-        <div class="legend"><span><i style="background:#C9353A"></i>Today</span><span><i style="background:#0B8A4C"></i>With Fitwise</span></div>
+        <div class="legend"><span><i style="background:#C9353A"></i>Today</span><span><i style="background:#0B8A4C"></i>With Vrom</span></div>
       </div>
       <div class="rh">Pain today</div>
       <div class="pain">No way to judge urgency.</div><div class="pain">Generic content; nothing about <i>his</i> car.</div><div class="pain">Forms ask for things he doesn't know.</div><div class="pain">Catalogue names; no fitment filter by default.</div><div class="pain">“Fits” claims with no evidence.</div><div class="pain">Online and local are separate worlds.</div><div class="pain">No memory of the vehicle.</div>
       <div class="rh">Design move</div>
-      <div class="move">Ask Fitwise: describe it in your words.<br><i>Home</i></div><div class="move">Reasoning steps and a grounded answer, with a disclaimer and a ₹199 check.<br><i>Home</i></div><div class="move">Number-plate lookup; ask about variants only when it matters.<br><i>Home · PLP</i></div><div class="move">Listing pre-filtered to his car, quick take on which type to pick.<br><i>PLP</i></div><div class="move">Fitment card with evidence: variant, OE cross-ref, real installs.<br><i>PDP</i></div><div class="move">Deliver, pick up or buy + fit, with live dealer stock nearby.<br><i>PDP</i></div><div class="move">My Garage tracks wear and nudges before the next failure.<br><i>Home</i></div>
+      <div class="move">Ask Vrom: describe it in your words.<br><i>Home</i></div><div class="move">Reasoning steps and a grounded answer, with a disclaimer and a ₹199 check.<br><i>Home</i></div><div class="move">Number-plate lookup; ask about variants only when it matters.<br><i>Home · PLP</i></div><div class="move">Listing pre-filtered to his car, quick take on which type to pick.<br><i>PLP</i></div><div class="move">Fitment card with evidence: variant, OE cross-ref, real installs.<br><i>PDP</i></div><div class="move">Deliver, pick up or buy + fit, with live dealer stock nearby.<br><i>PDP</i></div><div class="move">My Garage tracks wear and nudges before the next failure.<br><i>Home</i></div>
     </div></div>
 
     <div class="moments">
@@ -673,11 +688,11 @@ footer a{color:var(--ink-2)}
 
     <h3>Sitemap</h3>
     <div class="tree">
-      <div class="col"><div class="hd a">Home</div><ul><li><b>Vehicle finder</b><small>Plate · make/model · part/size</small></li><li><b>Ask Fitwise</b><small>Symptom → part</small></li><li><b>My Garage</b><small>Due soon, wear estimates</small></li><li>Shop by vehicle</li><li>Shop by system</li><li>Tyre decoder · Track guide</li><li>Dealers near you</li></ul></div>
+      <div class="col"><div class="hd a">Home</div><ul><li><b>Vehicle finder</b><small>Plate · make/model · part/size</small></li><li><b>Ask Vrom</b><small>Symptom → part</small></li><li><b>My Garage</b><small>Due soon, wear estimates</small></li><li>Shop by vehicle</li><li>Shop by system</li><li>Tyre decoder · Track guide</li><li>Dealers near you</li></ul></div>
       <div class="col"><div class="hd">Shop by vehicle</div><ul><li>Cars &amp; SUVs</li><li>Two-wheelers</li><li>Trucks &amp; buses</li><li>Tractors &amp; farm</li><li>Construction</li><li>Three-wheelers</li></ul></div>
       <div class="col"><div class="hd">Catalogue</div><ul><li><b>Parts by system</b><small>Brakes, filters, engine, suspension, clutch, cooling, electrical, lighting, body…</small></li><li><b>Tyres</b><small>By vehicle · by size</small></li><li><b>Tracks</b><small>By machine · by size</small></li><li>Batteries · oils · accessories</li></ul></div>
       <div class="col"><div class="hd">Buy &amp; fulfil</div><ul><li>Listing (PLP)</li><li>Product (PDP)</li><li>Compare</li><li>Cart · checkout</li><li>Reserve at dealer</li><li>Book fitting</li><li>Dealer locator</li></ul></div>
-      <div class="col"><div class="hd">Account &amp; business</div><ul><li>Orders · returns</li><li>Fitment promise</li><li><b>Fitwise Pro</b><small>Garages: credit, trade price, job cards</small></li><li><b>Fleet</b><small>Assets, approvals, invoices</small></li><li>Become a dealer</li></ul></div>
+      <div class="col"><div class="hd">Account &amp; business</div><ul><li>Orders · returns</li><li>Fitment promise</li><li><b>Vrom Pro</b><small>Garages: credit, trade price, job cards</small></li><li><b>Fleet</b><small>Assets, approvals, invoices</small></li><li>Become a dealer</li></ul></div>
     </div>
 
     <h3>Same template, category-aware filters</h3>
@@ -711,7 +726,7 @@ footer a{color:var(--ink-2)}
 
     <h3>What the user sees</h3>
     <div class="grid g2">
-      <div class="parse-demo"><div class="q">steering shakes when I brake, 2024 creta diesel</div><div class="toks"><span class="tok"><i>Vehicle</i>Hyundai Creta</span><span class="tok"><i>Year</i>2024</span><span class="tok"><i>Fuel</i>Diesel</span><span class="tok"><i>System</i>Brakes</span><span class="tok"><i>Symptom</i>Shaking when braking</span></div><div class="out">→ Ask Fitwise explains it's likely warped discs, then <b>7 front discs that fit</b>.</div></div>
+      <div class="parse-demo"><div class="q">steering shakes when I brake, 2024 creta diesel</div><div class="toks"><span class="tok"><i>Vehicle</i>Hyundai Creta</span><span class="tok"><i>Year</i>2024</span><span class="tok"><i>Fuel</i>Diesel</span><span class="tok"><i>System</i>Brakes</span><span class="tok"><i>Symptom</i>Shaking when braking</span></div><div class="out">→ Ask Vrom explains it's likely warped discs, then <b>7 front discs that fit</b>.</div></div>
       <div class="parse-demo"><div class="q">ट्रैक्टर का पिछला टायर 575</div><div class="toks"><span class="tok"><i>Vehicle</i>Mahindra 575 DI</span><span class="tok"><i>Category</i>Tyres</span><span class="tok"><i>Position</i>Rear</span></div><div class="out">→ Size resolved to <span class="mono">13.6-28</span> (some units run 14.9-28, so that is the one question if it matters), <b>2 tyres that fit</b>, 3 farm and truck dealers.</div></div>
       <div class="parse-demo"><div class="q">51712-C9000</div><div class="toks"><span class="tok"><i>OE part no.</i>51712-C9000</span></div><div class="out">→ Exact OE part (Hyundai Mobis front disc), plus <b>6 equivalent brands</b> cross-referenced. Part numbers here are illustrative.</div></div>
       <div class="parse-demo"><div class="q">300x52.5x80 track</div><div class="toks"><span class="tok"><i>Track size</i>300 × 52.5 × 80</span><span class="tok"><i>Machine</i>Mini excavator</span></div><div class="out">→ <b>4 tracks in that size</b> for mini excavators like the JCB 30 Plus, and a reminder to count links (80 or 84).</div></div>
@@ -772,7 +787,7 @@ footer a{color:var(--ink-2)}
       <ul class="qs"><li>What are we shopping for?</li><li>What's due on my vehicle?</li><li>Can I trust these parts?</li><li>Can I get it locally, today?</li></ul>
     </div>
   </div>
-  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">fitwise.in</span><a href="prototype.html#home" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#home" data-w="1440" data-h="1180"></div></div>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">vrom.in</span><a href="prototype.html#home" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#home" data-w="1440" data-h="1180"></div></div>
   <div class="inset">
     <div class="screen-row">
       <div class="phone"><div class="vp" data-src="prototype.html?embed=1#home" data-w="390" data-h="844"></div></div>
@@ -783,7 +798,7 @@ footer a{color:var(--ink-2)}
         <li><div><b>My garage, for signed-in users</b><p>A row of vehicle pills switches between saved vehicles. The selected one opens as a single large card, like a car-maker app: the official studio render (360° for the Creta), plate, odometer, last service, and what's coming up, each one tap from shopping.</p></div></li>
         <li><div><b>Categories that don't look like products</b><p>Category tiles use large, angled part renders on warm gradient cards. Product cards sit on plain white with a hairline border, so the two are never confused while scrolling.</p></div></li>
         <li><div><b>Offers as designed cards, not stock photos</b><p>Each offer is a clean tinted card with a product cut-out (discs and pads, a tyre stack, a tractor tyre) and one clear action. They're easy to scan and on-brand, and easy for a marketing team to swap.</p></div></li>
-        <li><div><b>Search that understands plain language</b><p>The header search accepts symptoms, sizes and part numbers, shows what it understood as chips, and hands questions to Ask Fitwise.</p><span class="src">Pattern: Kobra Command menu</span></div></li>
+        <li><div><b>Search that understands plain language</b><p>The header search accepts symptoms, sizes and part numbers, shows what it understood as chips, and hands questions to Ask Vrom.</p><span class="src">Pattern: Kobra Command menu</span></div></li>
       </ol>
     </div>
     <div class="iter">
@@ -799,13 +814,13 @@ footer a{color:var(--ink-2)}
       <ul class="qs"><li>Are these all for my car?</li><li>What's the difference between these?</li><li>Can I get it today?</li><li>Which one should I pick?</li></ul>
     </div>
   </div>
-  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">fitwise.in/brakes/front-discs?vehicle=creta-2024-crdi</span><a href="prototype.html#plp" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#plp" data-w="1440" data-h="1180"></div></div>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">vrom.in/brakes/front-discs?vehicle=creta-2024-crdi</span><a href="prototype.html#plp" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#plp" data-w="1440" data-h="1180"></div></div>
   <div class="inset">
     <div class="screen-row">
       <div class="phone"><div class="vp" data-src="prototype.html?embed=1#plp" data-w="390" data-h="844"></div></div>
       <ol class="anno">
         <li><div><b>Filtered for the vehicle, and saying so</b><p>The title names the vehicle. One neutral context bar says “7 brake discs fit your Creta”, what that's based on, and offers a switch to see everything. Colour is kept for the check icon only.</p></div></li>
-        <li><div><b>One question, only when it matters</b><p>“Are your Creta's wheels 16-inch or 17-inch?” The 2024 SX manual comes on 16s and the automatic on 17s, and both the disc and the tyre size follow from it. Answered once, it updates discs and tyres together. Tracks ask the same way: 80 or 84 links. Until it's answered, the context bar turns amber and says how many parts depend on it. “Not sure” opens Ask Fitwise.</p></div></li>
+        <li><div><b>One question, only when it matters</b><p>“Are your Creta's wheels 16-inch or 17-inch?” The 2024 SX manual comes on 16s and the automatic on 17s, and both the disc and the tyre size follow from it. Answered once, it updates discs and tyres together. Tracks ask the same way: 80 or 84 links. Until it's answered, the context bar turns amber and says how many parts depend on it. “Not sure” opens Ask Vrom.</p></div></li>
         <li><div><b>Help me choose, folded away</b><p>“Which brake disc should I choose?” is an AI answer grounded in the catalogue, collapsed by default so it never pushes products down. A follow-up opens the assistant.</p></div></li>
         <li><div><b>Same template, three catalogues</b><p>Brake discs, tyres and tracks share the layout. Filters change with the category: disc type, tyre size and speed rating, track width × pitch × links. Filters only list values that apply to your vehicle, and the help card changes too: a brake inspection, a free tyre-size check, or an on-site undercarriage check.</p></div></li>
         <li><div><b>Filters that never lead to zero</b><p>Live counts, disabled options that would empty the page, a price histogram, and removable chips for every applied filter.</p><span class="src">Pattern: UI Arc Range histogram slider · Filter toolbar</span></div></li>
@@ -827,7 +842,7 @@ footer a{color:var(--ink-2)}
       <ul class="qs"><li>Does it definitely fit? How do you know?</li><li>Where does it go on my car?</li><li>Who near me has it, and at what price?</li><li>Can someone fit it today?</li></ul>
     </div>
   </div>
-  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">fitwise.in/p/bosch-front-brake-disc-ventilated-pair</span><a href="prototype.html#pdp" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#pdp" data-w="1440" data-h="1180"></div></div>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">vrom.in/p/bosch-front-brake-disc-ventilated-pair</span><a href="prototype.html#pdp" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#pdp" data-w="1440" data-h="1180"></div></div>
   <div class="inset">
     <div class="screen-row">
       <div class="phone"><div class="vp" data-src="prototype.html?embed=1#pdp" data-w="390" data-h="844"></div></div>
@@ -837,7 +852,7 @@ footer a{color:var(--ink-2)}
         <li><div><b>The fit verdict comes before the price</b><p>Fitment is the product, so the answer to "does it fit my car?" is the second thing on the page and the only tinted block: green with a tick, amber with a question, red with a way out. Evidence is one plain line (matches OE 51712-C9000 · 1,284 fitted on a Creta) instead of three chips. When fit depends on wheel size or link count, the question sits inside the amber block, and until it's answered the main button is disabled and says "Confirm fit to continue", so nobody reserves a part that may not fit. If the part is wrong for the vehicle, the purchase controls disappear and the button becomes "See parts that fit".</p></div></li>
         <li><div><b>How do you want it? One switch, one line</b><p>Three tall radio cards became a three-way switch (Pick up today, Delivery, Get it fitted) with a single line under it: "In stock at 4 stores within 4 km", "Tomorrow before 9 PM, free", or the fitting slot and labour. It cuts the height by about two thirds. The main button follows the choice: Reserve at store, Buy now, Book fitting.</p><span class="src">Pattern: segmented control · UI Arc Segmented control</span></div></li>
         <li><div><b>One primary action, everything else quieter</b><p>The quantity stepper sits beside a single full-width button; "or add to cart" is a text link; the reassurance is one line (free return if it doesn't fit, 12 months warranty). Two heavy buttons used to compete. The AI entry is one quiet row at the end, "Ask about this part", with one example question; the assistant panel still offers the full set of questions for that kind of part, so they are not repeated in the box. Reviews, Q&amp;A, specs, "bought together" and the store list change by part type: tractor and truck tyres and tracks come from farm, truck and earthmover dealers, with fitting on site.</p></div></li>
-        <li><div><b>Stores near you: two lines each, detail on demand</b><p>The decision is "where can I get it, and how far", so each store shows only that: name, price, distance and availability (in stock, only 2 left, ready tomorrow), plus a warning only when it's about to close. Everything else waits until a store is selected: rating, opening hours, "can fit it", one Reserve button and small call, WhatsApp and directions buttons. Stores that have it come first, nearest within each group, so a closer store with nothing in stock never sits above one that does. One card is open at a time, and selecting a store from the list or from a map pin opens the same card. "Verified" is true of every store, so it is a tick, not a label; only the Fitwise hub is marked. The map is drawn by the prototype itself from a small extract of OpenStreetMap roads, rail, water and parks, so it never depends on a map-tile server, and stores are numbered the same in the list and on the map, sit at their real locations, with distances measured from your PIN code. Picking a store draws a route from you, and zoom steps in on it. Reserving uses slide-to-confirm and returns a pickup code.</p><span class="src">Pattern: progressive disclosure · Bencho · Space UI Slide to confirm</span></div></li>
+        <li><div><b>Stores near you: two lines each, detail on demand</b><p>The decision is "where can I get it, and how far", so each store shows only that: name, price, distance and availability (in stock, only 2 left, ready tomorrow), plus a warning only when it's about to close. Everything else waits until a store is selected: rating, opening hours, "can fit it", one Reserve button and small call, WhatsApp and directions buttons. Stores that have it come first, nearest within each group, so a closer store with nothing in stock never sits above one that does. One card is open at a time, and selecting a store from the list or from a map pin opens the same card. "Verified" is true of every store, so it is a tick, not a label; only the Vrom hub is marked. The map is drawn by the prototype itself from a small extract of OpenStreetMap roads, rail, water and parks, so it never depends on a map-tile server, and stores are numbered the same in the list and on the map, sit at their real locations, with distances measured from your PIN code. Picking a store draws a route from you, and zoom steps in on it. Reserving uses slide-to-confirm and returns a pickup code.</p><span class="src">Pattern: progressive disclosure · Bencho · Space UI Slide to confirm</span></div></li>
         <li><div><b>Frequently bought together</b><p>Disc pair + pads + fitting, with live totals. The way mechanics actually do the job.</p></div></li>
         <li><div><b>Compatibility and reviews that use the vehicle</b><p>A searchable compatibility table with your vehicle highlighted. Reviews show “Customers say”, an AI summary by theme, and put same-vehicle reviews first.</p></div></li>
       </ol>
@@ -871,7 +886,7 @@ footer a{color:var(--ink-2)}
       <div style="background:var(--bad-tint)"><b style="color:var(--bad)">✕ Doesn't fit</b>Only shown when “Show only parts that fit” is off. Greyed out, never sold by accident.</div>
     </div>
     <p class="note">One primary style: every main action is a solid indigo button (hover <code>#4031E5</code>), secondary actions are white with an outline, and links are indigo text. That follows Baymard's guidance that buttons and links must never be confused and that colour should carry meaning, not decoration. Indigo is the only brand colour, so it always means “you can act here” (including offer tags and due-soon items, in a light <code>#EEEDFF</code> tint). Green, amber and red are not taken from Cars24: they are kept because fitment needs a clear yes / check / no signal, and they appear only for that.</p>
-    <p class="note">One AI mark: a small indigo orb, in the same colour as every primary action. It appears wherever Ask Fitwise can help (the search bar button, “Ask about this part”, the listing's AI answer, the assistant header) and nowhere else, so it reads as one feature rather than decoration. It slowly turns only while answering, and stops under reduced motion.</p>
+    <p class="note">One AI mark: a small indigo orb, in the same colour as every primary action. It appears wherever Ask Vrom can help (the search bar button, “Ask about this part”, the listing's AI answer, the assistant header) and nowhere else, so it reads as one feature rather than decoration. It slowly turns only while answering, and stops under reduced motion.</p>
     <p class="note">Accessibility: helper text uses a grey that passes WCAG AA contrast (4.5:1) on white and slate surfaces. Search is a proper combobox: <kbd>/</kbd> or <kbd>⌘K</kbd> opens it, arrow keys move through suggestions, Enter opens one, Escape closes it. Search, the assistant and drawers are modal dialogs: focus moves in when they open, Tab stays inside, and Escape returns focus to the button that opened them. Fit states are announced as status messages, and colour is never the only signal (each state also has an icon and a sentence).</p>
     <div class="type">
       <div><span class="mono" style="color:var(--ink-3)">Typeface · Inter</span><div class="spec" style="font-weight:800;letter-spacing:-.04em">Aa ₹4,650</div><p>One family for everything. Tight tracking on headlines, tabular numbers for prices, and Indian lakh formatting.</p></div>
@@ -893,7 +908,7 @@ footer a{color:var(--ink-2)}
       <tbody>
         <tr><td>Number-plate slots</td><td>Kobra · Input OTP</td><td>Home finder</td><td>Chunking matches the printed plate. Characters spring in and a sweep confirms the number.</td></tr>
         <tr><td>Search with parsed chips</td><td>Kobra · Command menu · UI Arc Combobox</td><td>Header search</td><td>Shows what was understood before results load.</td></tr>
-        <tr><td>Docked assistant panel</td><td>Beautiful UI · Thinking, Streaming text · Kobra Reasoning steps</td><td>Ask Fitwise</td><td>Visible working builds trust in an AI answer, and the page stays visible.</td></tr>
+        <tr><td>Docked assistant panel</td><td>Beautiful UI · Thinking, Streaming text · Kobra Reasoning steps</td><td>Ask Vrom</td><td>Visible working builds trust in an AI answer, and the page stays visible.</td></tr>
         <tr><td>Segmented control</td><td>UI Arc · Segmented control</td><td>Vehicle type</td><td>Mutually exclusive choice with a sliding indicator.</td></tr>
         <tr><td>Nav underline</td><td>Lightswind · Tubelight navbar</td><td>Category nav</td><td>Clear hover state across 12 items, without a heavy menu bar.</td></tr>
         <tr><td>Skeleton reveal</td><td>Spectrum UI · Skeleton reveal</td><td>Plate lookup</td><td>Honest loading for a network call.</td></tr>
@@ -925,14 +940,14 @@ footer a{color:var(--ink-2)}
   <div class="inset">
     <div class="ns">
       <div><span class="k">North star</span><h4>First-time-right fitment rate</h4><p>The share of orders fitted on the intended vehicle without a return, exchange or complaint. It measures the customer's real job and the business's biggest cost.</p></div>
-      <div class="formula">orders fitted OK<br>÷ orders delivered or picked up<br><span style="color:#8D8D88">— excluding change-of-mind returns</span><br><br><span style="color:#9DB0FF">target ≥ 98% · today's industry norm unknown, baseline first</span></div>
+      <div class="formula">orders fitted OK<br>÷ orders delivered or picked up<br><span style="color:#8D8D88">— excluding change-of-mind returns</span><br><br><span style="color:#FF9DA3">target ≥ 98% · today's industry norm unknown, baseline first</span></div>
     </div>
     <div class="tbl"><table>
       <thead><tr><th>Stage</th><th>Metric</th><th>Why it matters</th><th>Screen</th></tr></thead>
       <tbody>
         <tr><td>Context</td><td>Vehicle-set rate</td><td>% of sessions with a vehicle in the garage. Everything else depends on it.</td><td>Home</td></tr>
         <tr><td>Discovery</td><td>Search success, zero-result rate</td><td>Did the query reach a relevant listing or PDP?</td><td>Search, PLP</td></tr>
-        <tr><td>Discovery</td><td>Ask Fitwise → listing click-through</td><td>Is the AI answer useful enough to act on?</td><td>Home</td></tr>
+        <tr><td>Discovery</td><td>Ask Vrom → listing click-through</td><td>Is the AI answer useful enough to act on?</td><td>Home</td></tr>
         <tr><td>Confidence</td><td>Disambiguation answer rate</td><td>Do people answer the one question, or bounce?</td><td>PLP</td></tr>
         <tr><td>Conversion</td><td>PDP → local action</td><td>Reserve, call, WhatsApp or directions. Local intent counts as success.</td><td>PDP</td></tr>
         <tr><td>Fulfilment</td><td>Reservation pickup rate</td><td>Do reservations turn into sales at the counter?</td><td>Dealer</td></tr>
@@ -976,7 +991,7 @@ footer a{color:var(--ink-2)}
 </section>
 
 <footer>
-  <p><b style="color:var(--ink)">Vithyanela K</b> · Design assignment, October 2026. “Fitwise” is a placeholder brand. Product names and brands are used for realism; prices, part numbers, dealers and statistics inside the prototype are illustrative.</p>
+  <p><b style="color:var(--ink)">Vithyanela K</b> · Design assignment, October 2026. “Vrom” is a placeholder brand. Product names and brands are used for realism; prices, part numbers, dealers and statistics inside the prototype are illustrative.</p>
   <p style="margin-top:1rem"><b style="color:var(--ink)">Sources</b></p>
   <ul class="srcs">
     <li><a href="https://www.businesstoday.in/auto/story/domestic-auto-component-industry-grows-10-in-fy25-acma-483592-2025-07-08" target="_blank" rel="noopener">ACMA FY25 industry review, Business Today</a></li>
@@ -1011,7 +1026,7 @@ footer a{color:var(--ink-2)}
   const fit = vp => { const w = +vp.dataset.w, h = +vp.dataset.h, s = vp.clientWidth / w; vp.style.height = h * s + 'px'; const f = vp.querySelector('iframe'); if (f) { f.style.width = w + 'px'; f.style.height = h + 'px'; f.style.transform = `scale(${s})`; } };
   const vps = [...document.querySelectorAll('.vp[data-src]')];
   vps.forEach(fit);
-  const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const vp = e.target; io.unobserve(vp); const f = document.createElement('iframe'); f.loading = 'lazy'; f.title = 'Fitwise prototype'; f.src = vp.dataset.src; vp.appendChild(f); fit(vp); }), { rootMargin: '600px' });
+  const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const vp = e.target; io.unobserve(vp); const f = document.createElement('iframe'); f.loading = 'lazy'; f.title = 'Vrom prototype'; f.src = vp.dataset.src; vp.appendChild(f); fit(vp); }), { rootMargin: '600px' });
   vps.forEach(v => io.observe(v));
   addEventListener('resize', () => vps.forEach(fit));
 })();

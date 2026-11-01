@@ -1,9 +1,14 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <radialGradient id="logoGrad" cx="0.5" cy="1" r="1" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#C21C25"/><stop offset="30%" stop-color="#86121A"/><stop offset="58%" stop-color="#38090C"/><stop offset="80%" stop-color="#130909"/><stop offset="100%" stop-color="#0B0B0D"/>
+  </radialGradient>
+</defs></svg>
 <div class="util">
   <div class="wrap">
     <button id="locBtn">${I('map-pin')} Deliver to <b>Coimbatore 641018</b> ${I('chevron-down')}</button>
     <span class="hide-m">${I('shield-check')} Fitment promise: free returns if it doesn't fit</span>
     <span class="sp"></span>
-    <a href="#" class="hide-m">Fitwise Pro for garages</a>
+    <a href="#" class="hide-m">Vrom Pro for garages</a>
     <a href="#" class="hide-m">Become a dealer</a>
     <a href="#" class="hide-m">Help</a>
     <button id="langBtn">${I('languages')} English ${I('chevron-down')}</button>
@@ -12,14 +17,14 @@
 
 <header class="top" id="top">
   <div class="wrap hdr">
-    <a class="logo" href="#home" data-go="home" aria-label="Fitwise home"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Fitwise</a>
+    <a class="logo" href="#home" data-go="home" aria-label="Vrom home"><svg class="mk" viewBox="0 0 100 100"><path d="${LOGO_D}" fill="url(#logoGrad)"/></svg>Vrom</a>
     <div class="search" id="search">
       <div class="sbox" id="sbox">
         <button class="sopen" id="sopen" aria-label="Search parts, tyres and tracks" aria-keyshortcuts="/ Control+K Meta+K">${I('search')}<span class="ph" id="sph" aria-hidden="true"></span></button>
         <button class="tb" data-act="scan" title="Search with a photo" aria-label="Search with a photo">${I('camera')}</button>
         <button class="tb" data-act="voice" title="Search by voice" aria-label="Search by voice">${I('mic')}</button>
         <span class="div"></span>
-        <button class="ask" data-ask="" title="Ask Fitwise"><span class="orb" aria-hidden="true"></span><span class="t">Ask Fitwise</span></button>
+        <button class="ask" data-ask="" title="Ask Vrom"><span class="orb" aria-hidden="true"></span><span class="t">Ask Vrom</span></button>
       </div>
     </div>
     <div style="position:relative">
@@ -31,10 +36,10 @@
       <div class="pop" id="gPop"></div>
     </div>
     <div class="hact">
-      <button class="ask-m" data-ask="" title="Ask Fitwise" aria-label="Ask Fitwise"><span class="orb" style="width:22px;height:22px" aria-hidden="true"></span></button>
-      <div style="position:relative"><button class="acct" id="acctBtn" aria-haspopup="true"><span class="av">AK</span><span><small>Hello,</small><b>Arjun</b></span>${I('chevron-down')}</button>
-        <div class="amenu" id="amenu"><div class="who"><span class="av">AK</span><div><b style="font-weight:600">Arjun Kumar</b><div class="muted" style="font-size:12px">+91 98•••• 4821</div></div></div>
-          <a href="#">${I('package')}My orders<em>2 active</em></a><a href="#" id="amGarage">${I('car')}My garage<em>4 vehicles</em></a><a href="#">${I('heart')}Wishlist</a><a href="#">${I('ticket')}Coupons<em>3</em></a><a href="#">${I('wrench')}Fitwise Pro</a><a href="#">${I('log-out')}Sign out</a></div></div>
+      <button class="ask-m" data-ask="" title="Ask Vrom" aria-label="Ask Vrom"><span class="orb" style="width:22px;height:22px" aria-hidden="true"></span></button>
+      <div style="position:relative"><button class="acct" id="acctBtn" aria-haspopup="true"><span class="av"><img src="assets/brand/avatar.jpg" alt="" loading="lazy"></span><span><small>Hello,</small><b>Arjun</b></span>${I('chevron-down')}</button>
+        <div class="amenu" id="amenu"><div class="who"><span class="av"><img src="assets/brand/avatar.jpg" alt=""></span><div><b style="font-weight:600">Arjun Kumar</b><div class="muted" style="font-size:12px">+91 98•••• 4821</div></div></div>
+          <a href="#">${I('package')}My orders<em>2 active</em></a><a href="#" id="amGarage">${I('car')}My garage<em>4 vehicles</em></a><a href="#">${I('heart')}Wishlist</a><a href="#">${I('ticket')}Coupons<em>3</em></a><a href="#">${I('wrench')}Vrom Pro</a><a href="#">${I('log-out')}Sign out</a></div></div>
       <button title="Cart" id="cartBtn">${I('shopping-cart')}<span class="badge" id="cartN">2</span><span class="lbl">Cart</span></button>
     </div>
   </div>
@@ -66,7 +71,7 @@
           <img src="${PH('mech-hands')}" alt="">
           <b style="font-size:17px">Not sure what you need?</b>
           <p>Describe the problem in your own words, in English, Hindi or Tamil.</p>
-          <span class="btn line sm" style="align-self:flex-start">Ask Fitwise</span>
+          <span class="btn line sm" style="align-self:flex-start">Ask Vrom</span>
         </a>
       </div>
     </div>
@@ -152,7 +157,7 @@
       <div class="mapbox" id="hmap"></div>
       <div class="r">
         <h2>Buy online. Pick up nearby.</h2>
-        <p>Every part on Fitwise is stocked by verified stores in your city. Reserve online, pay at the counter, and get it fitted while you wait.</p>
+        <p>Every part on Vrom is stocked by verified stores in your city. Reserve online, pay at the counter, and get it fitted while you wait.</p>
         <div class="kpis"><div><b>1,240</b><small>stores in India</small></div><div><b>14</b><small>near 641018</small></div><div><b>2 hrs</b><small>typical pickup</small></div></div>
         <button class="btn line" data-go="pdp">See what's in stock near you ${I('arrow-right')}</button>
       </div>
@@ -161,7 +166,7 @@
     <section class="sec">
       <div class="proband">
         <div class="l">
-          <span class="k">${I('wrench')} Fitwise Pro</span>
+          <span class="k">${I('wrench')} Vrom Pro</span>
           <h2>Run a garage? Order faster, on credit, by part number.</h2>
           <ul>
             <li>${I('indian-rupee')}<span><b>Trade prices</b>Up to 18% below retail</span></li>
@@ -188,13 +193,13 @@
 <footer class="ft">
   <div class="wrap">
     <div class="ft-g">
-      <div><a class="logo" href="#home" data-go="home"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>Fitwise</a><p style="margin-top:12px;max-width:290px">Spare parts, tyres and tracks for cars, bikes, trucks, tractors and construction machines. Checked to fit, sold through local stores.</p><div class="pay"><span>UPI</span><span>RuPay</span><span>Visa</span><span>Mastercard</span><span>EMI</span><span>Cash at store</span></div></div>
+      <div><a class="logo" href="#home" data-go="home"><svg class="mk" viewBox="0 0 100 100"><path d="${LOGO_D}" fill="url(#logoGrad)"/></svg>Vrom</a><p style="margin-top:12px;max-width:290px">Spare parts, tyres and tracks for cars, bikes, trucks, tractors and construction machines. Checked to fit, sold through local stores.</p><div class="pay"><span>UPI</span><span>RuPay</span><span>Visa</span><span>Mastercard</span><span>EMI</span><span>Cash at store</span></div></div>
       <div><h6>Shop</h6><a href="#">Car parts</a><a href="#">Tyres</a><a href="#">Rubber tracks</a><a href="#">Tractor &amp; farm</a><a href="#">Truck &amp; bus</a></div>
       <div><h6>Help</h6><a href="#">Fitment promise</a><a href="#">Returns</a><a href="#">Track order</a><a href="#">Warranty claims</a></div>
-      <div><h6>Business</h6><a href="#">Fitwise Pro</a><a href="#">Fleet accounts</a><a href="#">Become a dealer</a><a href="#">Brand partners</a></div>
+      <div><h6>Business</h6><a href="#">Vrom Pro</a><a href="#">Fleet accounts</a><a href="#">Become a dealer</a><a href="#">Brand partners</a></div>
       <div><h6>Company</h6><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Contact</a></div>
     </div>
-    <div class="base"><span>© 2026 Fitwise (concept). Prices include GST.</span><span>Photos: Unsplash and Wikimedia Commons contributors. Map © OpenStreetMap contributors.</span></div>
+    <div class="base"><span>© 2026 Vrom (concept). Prices include GST.</span><span>Photos: Unsplash and Wikimedia Commons contributors. Map © OpenStreetMap contributors.</span></div>
   </div>
 </footer>
 
@@ -207,11 +212,11 @@
   <div class="cmd-b" id="cmdB" role="listbox" aria-label="Suggestions"></div>
   <div class="cmd-f"><span><kbd>↑</kbd><kbd>↓</kbd> to move</span><span><kbd>↵</kbd> to open</span><span style="margin-left:auto">${I('languages')} Works in English, हिन्दी, தமிழ் and 6 more</span></div>
 </div>
-<aside class="copilot" id="copilot" role="dialog" aria-modal="true" aria-label="Ask Fitwise">
-  <div class="cp-h"><span class="orb" aria-hidden="true"></span><span><b>Ask Fitwise</b><small>Parts expert · replies instantly</small></span><span class="acts"><button id="cpNew" title="New chat" aria-label="New chat">${I('rotate-ccw')}</button><button id="cpX" title="Close" aria-label="Close Ask Fitwise">${I('x')}</button></span></div>
+<aside class="copilot" id="copilot" role="dialog" aria-modal="true" aria-label="Ask Vrom">
+  <div class="cp-h"><span class="orb" aria-hidden="true"></span><span><b>Ask Vrom</b><small>Parts expert · replies instantly</small></span><span class="acts"><button id="cpNew" title="New chat" aria-label="New chat">${I('rotate-ccw')}</button><button id="cpX" title="Close" aria-label="Close Ask Vrom">${I('x')}</button></span></div>
   <div class="cp-ctx" id="cpCtx"></div>
   <div class="cp-b" id="cpB" aria-live="polite"></div>
-  <form class="cp-f" id="cpF"><div class="ai-in"><input id="cpIn" aria-label="Ask Fitwise a question" placeholder="Ask about a problem, a part or a fit"><button type="button" class="tb" data-act="voice" aria-label="Ask by voice" style="width:36px;height:36px;display:grid;place-items:center;color:var(--ink-3)">${I('mic')}</button><button class="send" aria-label="Send">${I('arrow-up')}</button></div><div class="cp-legal">Suggestions, not a diagnosis. Fitment is checked against the parts catalogue.</div></form>
+  <form class="cp-f" id="cpF"><div class="ai-in"><input id="cpIn" aria-label="Ask Vrom a question" placeholder="Ask about a problem, a part or a fit"><button type="button" class="tb" data-act="voice" aria-label="Ask by voice" style="width:36px;height:36px;display:grid;place-items:center;color:var(--ink-3)">${I('mic')}</button><button class="send" aria-label="Send">${I('arrow-up')}</button></div><div class="cp-legal">Suggestions, not a diagnosis. Fitment is checked against the parts catalogue.</div></form>
 </aside>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Details"></aside>
 <div class="tray" id="tray"></div>

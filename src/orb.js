@@ -11,7 +11,7 @@ void main(){ vec2 p = vec2((gl_VertexID << 1) & 2, gl_VertexID & 2); vUv = vec2(
   const FS = `#version 300 es
 precision highp float;
 in vec2 vUv; out vec4 outColor;
-uniform float time, micLevel, think, stateTs, wcStrength;
+uniform float time, micLevel, think, stateTs, wcStrength, noiseScale, colorSpeed, reactivity, halo;
 uniform vec4 avgMag, cumulativeAudio;
 uniform vec3 cMain, cLow, cMid, cHigh;
 const float E = 2.71828182846, PI = 3.141592653589793, MAIN_R = 0.49;
@@ -47,7 +47,7 @@ float cnoise(vec3 P){
   vec2 nyz = mix(nz.xy, nz.zw, fade3(Pf0).y);
   return 2.2 * mix(nyz.x, nyz.y, fade3(Pf0).x);
 }
-float watercolorTex(vec2 uv, float z){ return cnoise(vec3(uv * 4.0, z)) * 0.65 + cnoise(vec3(uv * 8.0 + vec2(5.2, 1.7), z + 1.1)) * 0.35; }
+float watercolorTex(vec2 uv, float z){ return cnoise(vec3(uv * noiseScale, z)) * 0.65 + cnoise(vec3(uv * noiseScale * 2.0 + vec2(5.2, 1.7), z + 1.1)) * 0.35; }
 float texDisp(vec2 uv, float z, float m){ float r = watercolorTex(uv, z) * 0.5 + 0.5, g = watercolorTex(vec2(uv.x, 1.0 - uv.y), z + 2.3) * 0.5 + 0.5; return mix(r - 0.5, g - 0.5, m); }
 float hash21(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 4.1414))) * 43758.5453); }
 float noise2(vec2 p){ vec2 i = floor(p), f = fract(p), u = f * f * (3.0 - 2.0 * f);
@@ -78,7 +78,7 @@ float thinkDist(vec2 st, float dur, float t){
   return mix(base, d, deploy);
 }
 vec3 watercolor(vec2 st){
-  float t = time * 0.85; vec4 cum = cumulativeAudio, au = avgMag; float amp = clamp(wcStrength, 0.0, 1.0) * 2.0;
+  float t = time * 0.85 * colorSpeed; vec4 cum = cumulativeAudio, au = avgMag; float amp = clamp(wcStrength, 0.0, 1.0) * reactivity * (2.0 / 3.0);
   vec2 uv = st * (1.0 / 0.8) + 0.5; uv.y = 1.0 - uv.y;
   float nx = cnoise(vec3(uv + vec2(0.0, 74.8572), (t + cum.x * 0.05) * 0.3)), ny = cnoise(vec3(uv + vec2(203.91282, 10.0), (t + cum.z * 0.05) * 0.3));
   uv += vec2(nx * 2.0, ny) * 0.19 * amp;
@@ -111,7 +111,7 @@ void main(){
   vec2 st = vUv - 0.5;
   float dur = max(0.0, time - stateTs);
   float dist = think > 0.5 ? thinkDist(st, dur, time) : listenDist(st, dur, time, micLevel);
-  float alpha = smoothstep(0.0075, 0.0, dist);
+  float alpha = smoothstep(0.0075 / max(halo, 0.1), 0.0, dist);
   outColor = vec4(watercolor(st) * alpha, alpha);
 }`;
   const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
@@ -119,11 +119,18 @@ void main(){
   try { prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog); if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog)); }
   catch (e) { console.warn('Orb Bloop: falling back to the CSS orb', e); return; }
   gl.useProgram(prog); gl.bindVertexArray(gl.createVertexArray());
-  const U = {}; ['time', 'micLevel', 'think', 'stateTs', 'wcStrength', 'avgMag', 'cumulativeAudio', 'cMain', 'cLow', 'cMid', 'cHigh'].forEach(n => U[n] = gl.getUniformLocation(prog, n));
+  const U = {}; ['time', 'micLevel', 'think', 'stateTs', 'wcStrength', 'noiseScale', 'colorSpeed', 'reactivity', 'halo', 'avgMag', 'cumulativeAudio', 'cMain', 'cLow', 'cMid', 'cHigh'].forEach(n => U[n] = gl.getUniformLocation(prog, n));
   /* the bloop's own GREYSCALE palette, verbatim */
   const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16) / 255);
-  gl.uniform3fv(U.cMain, rgb('#D7D7D7')); gl.uniform3fv(U.cLow, rgb('#303030')); gl.uniform3fv(U.cMid, rgb('#989898')); gl.uniform3fv(U.cHigh, rgb('#FFFFFF'));
-  gl.uniform1f(U.wcStrength, 0.5);
+  /* Tuned to the client's AI Blob spec (glowIntensity/noiseScale/glints/halo/reactivity/colorSpeed/hoverTilt)
+     since that React/shadcn component can't drop into this vanilla-JS static site and the shader above
+     already is this project's AI blob — these constants carry the spec's numbers over to it. */
+  const BLOB = { glowIntensity: 0.65, noiseScale: 4.6, glints: 1.37, halo: 0.96, reactivity: 3, colorSpeed: 1.44, hoverTilt: 2 };
+  gl.uniform3fv(U.cMain, rgb('#D7D7D7')); gl.uniform3fv(U.cLow, rgb('#303030')); gl.uniform3fv(U.cMid, rgb('#989898'));
+  gl.uniform3fv(U.cHigh, rgb('#FFFFFF').map(c => Math.min(1, c * BLOB.glints)));
+  gl.uniform1f(U.wcStrength, BLOB.glowIntensity);
+  gl.uniform1f(U.noiseScale, BLOB.noiseScale); gl.uniform1f(U.colorSpeed, BLOB.colorSpeed);
+  gl.uniform1f(U.reactivity, BLOB.reactivity); gl.uniform1f(U.halo, BLOB.halo);
 
   const RM = matchMedia('(prefers-reduced-motion: reduce)'), T0 = performance.now(), ORBS = new WeakMap();
   let last = 0, prev = T0;

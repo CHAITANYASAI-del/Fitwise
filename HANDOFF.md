@@ -1,5 +1,8 @@
 # Fitwise: handoff for the next Claude Code session
 
+> **Renamed 1 Nov 2026:** the product is now called **Vrom** everywhere a shopper sees it (header, favicon, page titles, "Ask Fitwise" → "Ask Vrom", etc.) — the code's internal names (`.btn.sun`, `CAT_META`, this file) and the rest of this historical log below still say "Fitwise" because that was the name at the time each decision was made.
+
+
 The fuller narrative (full conversation log, decisions and why, current state) is in `CONTEXT.md`; read that first.
 
 Paste this into a new Claude Code session opened in this folder:

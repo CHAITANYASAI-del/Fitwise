@@ -1,4 +1,4 @@
-/* Fitwise design system v2: white canvas, ink type and ink primary action, copper for offers, green reserved for fitment + ratings */
+/* Vrom design system v2: white canvas, ink type and ink primary action, copper for offers, green reserved for fitment + ratings */
 :root{
   color-scheme:light;
   /* Palette: black and white (Airbnb's Hof/Foggy neutral ramp, no brand colour). Colour is kept only where it carries meaning:
@@ -85,8 +85,7 @@ header.top{position:sticky;top:0;z-index:40;background:#fff;transition:box-shado
 header.top.sc{box-shadow:0 8px 24px -18px rgba(0,0,0,.35)}
 .hdr{display:flex;align-items:center;gap:20px;height:60px}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:22px;letter-spacing:-.045em;flex:none}
-.logo .mk{width:30px;height:30px;border-radius:8px;background:var(--sun);display:grid;place-items:center}
-.logo .mk svg{width:18px;height:18px}
+.logo .mk{width:30px;height:30px;flex:none;display:block}
 .search{flex:1;position:relative;min-width:0;max-width:680px}
 .sbox{display:flex;align-items:center;gap:6px;height:40px;padding:0 6px 0 14px;background:var(--tile);border-radius:10px;cursor:text;box-shadow:inset 0 0 0 1px transparent;transition:.15s}
 .sbox:hover{box-shadow:inset 0 0 0 1px var(--line-2)}
@@ -538,8 +537,9 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .qtake .in>div{overflow:hidden}
 .qtake .in p{padding:0 14px 14px 46px;color:var(--ink-2);font-size:13.5px}
 .qtake .in p b{color:var(--ink);font-weight:600}
-/* AI mark: Space UI Orb Bloop in its greyscale palette, everywhere Ask Fitwise appears */
-.orb{width:24px;height:24px;border-radius:50%;background:conic-gradient(from 0deg,var(--sun),#6A6A6A,#B0B0B0,#000000,var(--sun));position:relative;flex:none}
+/* AI mark: Space UI Orb Bloop in its greyscale palette, everywhere Ask Vrom appears */
+.orb{width:24px;height:24px;border-radius:50%;background:conic-gradient(from 0deg,var(--sun),#6A6A6A,#B0B0B0,#000000,var(--sun));position:relative;flex:none;transition:transform .25s ease;transform-style:preserve-3d}
+.orb:hover{transform:perspective(200px) rotateX(2deg) rotateY(2deg)}
 .orb::after{content:"";position:absolute;inset:3px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),rgba(255,255,255,0) 50%),radial-gradient(circle at 60% 70%,rgba(0,0,0,.15),transparent 60%)}
 .orb:not(.gl).think{animation:spin 1.1s linear infinite}
 /* Orb Bloop (orb.js) draws into a child canvas; the conic gradient above is only the no-WebGL fallback */
@@ -1232,14 +1232,16 @@ body.embed .dock,body.embed .util{display:none}
 /* account menu */
 .acct{display:flex;align-items:center;gap:8px;height:42px;padding:0 10px 0 6px;border-radius:10px}
 .acct:hover{background:var(--soft)}
-.acct .av{width:32px;height:32px;border-radius:50%;background:var(--sun);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12.5px}
+.acct .av{width:32px;height:32px;border-radius:50%;background:var(--sun);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12.5px;overflow:hidden;flex:none}
+.acct .av img{width:100%;height:100%;object-fit:cover;display:block}
 .acct b{font-weight:600;font-size:13.5px;display:block;line-height:1.2}
 .acct small{font-size:11.5px;color:var(--ink-3);display:block;line-height:1.2}
 .acct .lucide{width:16px;height:16px;color:var(--ink-3)}
 .amenu{position:absolute;top:calc(100% + 8px);right:0;width:260px;background:#fff;border-radius:14px;box-shadow:var(--sh-3),0 0 0 1px rgba(0,0,0,.05);padding:6px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:.2s var(--ease);z-index:50}
 .amenu.on{opacity:1;visibility:visible;transform:none}
 .amenu .who{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--line);margin-bottom:4px}
-.amenu .who .av{width:38px;height:38px;border-radius:50%;background:var(--sun);color:#fff;display:grid;place-items:center;font-weight:700}
+.amenu .who .av{width:38px;height:38px;border-radius:50%;background:var(--sun);color:#fff;display:grid;place-items:center;font-weight:700;overflow:hidden;flex:none}
+.amenu .who .av img{width:100%;height:100%;object-fit:cover;display:block}
 .amenu a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;font-weight:500}
 .amenu a:hover{background:var(--soft)}
 .amenu a .lucide{width:18px;height:18px;color:var(--ink-3)}

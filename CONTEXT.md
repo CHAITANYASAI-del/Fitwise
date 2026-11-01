@@ -1,5 +1,8 @@
 # Fitwise: full project context
 
+> **Renamed 1 Nov 2026:** the product is now called **Vrom** everywhere a shopper sees it (header, favicon, page titles, "Ask Fitwise" → "Ask Vrom", etc.) — the code's internal names (`.btn.sun`, `CAT_META`, this file) and the rest of this historical log below still say "Fitwise" because that was the name at the time each decision was made.
+
+
 Everything needed to continue this project in a new session: the brief, the decisions and why, the current state of every screen, a log of the whole conversation (each request and what came of it), the technical gotchas, and what is still open.
 
 - **Written:** 31 Oct 2026, at the end of a long working session.

@@ -222,7 +222,7 @@ function renderHome() {
   $('#gsw').innerHTML = GARAGE.map(id => { const g = VEHICLES[id], dd = DUE[id]; return `<button class="${id === S.vehicle ? 'on' : ''}" data-veh="${id}"><span class="th"><img src="${g.img}" alt=""></span><span><b>${g.name}</b><small>${stIc(dd.rows[0][4])}${dd.short}</small></span></button>`; }).join('') + `<button class="add">${I('plus')}Add vehicle</button>`;
   $('#vcard').innerHTML = `<div class="l"><span class="eyb">Your ${v.type === 'car' ? 'car' : v.type === 'excavator' ? 'machine' : v.type}</span><h3>${v.name}</h3><div class="sub">${v.year} · ${v.variant} · ${v.fuel} · ${v.trans}</div><div class="pl"><span class="iplate">${INDB}<span>${v.plate}</span></span></div>
       <div class="vstats4"><div><small>${v.type === 'car' || v.type === 'truck' ? 'Odometer' : 'Engine hours'}</small><b>${v.odo}</b></div><div><small>Last service</small><b>${d.svc}</b></div><div><small>Parts bought</small><b>${d.bought}</b></div></div>
-      <div class="up"><h4><span>Coming up</span><button class="link" data-ask="What service is due on my ${v.short}?">Ask Fitwise</button></h4>
+      <div class="up"><h4><span>Coming up</span><button class="link" data-ask="What service is due on my ${v.short}?">Ask Vrom</button></h4>
       <div class="hchips">${d.rows.map(([, t, , , st], i) => `<button class="hchip" data-hot="${HOT[v.id].findIndex(sp => sp[2].includes(i))}">${stIc(st)}${t}</button>`).join('')}</div>
       <p class="hhint">${I('cursor-click')}Tap a marker on the ${v.type === 'car' ? 'car' : v.type === 'excavator' ? 'machine' : v.type} to see what's due</p></div>
       <div class="acts"><button class="btn sun" data-plp="${d.cat}">Shop parts for this ${v.type === 'car' ? 'car' : 'vehicle'}</button><button class="btn line">${I('gauge')} Update ${v.type === 'car' || v.type === 'truck' ? 'km' : 'hours'}</button></div></div>
@@ -340,7 +340,7 @@ function mountMap(el, list, sel, price) {
   const ox = W / 2 - cx, oy = H / 2 - cy, at = d => { const [x, y] = proj(d, z); return [x + ox, y + oy]; };
   const [mx, my] = at(ME), [sx, sy] = s ? at(s) : [mx, my];
   const pins = list.map((d, i) => { const [x, y] = at(d), lbl = `${d.name}, ${d.area}, ${d.km} km, ${d.stock ? 'in stock' : 'ready tomorrow'}`;
-    return `<button class="pin ${d.id === sel ? 'on' : ''} ${d.stock ? '' : 'out'} ${d.own ? 'own' : ''}" data-pin="${d.id}" style="left:${x}px;top:${y}px" aria-label="${lbl}" aria-pressed="${d.id === sel}"><i class="st"></i><b class="pp">${price ? fmt(price(d)) : d.km + ' km'}</b><span class="pl"><b>${d.own ? 'Fitwise Hub' : d.name}</b><small>${price ? d.km + ' km · ' : ''}${d.stock ? 'In stock' : 'Ready tomorrow'}</small></span></button>`; }).join('');
+    return `<button class="pin ${d.id === sel ? 'on' : ''} ${d.stock ? '' : 'out'} ${d.own ? 'own' : ''}" data-pin="${d.id}" style="left:${x}px;top:${y}px" aria-label="${lbl}" aria-pressed="${d.id === sel}"><i class="st"></i><b class="pp">${price ? fmt(price(d)) : d.km + ' km'}</b><span class="pl"><b>${d.own ? 'Vrom Hub' : d.name}</b><small>${price ? d.km + ' km · ' : ''}${d.stock ? 'In stock' : 'Ready tomorrow'}</small></span></button>`; }).join('');
   el.innerHTML = `${baseMap(W, H, z, ox, oy, 'rl' + (el.id || 'm') + '-')}
     ${s ? `<svg class="route" width="${W}" height="${H}" aria-hidden="true"><line x1="${mx}" y1="${my}" x2="${sx}" y2="${sy}"/></svg>` : ''}
     <span class="me" style="left:${mx}px;top:${my}px"><i></i><b>You · ${ME.pin}</b></span>${pins}
@@ -413,17 +413,17 @@ function renderCmd() {
   let h = '';
   if (!q) {
     h += `<div class="cg"><h6>Popular searches</h6>${[['brake disc for 2024 Creta', 'plp:brakes:creta'], ['215/60 R17 tyres', 'plp:tyres:creta'], ['Rear tyre for Mahindra 575 DI', 'plp:tyres:m575'], ['51712-C9000', 'pdp:d2']].map(([t, a]) => item(I('search'), t, 'Search', a)).join('')}</div>
-    <div class="cg"><h6>Not sure what you need?</h6>${item('<span class="orb"></span>', 'Describe the problem to Ask Fitwise', 'For example: “steering shakes when I brake”', 'ai:')}</div>
+    <div class="cg"><h6>Not sure what you need?</h6>${item('<span class="orb"></span>', 'Describe the problem to Ask Vrom', 'For example: “steering shakes when I brake”', 'ai:')}</div>
     <div class="cg"><h6>My vehicles</h6>${GARAGE.map(id => item(`<img src="${VEHICLES[id].img}" alt="">`, vLabel(VEHICLES[id]), VEHICLES[id].variant + ' · ' + VEHICLES[id].plate, 'veh:' + id)).join('')}</div>`;
   } else {
     if (r.t.length) h += `<div class="cg"><h6>We understood</h6><div class="parse">${r.t.map((x, i) => `<span class="tok" style="animation-delay:${i * 50}ms"><i>${x[0]}</i><b>${x[1]}</b></span>`).join('')}</div></div>`;
-    if (r.intent === 'ai') h += `<div class="cg">${item('<span class="orb"></span>', `Ask Fitwise: “${q}”`, 'Get an answer and the parts that fit', 'ai:' + q, '<span class="tag ai">Answer</span>')}</div>`;
+    if (r.intent === 'ai') h += `<div class="cg">${item('<span class="orb"></span>', `Ask Vrom: “${q}”`, 'Get an answer and the parts that fit', 'ai:' + q, '<span class="tag ai">Answer</span>')}</div>`;
     if (r.intent === 'pn') h += `<div class="cg"><h6>Exact part number match</h6>${item(`<img src="${P('d2').img}" alt="">`, 'Hyundai Mobis Genuine Front Brake Disc (Pair)', 'OE 51712-C9000 · plus 6 equivalent brands', 'pdp:d2', `<span class="tag fit">Fits</span>`)}</div>`;
     const words = q.toLowerCase().split(/\s+/).filter(w => w.length > 2);
     let ps = PRODUCTS.filter(p => (r.cat ? p.cat === r.cat : words.some(w => (p.brand + ' ' + p.name).toLowerCase().includes(w))) && fitOf(p, vid) !== 'bad').slice(0, 4);
     if (ps.length) h += `<div class="cg"><h6>Products</h6>${ps.map(p => item(img(p), hl(p.brand + ' ' + p.name, words), `${fmt(p.price)} · ${p.dealers ? 'Pick up today' : 'Delivery ' + p.eta.toLowerCase()}`, 'pdp:' + p.id, fitOf(p, vid) === 'ok' ? '<span class="tag fit">Fits</span>' : '<span class="tag warn">Check</span>')).join('')}</div>`;
     if (r.cat) h += `<div class="cg">${item(I('layout-grid'), `See all ${CAT_META[r.cat].tab.toLowerCase()} for your ${v.short}`, 'With filters', `plp:${r.cat}:${vid}`)}</div>`;
-    if (!h) h = `<div class="cg">${item('<span class="orb"></span>', `Ask Fitwise: “${q}”`, 'We\'ll work out the part from your words', 'ai:' + q)}</div>`;
+    if (!h) h = `<div class="cg">${item('<span class="orb"></span>', `Ask Vrom: “${q}”`, 'We\'ll work out the part from your words', 'ai:' + q)}</div>`;
   }
   $('#cmdB').innerHTML = h; icons();
   cItems = $$('#cmdB .ci'); cItems.forEach((b, i) => b.id = 'ci' + i); markSel(0);
@@ -471,7 +471,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeCmd(); closeDrawer(); closeCopilot(); $('#filters') && $('#filters').classList.remove('on'); }
 });
 
-/* ============ Ask Fitwise (docked assistant) ============ */
+/* ============ Ask Vrom (docked assistant) ============ */
 const SCN = {
   brake: { veh: 'creta', cat: 'brakes', steps: ['Matched your vehicle · <b>2024 Hyundai Creta SX 1.5 CRDi</b>', 'Likely cause · <b>warped front brake discs</b>', 'Checked fitment against OE <b>51712-C9000</b> · 7 discs fit', 'In stock at <b>4 stores</b> within 5 km'],
     a: 'A steering wheel that shakes when you brake usually means the <b>front brake discs are warped</b>, often after hard braking on hot discs. At 41,200 km, it\'s worth replacing the <b>pads</b> at the same time. Discs are always changed <b>in pairs</b>.', recs: ['d1', 'd2', 'd5'], more: 'See all 7 discs that fit' },
@@ -484,7 +484,7 @@ const SCN = {
   pads: { veh: 'creta', steps: ['Checked service history · <b>pads last changed at 0 km (estimated)</b>'],
     a: 'Yes. Mechanics recommend <b>new pads with new discs</b>, because old pads wear unevenly against a fresh surface and can cause noise. Pads for your Creta start at <b>₹1,290</b>. Fitting both takes about <b>45 minutes</b>.', recs: [], more: 'Add pads and fitting', moreAct: 'fbt' },
   time: { veh: 'creta', steps: ['Looked up labour times · <b>Creta front axle</b>'],
-    a: 'Replacing front discs and pads takes about <b>45 to 60 minutes</b>. At Fitwise partner garages, labour is <b>₹349</b>, and you can book a slot when you reserve the part.', recs: [], more: 'See stores that can fit it', moreAct: 'stores' },
+    a: 'Replacing front discs and pads takes about <b>45 to 60 minutes</b>. At Vrom partner garages, labour is <b>₹349</b>, and you can book a slot when you reserve the part.', recs: [], more: 'See stores that can fit it', moreAct: 'stores' },
   tsize: { veh: 'creta', cat: 'tyres', steps: ['Checked your variant · <b>SX 1.5 CRDi manual</b>', 'Factory sizes · <b>205/65 R16</b> (manual) · <b>215/60 R17</b> (automatic, SX(O))'],
     a: 'Your Creta SX manual left the factory on <b>205/65 R16</b> tyres. Automatics and the SX(O) run <b>215/60 R17</b>. The size is printed on the sidewall, so check yours before buying, because wheels sometimes get swapped. Tell me which it is and the fit badges update.', recs: ['t1', 't3'], more: 'See tyres that fit' },
   links: { veh: 'jcb', cat: 'tracks', steps: ['Matched your machine · <b>JCB 30 Plus</b>', 'Standard track · <b>300 × 52.5 × 80</b> · long builds run <b>84</b>'],
@@ -612,7 +612,7 @@ function chipsHTML() {
   Object.entries(S.f).forEach(([k, v]) => { if (k === 'price') c.push(`<span class="chipx">${fmt(v[0])} – ${fmt(v[1])}<button data-rm="price" aria-label="Remove">${I('x')}</button></span>`); else v.forEach(x => c.push(`<span class="chipx">${k === 'avail' ? (x === 'pickup' ? 'Pick up today' : 'By tomorrow') : k === 'rating' ? x + '★ & above' : x}<button data-rm="${k}" data-rv="${x}" aria-label="Remove">${I('x')}</button></span>`)); });
   return c.join('');
 }
-const HELP = { brakes: ['Not sure which one? Get it checked first.', '₹199 brake inspection at a partner garage near you, adjusted if you buy.'], tyres: ['Not sure of your size? We\'ll read it for you.', 'Free tyre-size and tread check at any Fitwise store. About 10 minutes.'], heavy: ['Not sure which tyre? We\'ll come to you.', '₹299 on-site tyre check for tractors and trucks, adjusted if you buy.'], tracks: ['Not sure of the link count? We\'ll measure it.', '₹499 on-site undercarriage check: links, sprockets and rollers, adjusted if you buy.'] };
+const HELP = { brakes: ['Not sure which one? Get it checked first.', '₹199 brake inspection at a partner garage near you, adjusted if you buy.'], tyres: ['Not sure of your size? We\'ll read it for you.', 'Free tyre-size and tread check at any Vrom store. About 10 minutes.'], heavy: ['Not sure which tyre? We\'ll come to you.', '₹299 on-site tyre check for tractors and trucks, adjusted if you buy.'], tracks: ['Not sure of the link count? We\'ll measure it.', '₹499 on-site undercarriage check: links, sprockets and rollers, adjusted if you buy.'] };
 function gridHTML(list) {
   if (!list.length) return emptyHTML();
   const cards = list.map(cardHTML);
@@ -729,11 +729,11 @@ const REV = {
     r2: 'Count the links before you order. We see one or two 84-link machines a month, and the wrong track simply will not tension.', w2: 'Kovai Earthmover Spares · Dealer', role: 'Dealer' }
 };
 const QA = {
-  brakes: [['Do I need to change both discs?', 'Yes. Discs are always replaced in pairs on the same axle so braking stays even. This listing is for a pair.', 'Ravi S., mechanic · 38 people found this helpful'], ['Will this fit the automatic version of the Creta?', 'It depends on the wheel size, not the gearbox. Cretas on 16-inch wheels use OE 51712-C9000; Cretas on 17-inch wheels (automatics and the SX(O)) use 51712-C9100. The size is printed on your tyre.', 'Fitwise parts team']],
-  car: [['Should I replace all four tyres?', 'Not always. Replace in pairs on the same axle. If only two are new, most mechanics put them on the rear for better grip in the wet.', 'Senthil R., tyre dealer · 52 people found this helpful'], ['How do I read the tyre size?', '205/65 R16 95H means 205 mm wide, a sidewall 65% as tall as the width, a 16-inch rim, load index 95 and speed rating H. It is printed on the sidewall of your current tyre.', 'Fitwise parts team']],
-  tractor: [['Tube type or tubeless?', 'Most rear tractor tyres in this size are tube type. The price is for the tyre only; a new tube and flap add about ₹1,800 at the store.', 'Sakthi Tractors, dealer · 44 people found this helpful'], ['Can I fit 14.9-28 instead?', 'Some 575 DI units run 14.9-28. Only change size if both rears change together and your rims allow it. Ask the store to check before fitting.', 'Fitwise parts team']],
-  truck: [['Is this for the drive or steer axle?', 'Drive axle. The lug pattern is built for traction. Use a rib-pattern tyre on the steer axle.', 'Ramesh K., fleet mechanic · 19 people found this helpful'], ['Can the casing be retreaded?', 'Yes, usually once or twice if you pull the tyre at about 3 mm tread. The store can arrange retreading.', 'Fitwise parts team']],
-  tracks: [['How do I count the links?', 'Chalk one drive lug on the inside of the track and count round until you reach it again. Most brands also mould the size on the inside face.', 'Kovai Earthmover Spares, dealer · 27 people found this helpful'], ['Do I need new sprockets too?', 'If the sprocket teeth look hooked or pointed, yes. A worn sprocket wears out a new track quickly. The fitting crew checks this on site.', 'Fitwise parts team']]
+  brakes: [['Do I need to change both discs?', 'Yes. Discs are always replaced in pairs on the same axle so braking stays even. This listing is for a pair.', 'Ravi S., mechanic · 38 people found this helpful'], ['Will this fit the automatic version of the Creta?', 'It depends on the wheel size, not the gearbox. Cretas on 16-inch wheels use OE 51712-C9000; Cretas on 17-inch wheels (automatics and the SX(O)) use 51712-C9100. The size is printed on your tyre.', 'Vrom parts team']],
+  car: [['Should I replace all four tyres?', 'Not always. Replace in pairs on the same axle. If only two are new, most mechanics put them on the rear for better grip in the wet.', 'Senthil R., tyre dealer · 52 people found this helpful'], ['How do I read the tyre size?', '205/65 R16 95H means 205 mm wide, a sidewall 65% as tall as the width, a 16-inch rim, load index 95 and speed rating H. It is printed on the sidewall of your current tyre.', 'Vrom parts team']],
+  tractor: [['Tube type or tubeless?', 'Most rear tractor tyres in this size are tube type. The price is for the tyre only; a new tube and flap add about ₹1,800 at the store.', 'Sakthi Tractors, dealer · 44 people found this helpful'], ['Can I fit 14.9-28 instead?', 'Some 575 DI units run 14.9-28. Only change size if both rears change together and your rims allow it. Ask the store to check before fitting.', 'Vrom parts team']],
+  truck: [['Is this for the drive or steer axle?', 'Drive axle. The lug pattern is built for traction. Use a rib-pattern tyre on the steer axle.', 'Ramesh K., fleet mechanic · 19 people found this helpful'], ['Can the casing be retreaded?', 'Yes, usually once or twice if you pull the tyre at about 3 mm tread. The store can arrange retreading.', 'Vrom parts team']],
+  tracks: [['How do I count the links?', 'Chalk one drive lug on the inside of the track and count round until you reach it again. Most brands also mould the size on the inside face.', 'Kovai Earthmover Spares, dealer · 27 people found this helpful'], ['Do I need new sprockets too?', 'If the sprocket teeth look hooked or pointed, yes. A worn sprocket wears out a new track quickly. The fitting crew checks this on site.', 'Vrom parts team']]
 };
 const revKey = p => p.cat === 'tyres' ? ptype(p) : p.cat;
 const dealersFor = p => p.cat === 'tracks' || (p.cat === 'tyres' && ptype(p) !== 'car') ? DEALERS_HEAVY : DEALERS;
@@ -810,7 +810,7 @@ function renderPDP() {
           return `<article class="scard ${on ? 'on' : ''}" data-st="${d.id}">
           <button class="sc-h" aria-expanded="${on}" aria-controls="scb-${d.id}">
             <span class="sn ${d.own ? 'own' : ''}" aria-hidden="true">${i + 1}</span>
-            <span class="sc-t"><b>${d.name}</b>${d.own ? '<em class="sc-own">Fitwise</em>' : `<i class="sc-v" role="img" aria-label="Verified store" title="Verified store">${I('badge-check')}</i>`}</span>
+            <span class="sc-t"><b>${d.name}</b>${d.own ? '<em class="sc-own">Vrom</em>' : `<i class="sc-v" role="img" aria-label="Verified store" title="Verified store">${I('badge-check')}</i>`}</span>
             <span class="sc-p">${fmt(sp(d))}</span>
             <span class="sc-s">${d.km} km · ${d.area}${d.closing ? ` · <span class="sc-c">${d.open.replace('Closes at', 'Closes')}</span>` : ''}</span>
             <span class="sc-a ${av[0]}"><i></i>${av[1]}</span>
@@ -858,9 +858,9 @@ function renderPDP() {
   </section>
 
   <section class="psec qa" id="qa">
-    <h2>Questions and answers</h2><p class="s">Answered by verified mechanics and the Fitwise parts team.</p>
+    <h2>Questions and answers</h2><p class="s">Answered by verified mechanics and the Vrom parts team.</p>
     ${QA[rk].map(([q, t, w], i) => `<details ${i ? '' : 'open'}><summary>${q}${I('chevron-down')}</summary><p>${t}</p><small>Answered by ${w}</small></details>`).join('')}
-    <details><summary>Is the store price the same as online?${I('chevron-down')}</summary><p>Each store sets its own price, shown next to the store above. The online price is the Fitwise Hub price.</p><small>Answered by Fitwise parts team</small></details>
+    <details><summary>Is the store price the same as online?${I('chevron-down')}</summary><p>Each store sets its own price, shown next to the store above. The online price is the Vrom Hub price.</p><small>Answered by Vrom parts team</small></details>
     <button class="btn line sm" style="margin-top:16px" data-ask="">${I('message-circle')} Ask a question</button>
   </section>`;
   $('#mbuy').innerHTML = `<div style="min-width:0"><b style="font-size:17px">${fmt(p.price)}</b><div class="muted" style="font-size:12px">${f === 'ok' ? 'Fits your ' + v.short : f === 'warn' ? 'Check fit first' : 'Doesn\'t fit your ' + v.short}</div></div><button class="btn line" data-add="${p.id}">Add to cart</button><button class="btn sun" id="mCta" ${f === 'warn' ? 'disabled' : ''}>${ctaOf(p)}</button>`;
