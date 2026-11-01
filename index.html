@@ -131,7 +131,7 @@ td.take{color:var(--ink);font-weight:600}
 td.take::before{content:"→ ";color:var(--accent)}
 
 /* value chain */
-.chain{display:flex;align-items:stretch;gap:0;margin:2rem 0 1rem;overflow-x:auto;padding-bottom:.5rem}
+.chain{display:flex;align-items:stretch;gap:0;margin:2rem 0 1rem;overflow-x:auto;padding:14px .2rem .5rem}
 .chain .node{flex:1;min-width:150px;background:var(--ground-2);border-radius:14px;padding:1rem;position:relative}
 .chain .node.hi{background:var(--ink);color:#fff}
 .chain .node.hi p,.chain .node.hi .k{color:#B7B7B2}
@@ -875,27 +875,27 @@ footer a{color:var(--ink-2)}
 <section class="s" id="system">
   <div class="sh"><div class="num"><b>10</b>Visual language</div><div>
     <h2>It should feel familiar to Indian car buyers <em>and invisible everywhere else.</em></h2>
-    <p class="col">The palette is taken from Cars24's sell-a-car page, the marketplace many Indian car owners already use to value and sell a vehicle: one indigo brand colour for actions, and a cool slate scale for text, surfaces and borders. Real photography and official studio renders carry the page; colour is reserved for actions and for fit state. Nothing decorative that a shopper would have to look past.</p>
+    <p class="col">The palette is almost entirely black and white — closer to Airbnb's neutral ramp than to a typical brand wash — because colour that doesn't mean something is just noise on a page people are scanning for a part number. Real photography and official studio renders carry the visual interest. The only colour that survives is the one red glow on the single primary action per screen, and the three fit signals.</p>
   </div></div>
   <div class="inset">
     <div class="sw">
-      <div><i style="background:#4736FE"></i><p><b>Indigo</b><code>#4736FE</code> Every primary action, links, active states, the AI orb, the IND plate strip</p></div>
-      <div><i style="background:#0F172B"></i><p><b>Slate 900</b><code>#0F172B</code> Main text</p></div>
-      <div><i style="background:#62748E"></i><p><b>Slate 500</b><code>#62748E</code> Secondary and helper text</p></div>
-      <div><i style="background:#F1F5F9;box-shadow:inset 0 0 0 1px #E2E8F0"></i><p><b>Slate 100</b><code>#F1F5F9</code> Surfaces, tiles, the map; borders <code>#E2E8F0</code></p></div>
-      <div><i style="background:#2F7A52"></i><p><b>Fit green</b><code>#2F7A52</code> Fits, in stock, ratings, savings</p></div>
-      <div><i style="background:#9A6A1E"></i><p><b>Check amber</b><code>#9A6A1E</code> Fits some variants; red <code>#C8343A</code> doesn't fit</p></div>
+      <div><i style="background:#222222"></i><p><b>Ink</b><code>#222222</code> Body text, icons, most of the UI chrome — not pure black</p></div>
+      <div><i style="background:var(--cta)"></i><p><b>The one accent</b><code>radial-gradient</code> A red-to-black glow, used only on the single primary button per screen (Reserve, Add to cart, Find parts)</p></div>
+      <div><i style="background:#008A05"></i><p><b>Fit green</b><code>#008A05</code> Fits, in stock, ratings</p></div>
+      <div><i style="background:#A85A00"></i><p><b>Check amber</b><code>#A85A00</code> Fits some variants, one question to resolve</p></div>
+      <div><i style="background:#C13515"></i><p><b>Doesn't fit</b><code>#C13515</code> Shown only with “show everything” on; the part itself is greyed out</p></div>
+      <div><i style="background:#1F4FB4"></i><p><b>IND plate blue</b><code>#1F4FB4</code> Nowhere else — it's the colour of a real Indian number plate, so the plate reads as one</p></div>
     </div>
     <div class="fitsem">
       <div style="background:var(--ok-tint)"><b style="color:var(--ok)">✓ Fits your Creta</b>Matched on variant and original part number. Safe to buy.</div>
       <div style="background:var(--warn-tint)"><b style="color:var(--warn)">! Check your variant</b>Fits some versions. We say which, and ask one question.</div>
       <div style="background:var(--bad-tint)"><b style="color:var(--bad)">✕ Doesn't fit</b>Only shown when “Show only parts that fit” is off. Greyed out, never sold by accident.</div>
     </div>
-    <p class="note">One primary style: every main action is a solid indigo button (hover <code>#4031E5</code>), secondary actions are white with an outline, and links are indigo text. That follows Baymard's guidance that buttons and links must never be confused and that colour should carry meaning, not decoration. Indigo is the only brand colour, so it always means “you can act here” (including offer tags and due-soon items, in a light <code>#EEEDFF</code> tint). Green, amber and red are not taken from Cars24: they are kept because fitment needs a clear yes / check / no signal, and they appear only for that.</p>
-    <p class="note">One AI mark: a small indigo orb, in the same colour as every primary action. It appears wherever Ask Vrom can help (the search bar button, “Ask about this part”, the listing's AI answer, the assistant header) and nowhere else, so it reads as one feature rather than decoration. It slowly turns only while answering, and stops under reduced motion.</p>
-    <p class="note">Accessibility: helper text uses a grey that passes WCAG AA contrast (4.5:1) on white and slate surfaces. Search is a proper combobox: <kbd>/</kbd> or <kbd>⌘K</kbd> opens it, arrow keys move through suggestions, Enter opens one, Escape closes it. Search, the assistant and drawers are modal dialogs: focus moves in when they open, Tab stays inside, and Escape returns focus to the button that opened them. Fit states are announced as status messages, and colour is never the only signal (each state also has an icon and a sentence).</p>
+    <p class="note">One primary style: every main action is the red-glow gradient button, secondary actions are white with an outline, and links are plain ink text. That follows Baymard's guidance that buttons and links must never be confused and that colour should carry meaning, not decoration. Because it's the only colour statement on an otherwise black-and-white page, it always reads as “you can act here” without needing a separate brand hue. Green, amber and red are kept apart from it because fitment needs its own clear yes / check / no signal, and they appear only for that.</p>
+    <p class="note">One AI mark: a soft glowing orb with a sparkle at its centre, wherever Ask Vrom can help (the search bar button, “Ask about this part”, the listing's AI answer, the assistant header) and nowhere else, so it reads as one feature rather than decoration. It animates faster and brighter only while it's actually working on an answer, and freezes under reduced motion.</p>
+    <p class="note">Accessibility: helper text uses a grey that passes WCAG AA contrast (4.5:1) on white surfaces. Search is a proper combobox: <kbd>/</kbd> or <kbd>⌘K</kbd> opens it, arrow keys move through suggestions, Enter opens one, Escape closes it. Search, the assistant and drawers are modal dialogs: focus moves in when they open, Tab stays inside, and Escape returns focus to the button that opened them. Fit states are announced as status messages, and colour is never the only signal (each state also has an icon and a sentence).</p>
     <div class="type">
-      <div><span class="mono" style="color:var(--ink-3)">Typeface · Inter</span><div class="spec" style="font-weight:800;letter-spacing:-.04em">Aa ₹4,650</div><p>One family for everything. Tight tracking on headlines, tabular numbers for prices, and Indian lakh formatting.</p></div>
+      <div><span class="mono" style="color:var(--ink-3)">Typeface · Figtree</span><div class="spec" style="font-weight:800;letter-spacing:-.04em">Aa ₹4,650</div><p>One family for the whole UI. Tight tracking on headlines, tabular numbers for prices, and Indian lakh formatting. The homepage hero headline alone uses a bolder display serif, for a hero that has to carry the brand on its own.</p></div>
       <div><span class="mono" style="color:var(--ink-3)">Data · JetBrains Mono</span><div class="spec" style="font-family:var(--f-mono);font-weight:500;font-size:2rem;margin-top:.8rem">51712-C9000</div><p>Part numbers and sizes. People copy these into WhatsApp, so 0 and O must never be confused.</p></div>
       <div><span class="mono" style="color:var(--ink-3)">Icons · Lucide</span><div class="spec" style="font-size:2rem;margin-top:.8rem;letter-spacing:.2em">⌕ ♡ ⛟</div><p>One consistent 1.75 px outline set across the product. Noto Sans covers Hindi and Tamil.</p></div>
     </div>
