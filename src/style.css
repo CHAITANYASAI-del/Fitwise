@@ -51,7 +51,7 @@ img{display:block;max-width:100%}
 .btn.sun:hover::after{transform:translateX(120%)}
 .btn.sun:active{transform:translateY(1px)}
 .btn.sun .lucide{transition:transform .3s var(--spring)}.btn.sun:hover .lucide{transform:translateX(2px)}
-.btn.line{background:#fff;box-shadow:inset 0 0 0 1px var(--line-2)}.btn.line:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.btn.line{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}.btn.line:hover{box-shadow:inset 0 0 0 1px var(--ink)}
 .btn.ghost{color:var(--ink-2)}.btn.ghost:hover{background:var(--soft);color:var(--ink)}
 .btn.sm{height:36px;padding:0 14px;font-size:13px;border-radius:9px}
 .btn.xs{height:30px;padding:0 10px;font-size:12.5px;border-radius:8px;gap:6px}
