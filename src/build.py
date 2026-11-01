@@ -6,7 +6,7 @@ logos={}
 for f in sorted((d.parent/'assets'/'logos').glob('*.svg')):
     m=re.search(r' d="([^"]+)"',f.read_text())
     if m: logos[f.stem]=m.group(1)
-js='const LOGO='+json.dumps(logos)+';\n'+''.join((d/f).read_text()+'\n' for f in ['icons.js','data.js','app.js','orb.js'])
+js='const LOGO='+json.dumps(logos)+';\n'+''.join((d/f).read_text()+'\n' for f in ['icons.js','data.js','app.js'])
 html=f'''<!doctype html>
 <html lang="en">
 <head>
