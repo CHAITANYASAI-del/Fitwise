@@ -587,10 +587,8 @@ function facetsHTML(pr, pmin, pmax) {
   const b = base();
   return `<div class="fh"><b>Filters</b>${Object.keys(S.f).length ? '<button class="link" data-rm="all">Clear all</button>' : ''}</div>` + FACETS[S.cat].map(f => {
     if (f.type === 'range') {
-      const n = 16, step = (pmax - pmin) / n, h = Array(n).fill(0);
-      PRODUCTS.filter(p => p.cat === S.cat).forEach(p => h[Math.min(n - 1, Math.floor((p.price - pmin) / step))]++);
-      const mx = Math.max(...h), l = (pr[0] - pmin) / (pmax - pmin) * 100, r = (pr[1] - pmin) / (pmax - pmin) * 100;
-      return `<div class="fg"><button>${f.label}${I('chevron-down')}</button><div class="hist"><div class="bars">${h.map((x, i) => `<i style="height:${10 + x / mx * 90}%" class="${pmin + (i + 1) * step > pr[0] && pmin + i * step <= pr[1] ? 'in' : ''}"></i>`).join('')}</div>
+      const l = (pr[0] - pmin) / (pmax - pmin) * 100, r = (pr[1] - pmin) / (pmax - pmin) * 100;
+      return `<div class="fg"><button>${f.label}${I('chevron-down')}</button><div class="hist">
         <div class="rng"><div class="tl"><i style="left:${l}%;right:${100 - r}%"></i></div><input type="range" id="rLo" min="${pmin}" max="${pmax}" step="100" value="${pr[0]}" aria-label="Minimum price"><input type="range" id="rHi" min="${pmin}" max="${pmax}" step="100" value="${pr[1]}" aria-label="Maximum price"></div>
         <div class="rngv"><span id="rLoV">${fmt(pr[0])}</span>to<span id="rHiV">${fmt(pr[1])}</span></div></div></div>`;
     }
@@ -649,7 +647,6 @@ function bindPLP(pmin, pmax) {
   const upd = commit => { let a = +lo.value, b = +hi.value; if (a > b - 200) { if (document.activeElement === lo) a = b - 200; else b = a + 200; lo.value = a; hi.value = b; }
     $('#rLoV').textContent = fmt(a); $('#rHiV').textContent = fmt(b);
     $('.rng .tl i').style.cssText = `left:${(a - pmin) / (pmax - pmin) * 100}%;right:${100 - (b - pmin) / (pmax - pmin) * 100}%`;
-    const bars = $$('.bars i'), st = (pmax - pmin) / bars.length; bars.forEach((x, i) => x.classList.toggle('in', pmin + (i + 1) * st > a && pmin + i * st <= b));
     if (commit) { if (a <= pmin && b >= pmax) delete S.f.price; else S.f.price = [a, b]; refresh(); } };
   [lo, hi].forEach(x => { x.oninput = () => upd(false); x.onchange = () => upd(true); });
 }

@@ -506,9 +506,6 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .fo .rating{height:18px;font-size:11px}
 /* inset so the range handles (and their rings) never touch the scrolling filter column's edges */
 .hist{margin-top:12px;padding:0 10px}
-.bars{display:flex;align-items:flex-end;gap:2px;height:40px;padding:0 9px}
-.bars i{flex:1;background:var(--line);border-radius:2px 2px 0 0}
-.bars i.in{background:var(--ink-2)}
 .rng{position:relative;height:20px}
 .rng .tl{position:absolute;left:9px;right:9px;top:9px;height:2px;border-radius:2px;background:var(--line)}
 .rng .tl i{position:absolute;top:0;bottom:0;background:var(--ink)}
