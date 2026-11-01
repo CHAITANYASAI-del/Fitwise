@@ -113,6 +113,11 @@ Subject lifting with macOS Vision (Swift CLI, 15 lines): `VNGenerateForegroundIn
 - Image wells need an explicit grid track (`grid-template-rows:100%`) or percentage-sized images collapse.
 - Home uses lazy images; when screenshotting, force `loading=eager` first.
 - Many Simple Icons brand marks (Hero, Bajaj, Tata...) are mono or missing; that is why colour PNG logos from Commons are used now.
+- The preview pane used while developing this doc's screenshots does not always give a truly clean reload on repeat `file://` navigations to the same path (old async timers/DOM state can bleed into a "fresh" tab, and even an in-page `location.reload()` wasn't reliable there); when a test result looks impossible, open a brand-new tab or verify the logic in an isolated object instead of trusting that environment's reload.
+
+## 8a. The assistant's AI orb (`#cpOrb`)
+
+The small `.orb` icon used everywhere else (search bar, "Ask about this part", etc.) is a static CSS conic-gradient — cheap, and plenty for an icon-sized marker. The one in the assistant panel's own header (`.cp-h .orb`, the `.gl` variant, 36px) is the product's single "this is the AI" avatar, so it alone gets a richer canvas-drawn treatment: `initOrb`/`paintOrb`/`startOrb`/`stopOrb` in `app.js`, config in `ORB_CFG` (glow, noise/shimmer detail, glints, halo, colour speed, hover tilt — tuned to the values a design brief gave for a commercial "AI Blob" React component). It draws a soft halo, a shimmering segmented rim, a pulsing core and a glint that leans toward the cursor, all in the app's own ink/red palette rather than that component's default four-colour rainbow — "reactivity" maps to the one real signal this text assistant has, whether it's actively thinking (`.think`, already toggled by `runAI`), not an audio level that doesn't exist here. `startOrb()` runs only while the panel is open (hooked into `openCopilot`/`closeCopilot`); `prefers-reduced-motion` draws one static frame and stops, matching the referenced component's own "still orb" behaviour.
 
 ## 9. Open items (suggested next work)
 
