@@ -14,6 +14,7 @@
   --fit:#008A05; --fit-bg:#E6F6E9; --fit-line:#C3E6CB;
   --warn:#A85A00; --warn-bg:#FFF6EA; --warn-line:#F5D9B0;
   --bad:#C13515; --bad-bg:#FFF5F3;
+  --ai-ink:#8C2430; --ai-bg:#FBF0F1; --ai-line:#F0D2D6;
   --link:#222222; --deal:#222222;
   --hero-red:#B3121B; --hero-tint:#FCEDEE; /* hero finder only: the red from the claw-machine photo */
   --hsrp:#1F4FB4; /* the IND strip on Indian number plates is always blue */
@@ -62,7 +63,7 @@ img{display:block;max-width:100%}
 .link{color:var(--link);font-weight:600;display:inline-flex;align-items:center;gap:2px;text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px}
 .link:hover{text-decoration-color:var(--ink)}
 .tag{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:6px;font-size:11.5px;font-weight:600;background:var(--tile);color:var(--ink-2);white-space:nowrap}
-.tag.ink{background:var(--ink);color:#fff}.tag.sun{background:var(--sun-bg);color:var(--sun-ink)}.tag.fit{background:var(--fit-bg);color:var(--fit)}.tag.warn{background:var(--warn-bg);color:var(--warn)}.tag.bad{background:var(--bad-bg);color:var(--bad)}.tag.deal{background:var(--offer-bg);color:var(--offer)}.tag.w{background:#fff;box-shadow:var(--sh-1)}
+.tag.ink{background:var(--ink);color:#fff}.tag.sun{background:var(--sun-bg);color:var(--sun-ink)}.tag.ai{background:var(--ai-bg);color:var(--ai-ink)}.tag.fit{background:var(--fit-bg);color:var(--fit)}.tag.warn{background:var(--warn-bg);color:var(--warn)}.tag.bad{background:var(--bad-bg);color:var(--bad)}.tag.deal{background:var(--offer-bg);color:var(--offer)}.tag.w{background:#fff;box-shadow:var(--sh-1)}
 .tag .lucide{width:13px;height:13px;stroke-width:2.2}
 .rating{display:inline-flex;align-items:center;gap:3px;height:20px;padding:0 6px;border-radius:5px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
 .rating .lucide{width:11px;height:11px;fill:#fff;stroke:none}
@@ -411,8 +412,9 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .pc:hover .im .tl:has(+ .wish ~ .cmp){opacity:0}
 /* Airbnb "Guest favourite" pill: soft white gradient, floating shadow, ink text, one emoji */
 .gbadge{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px 0 8px;border-radius:40px;background:linear-gradient(163deg,#fff 17%,#F5F5F5 83%);box-shadow:0 4px 10px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.04);font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;letter-spacing:-.005em}
-.gbadge i{font-style:normal;font-size:13px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.gbadge .lucide{width:14px;height:14px}
 .main-im .gbadge{height:30px;font-size:13.5px;padding:0 12px 0 10px}
+.main-im .gbadge .lucide{width:16px;height:16px}
 .pc .wish{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--sh-1);color:var(--ink-2);transition:.15s}
 .pc .wish:hover{color:var(--deal)}
 .pc .wish.on .lucide{fill:var(--deal);color:var(--deal)}
@@ -471,8 +473,8 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.3s var(--spring)}
 .sw.on{background:var(--ink)}.sw.on::after{left:18px}
 .swl{display:flex;align-items:center;gap:8px;font-weight:500;cursor:pointer;white-space:nowrap;font-size:inherit}
-.askv{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);background:var(--stone);font-size:13.5px;flex-wrap:wrap}
-.askv>.lucide{color:var(--ink-3)}
+.askv{display:flex;align-items:center;gap:12px;margin-top:12px;padding:14px 16px;border-radius:14px;background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn-line);font-size:13.5px;flex-wrap:wrap}
+.askv>.lucide{color:var(--warn)}
 .askv .q{flex:1;min-width:260px}
 .askv .q b{font-weight:600}
 .askv .opts{display:flex;gap:6px;flex-wrap:wrap}
@@ -526,7 +528,7 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .lay button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
 .lay .lucide{width:16px;height:16px}
 .mfilt{display:none}
-.qtake{border-radius:12px;background:var(--stone);margin-bottom:20px;overflow:hidden}
+.qtake{border-radius:12px;background:var(--ai-bg);box-shadow:inset 0 0 0 1px var(--ai-line);margin-bottom:20px;overflow:hidden}
 .qtake>button{display:flex;width:100%;align-items:center;gap:10px;padding:11px 14px;font-weight:600;text-align:left}
 .qtake>button .tag{margin-left:4px}
 .qtake>button>.lucide{margin-left:auto;transition:.25s var(--ease);color:var(--ink-3);width:16px;height:16px}
@@ -771,7 +773,7 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .rbars i::after{content:"";position:absolute;inset:0;width:var(--w);background:var(--fit);border-radius:6px}
 .rsum .fit1{margin-top:16px;padding:12px;border-radius:12px;background:var(--fit-bg);font-size:13px}
 .rsum .fit1 b{font-weight:700;color:var(--fit)}
-.aisum{display:flex;gap:12px;padding:16px;border-radius:14px;background:var(--soft);margin-bottom:6px;font-size:13.5px;color:var(--ink-2)}
+.aisum{display:flex;gap:12px;padding:16px;border-radius:14px;background:var(--ai-bg);box-shadow:inset 0 0 0 1px var(--ai-line);margin-bottom:6px;font-size:13.5px;color:var(--ink-2)}
 .aisum b{color:var(--ink);font-weight:600}
 .aisum .themes{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .rc{padding:16px 0;border-bottom:1px solid var(--line)}

@@ -365,8 +365,8 @@ function fitLine(p) {
 const specLine = p => p.cat === 'brakes' ? `${p.style} · Ventilated · ${p.tier}` : p.cat === 'tyres' ? `${p.size} · ${p.use}` : `${p.pattern} tread · ${p.core}`;
 /* Airbnb "Guest favourite"-style badge: one per card, the most specific claim wins, emoji + two words. Parts that don't fit get none */
 const TOPSOLD = {}; PRODUCTS.forEach(p => { if (!TOPSOLD[p.cat] || p.reviews > TOPSOLD[p.cat].reviews) TOPSOLD[p.cat] = p; });
-const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['🎯', 'Best match'] : TOPSOLD[p.cat] === p ? ['🔥', 'Most bought'] : p.rating >= 4.6 ? ['🏆', 'Driver favourite'] : off(p) >= 20 ? ['💸', 'Great price'] : null;
-const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge"><i aria-hidden="true">${b[0]}</i>${b[1]}</span>` : ''; };
+const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite'] : off(p) >= 20 ? ['badge-percent', 'Great price'] : null;
+const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge">${I(b[0])}${b[1]}</span>` : ''; };
 function cardHTML(p) {
   return `<article class="pc ${fitOf(p) === 'bad' ? 'nofit' : ''}" data-pdp="${p.id}">
     <div class="im">${img(p)}<div class="tl">${badge(p)}</div>
@@ -417,7 +417,7 @@ function renderCmd() {
     <div class="cg"><h6>My vehicles</h6>${GARAGE.map(id => item(`<img src="${VEHICLES[id].img}" alt="">`, vLabel(VEHICLES[id]), VEHICLES[id].variant + ' · ' + VEHICLES[id].plate, 'veh:' + id)).join('')}</div>`;
   } else {
     if (r.t.length) h += `<div class="cg"><h6>We understood</h6><div class="parse">${r.t.map((x, i) => `<span class="tok" style="animation-delay:${i * 50}ms"><i>${x[0]}</i><b>${x[1]}</b></span>`).join('')}</div></div>`;
-    if (r.intent === 'ai') h += `<div class="cg">${item('<span class="orb"></span>', `Ask Fitwise: “${q}”`, 'Get an answer and the parts that fit', 'ai:' + q, '<span class="tag sun">Answer</span>')}</div>`;
+    if (r.intent === 'ai') h += `<div class="cg">${item('<span class="orb"></span>', `Ask Fitwise: “${q}”`, 'Get an answer and the parts that fit', 'ai:' + q, '<span class="tag ai">Answer</span>')}</div>`;
     if (r.intent === 'pn') h += `<div class="cg"><h6>Exact part number match</h6>${item(`<img src="${P('d2').img}" alt="">`, 'Hyundai Mobis Genuine Front Brake Disc (Pair)', 'OE 51712-C9000 · plus 6 equivalent brands', 'pdp:d2', `<span class="tag fit">Fits</span>`)}</div>`;
     const words = q.toLowerCase().split(/\s+/).filter(w => w.length > 2);
     let ps = PRODUCTS.filter(p => (r.cat ? p.cat === r.cat : words.some(w => (p.brand + ' ' + p.name).toLowerCase().includes(w))) && fitOf(p, vid) !== 'bad').slice(0, 4);
@@ -562,12 +562,12 @@ function renderPLP() {
       <div class="ctabs">${Object.entries(CAT_META).map(([k, c]) => `<button class="${S.cat === k ? 'on' : ''}" data-cat="${k}"><span><img src="${c.icon}" alt=""></span>${c.tab}</button>`).join('')}</div>
     </div>
     <div class="ctx"><div class="fitstrip ${fitN ? '' : warnN ? 'warn' : 'bad'}" role="status">${fitN ? I('circle-check') : I('circle-alert')}<span>${fitN ? `<b>${fitN} ${noun(fitN)} fit${fitN === 1 ? 's' : ''} your ${v.short}.</b> Matched on ${basis}.${warnN ? ` ${warnN} more depend${warnN === 1 ? 's' : ''} on your answer below.` : ''}` : warnN ? `<b>${warnN} ${noun(warnN)} may fit your ${v.short}.</b> Answer the question below to confirm.` : `<b>None of these fit your ${v.short}.</b> Switch vehicle or browse everything.`}</span>
-      <div class="r"><button class="swl" id="fitSw" role="switch" aria-checked="${S.fitsOnly}"><span class="sw ${S.fitsOnly ? 'on' : ''}"></span>Show only parts that fit</button></div></div>
-    ${ask ? `<div class="askv">${I('circle-help')}<div class="q">${ask.q}</div>${askHTML(ask)}</div>` : ''}</div>
+      <div class="r"><button class="swl" id="fitSw" role="switch" aria-checked="${S.fitsOnly}"><span class="sw ${S.fitsOnly ? 'on' : ''}"></span>Show only parts that fit</button></div></div></div>
+    ${ask ? `<div class="askv">${I('circle-help')}<div class="q">${ask.q}</div>${askHTML(ask)}</div>` : ''}
     <div class="plp">
       <aside class="filters" id="filters">${facetsHTML(pr, pmin, pmax)}</aside>
       <div>
-        <div class="qtake" id="qtake"><button aria-expanded="false" aria-controls="qtakeIn"><span class="orb"></span>${m.q}<span class="tag sun">AI answer</span>${I('chevron-down')}</button><div class="in" id="qtakeIn"><div><p>${(m.qtBy && m.qtBy[v.id]) || m.qt} <a href="#" class="link" data-ask="${m.q}">Ask a follow-up</a></p></div></div></div>
+        <div class="qtake" id="qtake"><button aria-expanded="false" aria-controls="qtakeIn"><span class="orb"></span>${m.q}<span class="tag ai">AI answer</span>${I('chevron-down')}</button><div class="in" id="qtakeIn"><div><p>${(m.qtBy && m.qtBy[v.id]) || m.qt} <a href="#" class="link" data-ask="${m.q}">Ask a follow-up</a></p></div></div></div>
         <div class="toolbar">
           <div class="l"><button class="btn line sm mfilt" id="mfBtn">${I('sliders-horizontal')} Filters</button><span class="count"><b>${list.length}</b> results</span>${chipsHTML()}</div>
           <div class="r"><select class="sel sortsel" id="sortSel">${[['rec', 'Sort: Best match'], ['plh', 'Price: low to high'], ['phl', 'Price: high to low'], ['rat', 'Top rated'], ['near', 'Most stores nearby']].map(([k, t]) => `<option value="${k}" ${S.sort === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
