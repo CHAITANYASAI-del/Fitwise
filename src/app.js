@@ -365,8 +365,8 @@ function fitLine(p) {
 const specLine = p => p.cat === 'brakes' ? `${p.style} · Ventilated · ${p.tier}` : p.cat === 'tyres' ? `${p.size} · ${p.use}` : `${p.pattern} tread · ${p.core}`;
 /* Airbnb "Guest favourite"-style badge: one per card, the most specific claim wins, emoji + two words. Parts that don't fit get none */
 const TOPSOLD = {}; PRODUCTS.forEach(p => { if (!TOPSOLD[p.cat] || p.reviews > TOPSOLD[p.cat].reviews) TOPSOLD[p.cat] = p; });
-const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite'] : off(p) >= 20 ? ['badge-percent', 'Great price'] : null;
-const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge">${I(b[0])}${b[1]}</span>` : ''; };
+const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match', 'best'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought', 'bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite', 'fav'] : off(p) >= 20 ? ['badge-percent', 'Great price', 'deal'] : null;
+const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge ${b[2]}">${I(b[0])}${b[1]}</span>` : ''; };
 function cardHTML(p) {
   return `<article class="pc ${fitOf(p) === 'bad' ? 'nofit' : ''}" data-pdp="${p.id}">
     <div class="im">${img(p)}<div class="tl">${badge(p)}</div>
@@ -602,7 +602,7 @@ function facetsHTML(pr, pmin, pmax) {
     }
     const sel = S.f[f.k] || [], vals = [...new Set([...b.map(p => p[f.k]), ...sel])];
     const rows = vals.map(v => ({ v, n: applyF(b, f.k).filter(p => p[f.k] === v).length })).sort((a, c) => c.n - a.n);
-    return `<div class="fg"><button>${f.label}${I('chevron-down')}</button>${f.info ? `<p class="info">${f.info}</p>` : ''}<div class="fopts">${rows.map(({ v, n }) => `<div class="fo ${sel.includes(v) ? 'on' : ''} ${n || sel.includes(v) ? '' : 'dis'}" data-fk="${f.k}" data-fv="${v}"><span class="cb"></span>${v}<em>${n}</em></div>`).join('')}</div></div>`;
+    return `<div class="fg"><button>${f.label}${I('chevron-down')}</button>${f.info ? `<span class="finfo" tabindex="0" data-tip="${f.info}">${I('circle-help')}</span>` : ''}<div class="fopts">${rows.map(({ v, n }) => `<div class="fo ${sel.includes(v) ? 'on' : ''} ${n || sel.includes(v) ? '' : 'dis'}" data-fk="${f.k}" data-fv="${v}"><span class="cb"></span>${v}<em>${n}</em></div>`).join('')}</div></div>`;
   }).join('') + `<button class="btn sun block mfilt" style="margin-top:16px" id="mfDone">Show results</button>`;
 }
 function chipsHTML() {
