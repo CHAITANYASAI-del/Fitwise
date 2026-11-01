@@ -509,62 +509,10 @@ function cpIdle() {
   $('#cpChg').onclick = e => { e.preventDefault(); closeCopilot(); scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => $('#gPop').classList.add('on'), 250); };
   $$('#cpB [data-q]').forEach(b => b.onclick = () => runAI(b.dataset.q));
 }
-function openCopilot(q) { remember(); $('#copilot').classList.add('on'); $('#scrim').classList.add('on'); cpIdle(); startOrb(); if (q) runAI(q); setTimeout(() => $('#cpIn').focus(), 300); }
-function closeCopilot() { const was = $('#copilot').classList.contains('on'); $('#copilot').classList.remove('on'); if (!$('#drawer').classList.contains('on') && !$('#cmd').classList.contains('on')) $('#scrim').classList.remove('on'); restore(was); stopOrb(); }
+function openCopilot(q) { remember(); $('#copilot').classList.add('on'); $('#scrim').classList.add('on'); cpIdle(); if (q) runAI(q); setTimeout(() => $('#cpIn').focus(), 300); }
+function closeCopilot() { const was = $('#copilot').classList.contains('on'); $('#copilot').classList.remove('on'); if (!$('#drawer').classList.contains('on') && !$('#cmd').classList.contains('on')) $('#scrim').classList.remove('on'); restore(was); }
 $('#cpX').onclick = closeCopilot; $('#cpNew').onclick = cpIdle;
 $('#cpF').addEventListener('submit', e => { e.preventDefault(); const q = $('#cpIn').value.trim(); if (!q) return; $('#cpIn').value = ''; runAI(q); });
-/* ============ AI blob: the one "living" orb, in the assistant panel header ============
-   Everywhere else .orb is a small static icon; this one spot is the product's single AI avatar,
-   so it gets the richer treatment, drawn on a <canvas> (the .gl variant the CSS already carves
-   out). Config mirrors the brief (glowIntensity .65, noiseScale 4.6, glints 1.37, halo .96,
-   colorSpeed 1.44, hoverTilt 2), kept in the app's own ink/red palette rather than the
-   component's default rainbow, and "reactivity" maps to the one real signal this assistant has:
-   whether it's actively thinking (.think), not an audio level that doesn't exist here. */
-const ORB_CFG = { glow: .65, noise: 4.6, glints: 1.37, halo: .96, colorSpeed: 1.44, hoverTilt: 2 };
-function initOrb(el) {
-  if (el._orb) return el._orb;
-  const cv = document.createElement('canvas'); el.appendChild(cv);
-  const ctx = cv.getContext('2d');
-  const state = { cv, ctx, mx: .38, my: .3, raf: 0 };
-  const resize = () => { const dpr = Math.min(2, window.devicePixelRatio || 1), s = el.clientWidth || 36; cv.width = s * dpr; cv.height = s * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); state.s = s; };
-  resize(); addEventListener('resize', resize);
-  el.addEventListener('mousemove', e => { const r = el.getBoundingClientRect(); state.mx = (e.clientX - r.left) / r.width; state.my = (e.clientY - r.top) / r.height; });
-  el.addEventListener('mouseleave', () => { state.mx = .38; state.my = .3; });
-  return el._orb = state;
-}
-function paintOrb(o, think, t) {
-  const { ctx, s } = o, cx = s / 2, cy = s / 2, r = s / 2;
-  const hue = think ? '194,28,37' : '34,34,34'; // --cta red while thinking, ink while idle
-  const speed = ORB_CFG.colorSpeed * (think ? 1.8 : 1), ang = (t / 1800) * speed * Math.PI * 2;
-  ctx.clearRect(0, 0, s, s);
-  const haloR = r * (1.3 + .5 * ORB_CFG.halo);
-  const hg = ctx.createRadialGradient(cx, cy, r * .2, cx, cy, haloR);
-  hg.addColorStop(0, `rgba(${hue},${.4 * ORB_CFG.glow})`); hg.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(cx, cy, haloR, 0, 7); ctx.fill();
-  const segs = Math.round(6 + ORB_CFG.noise * 2), rimW = Math.max(1.4, s * .07);
-  for (let i = 0; i < segs; i++) {
-    const a0 = (i / segs) * Math.PI * 2 + ang, shim = (Math.sin(a0 * 2 - ang * .6) + 1) / 2;
-    ctx.strokeStyle = `rgba(${hue},${(.25 + .65 * shim * shim) * ORB_CFG.glow})`;
-    ctx.lineWidth = rimW; ctx.beginPath(); ctx.arc(cx, cy, r - rimW / 2, a0, a0 + (Math.PI * 2 / segs) * .88); ctx.stroke();
-  }
-  const pulse = think ? 1 + .07 * Math.sin(t / 170) : 1 + .02 * Math.sin(t / 900), innerR = r * .48 * pulse;
-  const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, innerR);
-  cg.addColorStop(0, `rgba(255,255,255,${think ? .95 : .85})`); cg.addColorStop(.55, `rgba(${hue},.55)`); cg.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, innerR, 0, 7); ctx.fill();
-  const tilt = r * .22 * ORB_CFG.hoverTilt * .3, hx = cx + (o.mx - .5) * tilt, hy = cy + (o.my - .5) * tilt;
-  const gg = ctx.createRadialGradient(hx - r * .12, hy - r * .16, 0, hx - r * .12, hy - r * .16, r * .32);
-  gg.addColorStop(0, `rgba(255,255,255,${.8 * Math.min(1, ORB_CFG.glints) / 1.37})`); gg.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(hx - r * .12, hy - r * .16, r * .32, 0, 7); ctx.fill();
-}
-function startOrb() {
-  const el = $('#cpOrb'); if (!el) return;
-  const o = initOrb(el), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  cancelAnimationFrame(o.raf);
-  if (reduce) { paintOrb(o, false, 0); return; }
-  const tick = t => { paintOrb(o, el.classList.contains('think'), t); o.raf = requestAnimationFrame(tick); };
-  o.raf = requestAnimationFrame(tick);
-}
-function stopOrb() { const el = $('#cpOrb'); if (el && el._orb) cancelAnimationFrame(el._orb.raf); }
 let aiRun = 0;
 async function runAI(q) {
   const key = pick(q), sc = SCN[key], run = ++aiRun, b = $('#cpB'), wait = ms => new Promise(r => setTimeout(r, ms));
