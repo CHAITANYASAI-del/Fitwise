@@ -365,8 +365,8 @@ function fitLine(p) {
 const specLine = p => p.cat === 'brakes' ? `${p.style} · Ventilated · ${p.tier}` : p.cat === 'tyres' ? `${p.size} · ${p.use}` : `${p.pattern} tread · ${p.core}`;
 /* Airbnb "Guest favourite"-style badge: one per card, the most specific claim wins, emoji + two words. Parts that don't fit get none */
 const TOPSOLD = {}; PRODUCTS.forEach(p => { if (!TOPSOLD[p.cat] || p.reviews > TOPSOLD[p.cat].reviews) TOPSOLD[p.cat] = p; });
-const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match', 'best'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought', 'bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite', 'fav'] : off(p) >= 20 ? ['badge-percent', 'Great price', 'deal'] : null;
-const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge ${b[2]}">${I(b[0])}${b[1]}</span>` : ''; };
+const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite'] : off(p) >= 20 ? ['badge-percent', 'Great price'] : null;
+const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge">${I(b[0])}${b[1]}</span>` : ''; };
 function cardHTML(p) {
   return `<article class="pc ${fitOf(p) === 'bad' ? 'nofit' : ''}" data-pdp="${p.id}">
     <div class="im">${img(p)}<div class="tl">${badge(p)}</div>

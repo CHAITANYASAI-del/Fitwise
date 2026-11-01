@@ -427,17 +427,9 @@ footer.ft{margin-top:64px;background:var(--soft);border-top:1px solid var(--line
 .pc:hover .im img{transform:scale(1.05)}
 .pc .im .tl{position:absolute;left:10px;top:10px;display:flex;gap:4px;flex-wrap:wrap;transition:opacity .2s}
 .pc:hover .im .tl:has(+ .wish ~ .cmp),.pc .im .tl:has(~ .cmp.on){opacity:0}
-/* Airbnb "Guest favourite" pill: soft white gradient, floating shadow, ink text, one emoji.
-   Four kinds of badge carry four different claims, so they don't all look the same:
-   "Best match" (our top pick) gets the strongest, filled treatment; "Driver favourite" reuses
-   the fit system's green since it's a rating signal; "Great price" borrows the dashed, coupon-style
-   border already used for deal codes; "Most bought" stays the plain default (simple popularity). */
+/* Airbnb "Guest favourite" pill: soft white gradient, floating shadow, ink text, one emoji */
 .gbadge{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px 0 8px;border-radius:40px;background:linear-gradient(163deg,#fff 17%,#F5F5F5 83%);box-shadow:0 4px 10px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.04);font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;letter-spacing:-.005em}
 .gbadge .lucide{width:14px;height:14px}
-.gbadge.best{background:var(--ink);box-shadow:0 4px 10px rgba(0,0,0,.22);color:#fff}
-.gbadge.fav{background:var(--fit-bg);box-shadow:inset 0 0 0 1px var(--fit-line);color:var(--fit)}
-.gbadge.deal{background:#fff;box-shadow:none;border:1.5px dashed var(--ink-4);padding:0 9px 0 7px}
-.gbadge.deal .lucide{color:var(--ink-3)}
 .main-im .gbadge{height:30px;font-size:13.5px;padding:0 12px 0 10px}
 .main-im .gbadge .lucide{width:16px;height:16px}
 .pc .wish{position:absolute;right:10px;top:10px;width:32px;height:32px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--sh-1);color:var(--ink-2);transition:.15s}
@@ -2126,8 +2118,8 @@ function fitLine(p) {
 const specLine = p => p.cat === 'brakes' ? `${p.style} · Ventilated · ${p.tier}` : p.cat === 'tyres' ? `${p.size} · ${p.use}` : `${p.pattern} tread · ${p.core}`;
 /* Airbnb "Guest favourite"-style badge: one per card, the most specific claim wins, emoji + two words. Parts that don't fit get none */
 const TOPSOLD = {}; PRODUCTS.forEach(p => { if (!TOPSOLD[p.cat] || p.reviews > TOPSOLD[p.cat].reviews) TOPSOLD[p.cat] = p; });
-const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match', 'best'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought', 'bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite', 'fav'] : off(p) >= 20 ? ['badge-percent', 'Great price', 'deal'] : null;
-const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge ${b[2]}">${I(b[0])}${b[1]}</span>` : ''; };
+const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite'] : off(p) >= 20 ? ['badge-percent', 'Great price'] : null;
+const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge">${I(b[0])}${b[1]}</span>` : ''; };
 function cardHTML(p) {
   return `<article class="pc ${fitOf(p) === 'bad' ? 'nofit' : ''}" data-pdp="${p.id}">
     <div class="im">${img(p)}<div class="tl">${badge(p)}</div>
