@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="author" content="G Chaitanya Sai">
+<meta name="description" content="Design assignment: an e-commerce concept for an auto care brand selling spare parts, tyres and tracks across cars, trucks, tractors and construction equipment. Research, personas, journeys, IA, AI search and a working Home, Listing and Product prototype.">
+<title>Fitwise Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --ground:#FFFFFF; --ground-2:#F6F6F3; --ground-3:#EFEFEA;
+  --ink:#0E0E0E; --ink-2:#474747; --ink-3:#6B6B6B; --rule:#DADAD5; --rule-2:#ECECE8;
+  --accent:#2B45E6; --accent-ink:#1D2F9C; --accent-tint:#EEF1FE; --offer:#F2621F;
+  --ok:#0B8A4C; --ok-tint:#E8F7EF; --warn:#A86400; --warn-tint:#FFF5DD; --bad:#C9353A; --bad-tint:#FDEEEE; --info:#2160E8;
+  --measure:42rem; --mid:60rem; --wide:76rem;
+  --f-display:"Inter",-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+/* Light-only on purpose: a printed-document register that looks the same everywhere. */
+*{box-sizing:border-box}
+html{background:var(--ground);scroll-behavior:smooth;scroll-padding-top:4.5rem}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;letter-spacing:-.011em;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0 0 1rem;color:var(--ink-2)}
+b,strong{color:var(--ink);font-weight:700}
+.page{max-width:var(--wide);margin:0 auto;padding:0 1.5rem 6rem}
+.col{max-width:var(--measure)}
+.mid{max-width:var(--mid)}
+.mono{font-family:var(--f-mono);font-size:.86em;letter-spacing:0}
+
+/* masthead */
+.masthead{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.mh{max-width:var(--wide);margin:0 auto;padding:.6rem 1.5rem;display:flex;align-items:center;gap:1rem;justify-content:space-between}
+.mh-name{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+.mh-nav{display:flex;gap:.2rem;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.mh-nav a{font-size:.78rem;color:var(--ink-2);text-decoration:none;white-space:nowrap;padding:.3rem .6rem;border-radius:99px;transition:background .2s,color .2s}
+.mh-nav a:hover{color:var(--ink);background:var(--ground-2)}
+.mh-nav a.on{background:var(--ink);color:#fff}
+.mh-cta{font-size:.78rem;font-weight:700;text-decoration:none;background:var(--accent);color:#fff;padding:.4rem .85rem;border-radius:99px;white-space:nowrap}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0}
+@media(max-width:1100px){.mh-nav{display:none}}
+
+/* hero */
+header.hero{padding:5.5rem 0 3rem;position:relative}
+.kicker{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2.6rem,6.4vw,5rem);line-height:1;letter-spacing:-.045em;margin:1rem 0 1.4rem;max-width:15ch}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:1.3rem;line-height:1.5;color:var(--ink-2);max-width:40rem}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);margin-top:3rem}
+.meta div{padding:1rem 1.2rem 1.1rem 0}
+.meta span{display:block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.3rem}
+.meta b{font-weight:600;font-size:.95rem;line-height:1.4;display:block}
+@media(max-width:760px){.meta{grid-template-columns:1fr 1fr}}
+.ctas{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.3rem;border-radius:99px;font-weight:700;font-size:.95rem;text-decoration:none;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.p{background:var(--ink);color:#fff}
+.btn.s{background:var(--ground);border:1px solid var(--rule);color:var(--ink)}
+.btn svg{width:16px;height:16px}
+
+/* tldr */
+.tldr{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:18px;overflow:hidden;margin-top:3rem}
+.tldr div{background:var(--ground);padding:1.3rem 1.3rem 1.4rem}
+.tldr .n{font-family:var(--f-mono);font-size:.68rem;color:var(--accent-ink);letter-spacing:.08em;text-transform:uppercase}
+.tldr h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:1.35rem;line-height:1.15;letter-spacing:-.02em;margin:.5rem 0 .5rem}
+.tldr p{font-size:.92rem;margin:0}
+@media(max-width:900px){.tldr{grid-template-columns:1fr 1fr}}@media(max-width:560px){.tldr{grid-template-columns:1fr}}
+
+/* sections */
+section.s{padding:5.5rem 0 1rem;border-top:1px solid var(--rule);margin-top:4rem}
+.sh{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:2rem;margin-bottom:2.2rem}
+.sh .num{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:.9rem}
+.sh .num b{display:block;color:var(--accent);font-family:var(--f-display);font-size:2.4rem;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:.3rem}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(1.9rem,3.8vw,2.9rem);line-height:1.06;letter-spacing:-.04em;margin:0 0 1rem;max-width:22ch}
+h2 em{font-style:normal;color:var(--ink-3)}
+h3{font-size:1.2rem;font-weight:800;letter-spacing:-.02em;margin:3rem 0 .8rem}
+h3 .tag{font-family:var(--f-mono);font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-left:.5rem}
+@media(max-width:860px){.sh{grid-template-columns:1fr;gap:.5rem}}
+.inset{padding-left:13rem}
+@media(max-width:860px){.inset{padding-left:0}}
+
+.pull{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:clamp(1.5rem,2.8vw,2.15rem);line-height:1.22;letter-spacing:-.02em;color:var(--ink);border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1.4rem;margin:2.5rem 0;max-width:46rem}
+.pull em{color:var(--accent);font-style:normal}
+.note{font-size:.85rem;color:var(--ink-3);border-left:2px solid var(--rule);padding-left:.9rem;margin:1.2rem 0}
+
+.grid{display:grid;gap:1rem}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--ground-2);border-radius:18px;padding:1.4rem 1.4rem 1.3rem}
+.card.w{background:var(--ground);border:1px solid var(--rule)}
+.card .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.card h4{font-size:1.05rem;font-weight:800;letter-spacing:-.015em;margin:.35rem 0 .45rem;line-height:1.3}
+.card p{font-size:.92rem;margin:0}
+.card p+p{margin-top:.6rem}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border-top:1px solid var(--ink);margin:1.5rem 0}
+.stats div{background:var(--ground);padding:1.3rem 1.4rem 1.2rem 0}
+.stats .v{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:clamp(2.2rem,4vw,3.2rem);letter-spacing:-.04em;line-height:1}
+.stats .v small{font-size:.45em;color:var(--ink-3);letter-spacing:0;margin-left:.2rem}
+.stats p{font-size:.88rem;margin:.6rem 0 0;max-width:18rem}
+.stats .src{display:block;font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);margin-top:.5rem;letter-spacing:.02em}
+@media(max-width:760px){.stats{grid-template-columns:1fr}}
+
+/* tables */
+.tbl{overflow-x:auto;margin:1.5rem 0;border-top:1px solid var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:720px}
+th,td{text-align:left;padding:.85rem .9rem .85rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td{color:var(--ink-2)}
+td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+td.take{color:var(--ink);font-weight:600}
+td.take::before{content:"→ ";color:var(--accent)}
+
+/* value chain */
+.chain{display:flex;align-items:stretch;gap:0;margin:2rem 0 1rem;overflow-x:auto;padding-bottom:.5rem}
+.chain .node{flex:1;min-width:150px;background:var(--ground-2);border-radius:14px;padding:1rem;position:relative}
+.chain .node.hi{background:var(--ink);color:#fff}
+.chain .node.hi p,.chain .node.hi .k{color:#B7B7B2}
+.chain .node b{display:block;font-size:.95rem;line-height:1.3}
+.chain .node.hi b{color:#fff}
+.chain .node p{font-size:.8rem;margin:.35rem 0 0;line-height:1.45}
+.chain .arr{display:grid;place-items:center;width:28px;flex:none;color:var(--ink-3)}
+.chain .k{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.chain .flag{position:absolute;top:-10px;right:10px;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.06em;background:var(--accent);color:#fff;padding:2px 7px;border-radius:99px;text-transform:uppercase}
+
+/* differences list */
+.diff{counter-reset:d;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 2.5rem;margin-top:1.5rem}
+.diff div{counter-increment:d;padding:1.1rem 0 1.1rem 2.8rem;border-top:1px solid var(--rule);position:relative}
+.diff div::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:1.15rem;font-family:var(--f-mono);font-size:.75rem;color:var(--accent-ink)}
+.diff b{display:block;font-size:1rem;margin-bottom:.2rem}
+.diff p{font-size:.9rem;margin:0}
+@media(max-width:760px){.diff{grid-template-columns:1fr}}
+
+/* tasks */
+.tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.task{border:1px solid var(--rule);border-radius:16px;padding:1.1rem 1.2rem}
+.task .k{font-family:var(--f-mono);font-size:.66rem;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase}
+.task b{display:block;margin:.4rem 0 .3rem;font-size:1rem;line-height:1.35}
+.task p{font-size:.86rem;margin:0}
+@media(max-width:760px){.tasks{grid-template-columns:1fr}}
+
+/* patterns */
+.gap-box{background:var(--ink);color:#fff;border-radius:22px;padding:2rem;margin:2rem 0;display:grid;grid-template-columns:1fr 1.3fr;gap:2rem;align-items:center}
+.gap-box h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:1.9rem;line-height:1.12;letter-spacing:-.025em;margin:0;color:#fff}
+.gap-box h4 em{color:#9DB0FF;font-style:normal}
+.venn{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.venn div{border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:.9rem 1rem;font-size:.85rem;color:#C9C9C4}
+.venn div b{display:block;color:#fff;font-size:.95rem;margin-bottom:.2rem}
+.venn div.all{grid-column:1/-1;background:var(--accent);border-color:var(--accent);color:#fff}
+@media(max-width:760px){.gap-box{grid-template-columns:1fr}}
+
+/* libraries */
+.libs{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}
+.libs a{font-family:var(--f-mono);font-size:.72rem;padding:.35rem .7rem;border-radius:99px;background:var(--ground-2);text-decoration:none;color:var(--ink-2)}
+.libs a:hover{background:var(--ink);color:#fff}
+
+/* 2x2 */
+.quad{display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center;margin:2rem 0}
+@media(max-width:860px){.quad{grid-template-columns:1fr}}
+
+/* personas */
+.persona{border:1px solid var(--rule);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.persona .top{padding:1.4rem 1.4rem 1.1rem;display:flex;gap:1rem;align-items:center;border-bottom:1px solid var(--rule-2)}
+.persona .av{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:1.2rem;color:#fff;flex:none}
+.persona h4{margin:0;font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
+.persona .role{font-size:.85rem;color:var(--ink-3)}
+.persona .body{padding:1.1rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:.9rem;flex:1}
+.persona .q{font-family:var(--f-display);font-weight:600;letter-spacing:-.01em;font-size:1.1rem;line-height:1.35;color:var(--ink)}
+.persona dl{display:grid;grid-template-columns:7.5rem 1fr;gap:.45rem 1rem;margin:0;font-size:.86rem}
+.persona dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-top:.2rem}
+.persona dd{margin:0;color:var(--ink-2)}
+.persona .wins{margin-top:auto;background:var(--ground-2);border-radius:12px;padding:.8rem .9rem;font-size:.85rem;color:var(--ink-2)}
+.persona .wins b{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:.2rem;font-weight:500}
+.chips{display:flex;gap:.35rem;flex-wrap:wrap}
+.chip{font-size:.72rem;font-weight:600;padding:.2rem .55rem;border-radius:99px;background:var(--ground-2);color:var(--ink-2)}
+
+/* journey */
+.journey{overflow-x:auto;margin:1.5rem 0;border-top:1px solid var(--ink)}
+.jgrid{display:grid;grid-template-columns:8.5rem repeat(7,minmax(9.5rem,1fr));min-width:1100px;font-size:.82rem}
+.jgrid>div{padding:.75rem .7rem .75rem 0;border-bottom:1px solid var(--rule)}
+.jgrid .rh{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding-top:.95rem}
+.jgrid .stg{font-weight:800;font-size:.9rem;color:var(--ink);padding-top:1rem}
+.jgrid .stg small{display:block;font-family:var(--f-mono);font-weight:400;font-size:.62rem;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+.jgrid .pain{color:var(--bad)}
+.jgrid .move{color:var(--ink);font-weight:600}
+.jgrid .move i{font-style:normal;font-family:var(--f-mono);font-size:.62rem;font-weight:500;display:inline-block;background:var(--accent-tint);color:var(--accent-ink);padding:1px 6px;border-radius:99px;margin-top:.3rem}
+.jgrid .curve{grid-column:2/-1;padding:.4rem 0}
+.legend{display:flex;gap:1.2rem;font-size:.8rem;color:var(--ink-3);margin-top:.6rem;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:.4rem}
+.legend i{width:18px;height:3px;border-radius:2px;display:block}
+
+.moments{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.moment{border-radius:20px;padding:1.5rem;background:var(--ground-2);position:relative;overflow:hidden}
+.moment .pg{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.moment h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:1.65rem;line-height:1.1;letter-spacing:-.025em;margin:.5rem 0 .6rem}
+.moment p{font-size:.9rem;margin:0}
+@media(max-width:760px){.moments{grid-template-columns:1fr}}
+
+.variants{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.variant{border:1px solid var(--rule);border-radius:18px;padding:1.2rem}
+.variant .who{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem}
+.variant .who span{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.8rem}
+.variant ol{margin:0;padding-left:1.1rem;font-size:.86rem;color:var(--ink-2)}
+.variant li{margin-bottom:.4rem}
+.variant li b{font-weight:700}
+@media(max-width:900px){.variants{grid-template-columns:1fr}}
+
+/* principles */
+.princ{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:20px;overflow:hidden;margin:1.5rem 0}
+.princ div{background:var(--ground);padding:1.3rem 1.2rem}
+.princ .n{font-family:var(--f-display);font-weight:800;font-size:2rem;color:var(--accent);line-height:1}
+.princ h4{font-size:1rem;font-weight:800;margin:.6rem 0 .4rem;line-height:1.3;letter-spacing:-.01em}
+.princ p{font-size:.84rem;margin:0}
+@media(max-width:1000px){.princ{grid-template-columns:1fr 1fr}}@media(max-width:560px){.princ{grid-template-columns:1fr}}
+
+/* object model */
+.om{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.6rem;margin:1.5rem 0;align-items:stretch}
+.om div{border:1.5px solid var(--ink);border-radius:16px;padding:1rem;position:relative;background:var(--ground)}
+.om div.core{background:var(--ink);color:#fff}
+.om div.core p,.om div.core small{color:#C9C9C4}
+.om b{display:block;font-size:1rem}
+.om div.core b{color:#fff}
+.om small{font-family:var(--f-mono);font-size:.62rem;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase}
+.om p{font-size:.8rem;margin:.4rem 0 0;line-height:1.45}
+.om div:not(:last-child)::after{content:"";position:absolute;right:-.62rem;top:50%;width:.6rem;height:1.5px;background:var(--ink)}
+@media(max-width:860px){.om{grid-template-columns:1fr}.om div::after{display:none}}
+
+/* sitemap */
+.tree{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem;margin:1.5rem 0;font-size:.84rem}
+.tree .col{max-width:none}
+.tree .hd{background:var(--ink);color:#fff;border-radius:12px;padding:.6rem .8rem;font-weight:700;margin-bottom:.5rem}
+.tree .hd.a{background:var(--accent)}
+.tree ul{list-style:none;margin:0;padding:0 0 0 .8rem;border-left:1.5px solid var(--rule)}
+.tree li{padding:.3rem 0 .3rem .7rem;position:relative;color:var(--ink-2)}
+.tree li::before{content:"";position:absolute;left:-.8rem;top:.95rem;width:1.2rem;height:1.5px;background:var(--rule)}
+.tree li b{font-weight:700}
+.tree li small{display:block;color:var(--ink-3);font-size:.76rem}
+@media(max-width:1000px){.tree{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.tree{grid-template-columns:1fr}}
+
+.entry{display:grid;grid-template-columns:repeat(3,1fr) 1.2fr;gap:.8rem;align-items:center;margin:1.5rem 0}
+.entry .e{border:1px solid var(--rule);border-radius:16px;padding:1rem}
+.entry .e .k{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.entry .e b{display:block;margin:.3rem 0 .2rem}
+.entry .e p{font-size:.82rem;margin:0}
+.entry .dest{background:var(--ink);color:#fff;border-radius:16px;padding:1.2rem;position:relative}
+.entry .dest b{color:#fff;font-size:1.05rem;display:block}
+.entry .dest p{color:#C9C9C4;font-size:.84rem;margin:.3rem 0 0}
+@media(max-width:860px){.entry{grid-template-columns:1fr}}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;margin:1.5rem 0;counter-reset:p}
+.pipe div{background:var(--ground-2);border-radius:14px;padding:1rem .9rem;counter-increment:p;position:relative}
+.pipe div::before{content:counter(p);font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.pipe div.det{background:var(--ink);color:#fff}
+.pipe div.det::before,.pipe div.det p{color:#B7B7B2}
+.pipe div.det b{color:#fff}
+.pipe div.ai{background:var(--accent-tint)}
+.pipe b{display:block;font-size:.95rem;margin:.3rem 0 .3rem}
+.pipe p{font-size:.78rem;margin:0;line-height:1.45}
+.pipe .who{display:inline-block;margin-top:.5rem;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:rgba(0,0,0,.06)}
+.pipe div.det .who{background:rgba(255,255,255,.12);color:#fff}
+@media(max-width:1000px){.pipe{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.pipe{grid-template-columns:1fr 1fr}}
+.parse-demo{border:1px solid var(--rule);border-radius:18px;padding:1.2rem 1.3rem;margin:1rem 0}
+.parse-demo .q{font-family:var(--f-mono);font-size:.95rem;color:var(--ink);margin-bottom:.8rem}
+.parse-demo .toks{display:flex;gap:.4rem;flex-wrap:wrap}
+.parse-demo .tok{font-size:.78rem;padding:.3rem .6rem;border-radius:8px;background:var(--ground-2)}
+.parse-demo .tok i{font-style:normal;font-family:var(--f-mono);font-size:.62rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-right:.35rem}
+.parse-demo .out{margin-top:.8rem;font-size:.85rem;color:var(--ink-2)}
+.parse-demo .out b{color:var(--ok)}
+
+/* screens */
+.screen-intro{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-bottom:1.5rem}
+@media(max-width:860px){.screen-intro{grid-template-columns:1fr}}
+.qs{display:flex;flex-direction:column;gap:.5rem;margin:0;padding:0;list-style:none}
+.qs li{display:flex;gap:.7rem;font-size:.95rem;color:var(--ink);font-weight:600;align-items:baseline}
+.qs li::before{content:"?";font-family:var(--f-display);color:var(--accent);font-size:1.2rem}
+.frame{border-radius:20px;overflow:hidden;border:1px solid var(--rule);background:#F3F3F0;box-shadow:0 40px 80px -40px rgba(20,20,20,.35);margin:1.2rem 0}
+.frame .bar{display:flex;align-items:center;gap:7px;padding:.7rem 1rem;border-bottom:1px solid var(--rule);background:#fff;font-size:.78rem;color:var(--ink-3)}
+.frame .bar i{width:11px;height:11px;border-radius:50%;background:#FF5F57}.frame .bar i:nth-child(2){background:#FEBC2E}.frame .bar i:nth-child(3){background:#28C840}
+.frame .bar .url{margin-left:.8rem;font-family:var(--f-mono);font-size:.7rem;background:var(--ground-2);padding:.2rem .7rem;border-radius:7px}
+.frame .bar a{margin-left:auto;font-weight:700;color:var(--ink);text-decoration:none}
+.vp{position:relative;width:100%;overflow:hidden}
+.vp iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#F3F3F0}
+.screen-row{display:grid;grid-template-columns:320px minmax(0,1fr);gap:2.5rem;margin-top:2rem;align-items:start}
+@media(max-width:900px){.screen-row{grid-template-columns:1fr}}
+.phone{width:320px;max-width:100%;border-radius:44px;padding:10px;background:#111;box-shadow:0 40px 70px -30px rgba(0,0,0,.5);position:sticky;top:6rem;margin:0 auto}
+.phone .vp{border-radius:34px;background:#F3F3F0}
+.phone::before{content:"";position:absolute;left:50%;top:18px;transform:translateX(-50%);width:84px;height:24px;border-radius:14px;background:#111;z-index:2}
+.anno{list-style:none;margin:0;padding:0;counter-reset:a}
+.anno li{counter-increment:a;display:grid;grid-template-columns:2rem 1fr;gap:.6rem;padding:1rem 0;border-top:1px solid var(--rule)}
+.anno li::before{content:counter(a);width:1.6rem;height:1.6rem;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--f-mono);font-size:.72rem;font-weight:500}
+.anno b{display:block;font-size:1rem;margin-bottom:.15rem}
+.anno p{font-size:.9rem;margin:0}
+.anno .src{display:inline-block;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.04em;color:var(--ink-3);margin-top:.35rem}
+.iter{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.5rem 0}
+.iter div{border:1px solid var(--rule);border-radius:16px;padding:1.1rem;font-size:.86rem;color:var(--ink-2)}
+.iter div.win{border:1.5px solid var(--ink);background:var(--ground-2)}
+.iter span{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.iter .win span{color:var(--accent-ink)}
+.iter b{display:block;color:var(--ink);font-size:.98rem;margin:.35rem 0 .3rem}
+@media(max-width:760px){.iter{grid-template-columns:1fr}}
+
+/* system */
+.sw{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem;margin:1.2rem 0}
+.sw div{border-radius:14px;overflow:hidden;border:1px solid var(--rule)}
+.sw i{display:block;height:74px}
+.sw p{padding:.6rem .7rem;margin:0;font-size:.78rem;line-height:1.35}
+.sw p b{display:block;font-size:.82rem}
+.sw p code{font-family:var(--f-mono);font-size:.68rem;color:var(--ink-3)}
+@media(max-width:900px){.sw{grid-template-columns:repeat(3,1fr)}}
+.type{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.2rem 0}
+.type div{border:1px solid var(--rule);border-radius:16px;padding:1.2rem}
+.type .spec{font-size:2.6rem;line-height:1;margin:.4rem 0 .6rem}
+.type p{font-size:.84rem;margin:0}
+@media(max-width:760px){.type{grid-template-columns:1fr}}
+.fitsem{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0}
+.fitsem div{border-radius:14px;padding:1rem;font-size:.86rem}
+.fitsem b{display:flex;align-items:center;gap:.4rem;font-size:.95rem;margin-bottom:.2rem}
+@media(max-width:760px){.fitsem{grid-template-columns:1fr}}
+
+/* metrics */
+.ns{background:var(--ink);color:#fff;border-radius:24px;padding:2.2rem;margin:1.5rem 0;display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center}
+.ns h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;font-size:2.3rem;line-height:1.05;letter-spacing:-.03em;margin:.4rem 0 .8rem;color:#fff}
+.ns p{color:#C9C9C4;margin:0;font-size:.95rem}
+.ns .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#9DB0FF}
+.ns .formula{font-family:var(--f-mono);font-size:.88rem;background:rgba(255,255,255,.07);border-radius:14px;padding:1.1rem 1.2rem;line-height:1.7;color:#E6E6E2}
+@media(max-width:760px){.ns{grid-template-columns:1fr}}
+
+.qlist{list-style:none;margin:1rem 0;padding:0;counter-reset:q}
+.qlist li{counter-increment:q;padding:1rem 0 1rem 3rem;border-top:1px solid var(--rule);position:relative;font-size:1.02rem;color:var(--ink);font-weight:600;line-height:1.45}
+.qlist li::before{content:"Q" counter(q);position:absolute;left:0;top:1.05rem;font-family:var(--f-mono);font-size:.75rem;color:var(--accent-ink);font-weight:500}
+.qlist li span{display:block;font-weight:400;color:var(--ink-2);font-size:.9rem;margin-top:.2rem}
+
+footer{border-top:1px solid var(--rule);margin-top:5rem;padding-top:2rem;font-size:.82rem;color:var(--ink-3)}
+footer p{font-size:.82rem;color:var(--ink-3)}
+footer a{color:var(--ink-2)}
+.srcs{columns:2;column-gap:2rem;font-size:.8rem;padding-left:1rem}
+.srcs li{margin-bottom:.4rem;break-inside:avoid}
+@media(max-width:760px){.srcs{columns:1}}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="mh">
+    <span class="mh-name">G Chaitanya Sai · Auto parts e-commerce</span>
+    <nav class="mh-nav" id="mhnav">
+      <a href="#brief">Brief</a><a href="#industry">Industry</a><a href="#market">Market</a><a href="#users">Users</a><a href="#journeys">Journeys</a><a href="#ia">IA</a><a href="#search">AI search</a><a href="#screens">Screens</a><a href="#system">System</a><a href="#metrics">Metrics</a><a href="#next">Next</a>
+    </nav>
+    <a class="mh-cta" href="prototype.html" target="_blank" rel="noopener">Open prototype ↗</a>
+  </div>
+  <div class="progress" id="prog"></div>
+</div>
+
+<div class="page">
+
+<header class="hero">
+  <div class="kicker">Design assignment · Product design · October 2026</div>
+  <h1>Selling the right part, <em>first time.</em></h1>
+  <p class="lede">An e-commerce concept for an auto care brand that sells spare parts, tyres and tracks for cars, trucks, tractors and construction equipment. This document walks through how I got from understanding the industry to a Home, Listing and Product page you can click through.</p>
+  <div class="ctas">
+    <a class="btn p" href="prototype.html" target="_blank" rel="noopener">Open the prototype <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    <a class="btn s" href="#screens">Jump to the screens</a>
+  </div>
+  <div class="meta">
+    <div><span>My role</span><b>Research, product strategy, UX, UI and a working prototype</b></div>
+    <div><span>Scope</span><b>Home · Listing (PLP) · Product (PDP), desktop and mobile</b></div>
+    <div><span>Concept brand</span><b>“Fitwise”, a placeholder name so the design has a voice</b></div>
+    <div><span>Read time</span><b>About 15 minutes, or 3 if you only read the bold parts</b></div>
+  </div>
+
+  <div class="tldr">
+    <div><span class="n">The problem</span><h4>Fitment is the product.</h4><p>A shirt that's a little big still gets worn. A brake pad for the wrong variant gets returned, after someone has taken the wheel off.</p></div>
+    <div><span class="n">The insight</span><h4>People shop for a vehicle, not a part.</h4><p>Nobody knows their variant code or part number, but everyone knows their number plate and what the problem sounds like.</p></div>
+    <div><span class="n">The bet</span><h4>Vehicle-first, AI-assisted, locally fulfilled.</h4><p>A garage that travels with you, search that understands symptoms, and dealers who have the part in stock today.</p></div>
+    <div><span class="n">How we'd know</span><h4>First-time-right fitment.</h4><p>The one number that captures both the customer's job and the business's biggest cost: returns.</p></div>
+  </div>
+</header>
+
+<!-- ======================= 01 BRIEF ======================= -->
+<section class="s" id="brief">
+  <div class="sh"><div class="num"><b>01</b>Reading the brief</div><div>
+    <h2>Three pages, but really <em>one question.</em></h2>
+    <p class="col">The ask: design a Home page, one Listing page and one Product page for a brand selling spare parts, tyres and tracks across many vehicle brands and categories. The PDP has to let someone check compatibility and find local dealers to buy from. The brief also asked for the reasoning behind the screens: industry, users, journeys, IA, and how search, including natural-language search, could work now that AI is part of the toolkit.</p>
+  </div></div>
+  <div class="inset">
+    <div class="pull">How might we help anyone who looks after a vehicle, from a city car owner to a farmer to a fleet manager, <em>find a part that definitely fits</em> and get it from somewhere nearby, without needing to know a part number?</div>
+    <h3>What “spare parts, tyres and tracks” actually means</h3>
+    <p class="col">These are three catalogues with different shapes. The design has to handle all three without becoming three different websites.</p>
+    <div class="grid g3">
+      <div class="card"><span class="k">Spare parts</span><h4>Identified by vehicle + variant + part number</h4><p>Lakhs of SKUs. Fit depends on make, model, year, engine, and sometimes trim (a disc-brake rear on the top variant only). OE, OES and aftermarket numbers all point to the same physical part.</p></div>
+      <div class="card"><span class="k">Tyres</span><h4>Identified by a size code</h4><p><span class="mono">205/65 R16 95H</span>. The vehicle only narrows it down: a 2024 Creta SX manual leaves the factory on 16-inch wheels, the automatic on 17-inch. People can also legally go up or down a size. Fit is a range, not a yes/no.</p></div>
+      <div class="card"><span class="k">Rubber tracks</span><h4>Identified by width × pitch × links</h4><p><span class="mono">300 × 52.5 × 80</span> for mini excavators and some tractors. High ticket, low frequency, and one link off means it won't tension.</p></div>
+    </div>
+    <h3>Assumptions I made <span class="tag">to confirm with you</span></h3>
+    <div class="grid g2">
+      <div class="card w"><h4>India-first, multilingual</h4><p>Prices in rupees, GST invoices, Indian number plates, Hindi and Tamil alongside English. The pattern travels; the details are local.</p></div>
+      <div class="card w"><h4>Multi-brand, with a dealer network</h4><p>The brand sells its own range and other brands, and has (or wants) a network of local dealers and garages. Online is the discovery layer; the counter is often where the sale closes.</p></div>
+      <div class="card w"><h4>B2C and B2B on one catalogue</h4><p>Owners, mechanics and fleet buyers use the same product data but need different views: reassurance for one, speed and credit for the others.</p></div>
+      <div class="card w"><h4>Fitment data exists, or can be built</h4><p>The whole experience depends on a vehicle-to-part mapping. I treat it as the core asset and design the UI to be honest about where it's uncertain.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 02 INDUSTRY ======================= -->
+<section class="s" id="industry">
+  <div class="sh"><div class="num"><b>02</b>Understanding the industry</div><div>
+    <h2>A big, fragmented market that still <em>runs on the counter.</em></h2>
+    <p class="col">Before drawing anything I wanted to know how parts actually move in India today, who decides what gets bought, and where the friction is.</p>
+  </div></div>
+  <div class="inset">
+    <div class="stats">
+      <div><div class="v">₹99,948<small>crore</small></div><p>Indian auto component aftermarket in FY25, about $11.8 billion, up about 6% on the year.</p><span class="src">ACMA FY25 review</span></div>
+      <div><div class="v">10.9<small>lakh</small></div><p>Domestic tractor sales in India in calendar 2025, the first year they crossed one million. Every one of them needs tyres, filters and clutch plates.</p><span class="src">TMA data via MaquinAC</span></div>
+      <div><div class="v">5–40<small>%</small></div><p>Share of fake parts in the aftermarket, depending on who measured and when. The exact figure is disputed; the trust problem isn't.</p><span class="src">ACMA and press estimates, 2012–2017</span></div>
+    </div>
+
+    <h3>How a part reaches a vehicle today</h3>
+    <div class="chain">
+      <div class="node"><span class="k">Makes it</span><b>Manufacturer</b><p>OE (carmaker-branded), OES (same factory, own brand), aftermarket.</p></div>
+      <div class="arr">→</div>
+      <div class="node"><span class="k">Moves it</span><b>Distributors</b><p>National → regional. Hold credit lines and territory.</p></div>
+      <div class="arr">→</div>
+      <div class="node"><span class="k">Stocks it</span><b>Retailer / dealer</b><p>The counter. Knows part numbers by heart. Extends credit to garages.</p></div>
+      <div class="arr">→</div>
+      <div class="node hi"><span class="flag">Decides</span><span class="k">Chooses it</span><b>Mechanic</b><p>In most repairs the mechanic picks the brand and fetches the part.</p></div>
+      <div class="arr">→</div>
+      <div class="node"><span class="k">Pays for it</span><b>Vehicle owner</b><p>Pays, but often can't judge what they're paying for.</p></div>
+    </div>
+    <p class="note">The person who pays is rarely the person who decides. Any design that speaks only to the owner misses the mechanic, and any design that speaks only in part numbers misses the owner.</p>
+
+    <h3>Why auto parts are unlike other e-commerce</h3>
+    <div class="diff">
+      <div><b>Fit is binary</b><p>Fashion has “roughly right”. Parts don't. A wrong pad is a wasted morning, a return and a lost customer.</p></div>
+      <div><b>The product's identity is hidden</b><p>Variant codes, OE numbers and sidewall codes exist, but buyers don't know them. The UI has to translate.</p></div>
+      <div><b>It's a job, not a product</b><p>Buying the part is step one. Someone still has to fit it, somewhere, today. Labour and location are part of the purchase.</p></div>
+      <div><b>Three people, one decision</b><p>Owner, mechanic and counter all have a say. Each needs different information to say yes.</p></div>
+      <div><b>Downtime costs more than the part</b><p>For a farmer at harvest, or a tipper on a quarry contract, speed and certainty beat a ₹200 discount.</p></div>
+      <div><b>Trust is earned slowly</b><p>Counterfeits and price opacity mean people default to “my mechanic's guy”. A website has to show its evidence.</p></div>
+    </div>
+
+    <h3>What's changing in 2026</h3>
+    <div class="grid g3">
+      <div class="card"><span class="k">Lookup</span><h4>Number-plate lookups are normal now</h4><p>Insurance and parts apps have taught people to type a plate and get their vehicle back. A long make/model/year form now feels outdated.</p></div>
+      <div class="card"><span class="k">Search</span><h4>Language models make symptom search viable</h4><p>“Squeak when braking” can now be turned into a part reliably, as long as a deterministic catalogue makes the final call on fit.</p></div>
+      <div class="card"><span class="k">Speed</span><h4>Quick commerce reset expectations</h4><p>People expect same-day. Parts can do it through local stock, not new warehouses.</p></div>
+      <div class="card"><span class="k">Channel</span><h4>WhatsApp is the B2B channel</h4><p>Garages already order from counters on WhatsApp with a photo and a part number. Fit into that rather than fight it.</p></div>
+      <div class="card"><span class="k">Language</span><h4>The next users are vernacular</h4><p>Tractor owners and small-town garages are the growth segment, and they search in Hindi, Tamil, Telugu and Punjabi, often by voice.</p></div>
+      <div class="card"><span class="k">Vehicles</span><h4>EVs add a new catalogue</h4><p>Battery, thermal and electronics parts arrive with less familiar names, which makes plain-language search more useful.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 03 MARKET ======================= -->
+<section class="s" id="market">
+  <div class="sh"><div class="num"><b>03</b>Market scan</div><div>
+    <h2>I ran the same three jobs <em>across a dozen platforms.</em></h2>
+    <p class="col">Rather than collect screenshots, I gave myself three benchmark tasks, one per catalogue shape, and noted where each platform helped or broke.</p>
+  </div></div>
+  <div class="inset">
+    <div class="tasks">
+      <div class="task"><span class="k">Task A · Car</span><b>Front brake discs for a 2024 Hyundai Creta 1.5 diesel</b><p>Tests variant handling, part-number cross-reference and price tiers.</p></div>
+      <div class="task"><span class="k">Task B · Tractor</span><b>Rear tyre for a Mahindra 575 DI, bought locally</b><p>Tests size systems, vernacular content and dealer discovery.</p></div>
+      <div class="task"><span class="k">Task C · Equipment</span><b>A rubber track for a JCB 30 Plus mini excavator</b><p>Tests a niche, high-value catalogue with measurements.</p></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Platform</th><th>Built for</th><th>What it does well</th><th>Where it breaks</th><th>What I'm taking</th></tr></thead>
+      <tbody>
+        <tr><td>Boodmo</td><td>Indian car owners and garages</td><td>Deep OE catalogue; search by car, VIN, part number or number plate; OE and aftermarket options for the same part.</td><td>Speaks catalogue language. Assumes you know what the part is called. Little local context.</td><td class="take">OE cross-reference as the backbone of fitment.</td></tr>
+        <tr><td>RockAuto</td><td>US DIYers</td><td>Exhaustive year/make/model tree; clear quality tiers side by side.</td><td>Dense, dated, overwhelming on mobile.</td><td class="take">Visible quality tiers, relabelled for India (OE, OES, aftermarket, value).</td></tr>
+        <tr><td>AutoZone / Advance</td><td>US owners</td><td>“My Garage”, “fits your vehicle” badges, buy online and pick up in store.</td><td>Fitment is a badge with no reasoning; one active vehicle at a time.</td><td class="take">The garage as persistent context; pickup as a first-class option.</td></tr>
+        <tr><td>Amazon (vehicle fit)</td><td>Everyone</td><td>Fit confirmation banner right at the top of the product page.</td><td>Marketplace noise; unclear where the fitment claim comes from.</td><td class="take">Fit confirmation above the fold, plus <b>how we know</b>.</td></tr>
+        <tr><td>OEM parts catalogues</td><td>Dealers, workshops</td><td>Exploded diagrams with numbered hotspots.</td><td>Built for experts; prices and stock are often missing.</td><td class="take">A “where it sits” view on the PDP.</td></tr>
+        <tr><td>Tyre brand sites</td><td>Car and truck owners</td><td>Tyre finder by vehicle or size; dealer locators.</td><td>One brand only; most dealer locators show addresses, not live stock.</td><td class="take">Size decoder + dealers with live stock.</td></tr>
+        <tr><td>Tractor portals</td><td>Farmers</td><td>Hindi-first content, model-first browsing, dealer listings.</td><td>Content and listings, weak on actually buying parts.</td><td class="take">Vernacular copy and model-first navigation for tractors.</td></tr>
+        <tr><td>Track specialists</td><td>Equipment owners</td><td>Track size guides and measuring instructions.</td><td>Size tables only; no machine → size mapping.</td><td class="take">Machine-first lookup with a measuring fallback.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Observations as of October 2026, from public sites and my own walkthroughs. Features differ by category and change often; I'd re-verify before quoting any of them externally.</p>
+
+    <div class="gap-box">
+      <h4>Everyone solves one piece. <em>Nobody joins them up.</em></h4>
+      <div class="venn">
+        <div><b>Vehicle-first</b>Garage, plate lookup</div>
+        <div><b>Honest fitment</b>Evidence, not just a badge</div>
+        <div><b>Plain-language search</b>Symptoms, sizes, any language</div>
+        <div><b>Local fulfilment</b>Live dealer stock, pickup, fitting</div>
+        <div class="all"><b style="color:#fff">The opportunity</b>All four in one flow, across parts, tyres and tracks, for owners and mechanics alike.</div>
+      </div>
+    </div>
+
+    <h3>Tools I explored for the interface <span class="tag">15 component libraries</span></h3>
+    <p class="col">Alongside the domain, I surveyed current component libraries for interaction patterns, not looks. The question for each: does this solve a real moment in the parts journey? The ones that did are mapped in <a href="#system">section 10</a>.</p>
+    <div class="libs">
+      <a href="https://easyui.site/components/" target="_blank" rel="noopener">EasyUI</a><a href="https://designeer.xyz/" target="_blank" rel="noopener">Designeer</a><a href="https://awesmos.com/" target="_blank" rel="noopener">Awesmos</a><a href="https://uiarc.dev/docs/introduction" target="_blank" rel="noopener">UI Arc</a><a href="https://ui.notquiteunicorns.xyz/" target="_blank" rel="noopener">Unicorn UI</a><a href="https://useplanes.com/components?tier=free" target="_blank" rel="noopener">Planes</a><a href="https://bencho.dev/" target="_blank" rel="noopener">Bencho</a><a href="https://www.spaceui.one/components/avatar-extended" target="_blank" rel="noopener">Space UI</a><a href="https://ui.spectrumhq.in/docs" target="_blank" rel="noopener">Spectrum UI</a><a href="https://lightswind.com/" target="_blank" rel="noopener">Lightswind</a><a href="https://prompt-motion.com/" target="_blank" rel="noopener">Prompt Motion</a><a href="https://ovioui.vercel.app/" target="_blank" rel="noopener">Ovio UI</a><a href="https://reactdrops.dev/components" target="_blank" rel="noopener">React Drops</a><a href="https://kobra.systems/components/input-otp" target="_blank" rel="noopener">Kobra</a><a href="https://www.beautifului.dev/" target="_blank" rel="noopener">Beautiful UI</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 04 USERS ======================= -->
+<section class="s" id="users">
+  <div class="sh"><div class="num"><b>04</b>Who we're designing for</div><div>
+    <h2>Two questions sorted <em>everyone I could think of.</em></h2>
+    <p class="col">Demographics didn't separate behaviour usefully. Two questions did: <b>who decides which part to buy?</b> and <b>what does an hour of downtime cost?</b></p>
+  </div></div>
+  <div class="inset">
+    <div class="quad">
+      <svg viewBox="0 0 520 420" role="img" aria-label="2 by 2 map of users by decision maker and cost of downtime">
+        <rect x="60" y="20" width="440" height="360" fill="#F6F6F3" rx="16"/>
+        <line x1="280" y1="20" x2="280" y2="380" stroke="#DADAD5" stroke-width="1.5" stroke-dasharray="4 5"/>
+        <line x1="60" y1="200" x2="500" y2="200" stroke="#DADAD5" stroke-width="1.5" stroke-dasharray="4 5"/>
+        <text x="280" y="408" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#7A7A7A" letter-spacing="1">WHO DECIDES THE PART →</text>
+        <text x="70" y="398" font-family="Manrope" font-size="11" fill="#7A7A7A">Owner</text>
+        <text x="490" y="398" text-anchor="end" font-family="Manrope" font-size="11" fill="#7A7A7A">Professional</text>
+        <text x="22" y="200" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#7A7A7A" letter-spacing="1" transform="rotate(-90 22 200)">COST OF DOWNTIME →</text>
+        <g font-family="Manrope">
+          <circle cx="160" cy="300" r="34" fill="#2160E8"/><text x="160" y="305" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">AK</text>
+          <text x="160" y="352" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0E0E0E">Car owner</text>
+          <circle cx="400" cy="250" r="34" fill="#0B8A4C"/><text x="400" y="255" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">RS</text>
+          <text x="400" y="302" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0E0E0E">Garage mechanic</text>
+          <circle cx="170" cy="90" r="34" fill="#A86400"/><text x="170" y="95" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">GS</text>
+          <text x="170" y="142" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0E0E0E">Tractor owner</text>
+          <circle cx="410" cy="80" r="34" fill="#FF5B14"/><text x="410" y="85" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">MI</text>
+          <text x="410" y="132" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0E0E0E">Fleet manager</text>
+        </g>
+        <g font-family="JetBrains Mono" font-size="9.5" fill="#7A7A7A" letter-spacing=".5"><text x="74" y="40">NEEDS REASSURANCE</text><text x="486" y="40" text-anchor="end">NEEDS SPEED + CREDIT</text><text x="74" y="372">NEEDS TO UNDERSTAND</text><text x="486" y="372" text-anchor="end">NEEDS PART NUMBERS</text></g>
+      </svg>
+      <div>
+        <p>Owners need the site to <b>explain</b>: what's wrong, what fits, what it should cost. Professionals need it to <b>get out of the way</b>: part number in, stock and price out, on credit.</p>
+        <p>Downtime cost changes how much a person will trade price for certainty and speed. A city car can wait till Saturday; a tractor in harvest or a tipper on contract can't.</p>
+        <p>That gives four proto-personas. They are assumption-based, built from desk research and what I know of the market. Section 12 is how I'd validate them.</p>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="persona">
+        <div class="top"><span class="av" style="background:#2160E8">AK</span><div><h4>Arjun, 31</h4><div class="role">Product manager, Coimbatore · 2024 Hyundai Creta diesel</div></div></div>
+        <div class="body">
+          <div class="q">“My mechanic says the company part is ₹3,200 and the local one is ₹1,200. I have no idea what I'm paying for.”</div>
+          <dl><dt>Trigger</dt><dd>The steering shakes when he brakes on the highway.</dd><dt>Wants</dt><dd>To know what's wrong, a fair price, and someone to fit it this week.</dd><dt>Fears</dt><dd>Fake parts, being upsold, buying the wrong thing online.</dd><dt>Device</dt><dd>Phone first; compares on laptop at night. English.</dd></dl>
+          <div class="chips"><span class="chip">Problem-first</span><span class="chip">Needs reassurance</span><span class="chip">Pick up + fit</span></div>
+          <div class="wins"><b>What wins him</b>Describe the shake, learn it's warped discs, see 3 that fit, book fitting at a garage 2 km away.</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="top"><span class="av" style="background:#0B8A4C">RS</span><div><h4>Ravi, 42</h4><div class="role">Runs a 4-bay garage, Coimbatore · 15–30 parts a day</div></div></div>
+        <div class="body">
+          <div class="q">“If the part isn't at my counter by 11, the car doesn't go out tonight.”</div>
+          <dl><dt>Trigger</dt><dd>A customer's car on the lift, wheel already off.</dd><dt>Wants</dt><dd>Stock certainty, trade price, 30-day credit, GST invoice.</dd><dt>Fears</dt><dd>Wrong part delivered; a customer comparing his price online.</dd><dt>Device</dt><dd>Android + WhatsApp, Tamil and English, by part number.</dd></dl>
+          <div class="chips"><span class="chip">Part-first</span><span class="chip">Speed</span><span class="chip">B2B · Pro</span></div>
+          <div class="wins"><b>What wins him</b>Dense list view, part numbers he can copy, stock across 3 counters nearby, a job card per customer.</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="top"><span class="av" style="background:#A86400">GS</span><div><h4>Gurpreet, 48</h4><div class="role">Farmer near Ludhiana · Mahindra 575 DI</div></div></div>
+        <div class="body">
+          <div class="q">“At harvest, one day without the tractor is one day of crop lost. I'll go to the dealer I know.”</div>
+          <dl><dt>Trigger</dt><dd>Rear tyre cracked before the wheat harvest.</dd><dt>Wants</dt><dd>The right size, a dealer he trusts, fitting on the farm if possible.</dd><dt>Fears</dt><dd>Buying online and waiting a week; English-only forms.</dd><dt>Device</dt><dd>Phone, Punjabi/Hindi, prefers voice; son helps.</dd></dl>
+          <div class="chips"><span class="chip">Vehicle-first</span><span class="chip">Vernacular + voice</span><span class="chip">Local dealer</span></div>
+          <div class="wins"><b>What wins him</b>Say “575 ka pichhla tyre” and get the size, two options, and a dealer 6 km away who can fit it today.</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="top"><span class="av" style="background:#FF5B14">MI</span><div><h4>Meena, 39</h4><div class="role">Fleet ops, quarry logistics, Hosur · 40 tippers, 3 mini excavators</div></div></div>
+        <div class="body">
+          <div class="q">“I don't buy tyres. I buy kilometres. And I need an invoice my accounts team accepts.”</div>
+          <dl><dt>Trigger</dt><dd>Scheduled tyre and track replacement across the fleet.</dd><dt>Wants</dt><dd>Cost per km, bulk price, on-site fitting, approvals, one monthly GST invoice.</dd><dt>Fears</dt><dd>Mismatched sizes across vehicles; a machine idle on site.</dd><dt>Device</dt><dd>Laptop at work, phone on site. English.</dd></dl>
+          <div class="chips"><span class="chip">Vehicle-first, many vehicles</span><span class="chip">B2B · Fleet</span><span class="chip">Tracks</span></div>
+          <div class="wins"><b>What wins her</b>A garage of 43 assets, each with its sizes, due dates and an approved vendor price.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 05 JOURNEYS ======================= -->
+<section class="s" id="journeys">
+  <div class="sh"><div class="num"><b>05</b>Journey mapping</div><div>
+    <h2>The job starts with a noise, <em>not a search.</em></h2>
+    <p class="col">I mapped Arjun's journey end to end, because it has the most uncertainty and shows every failure point. The other three personas reuse the same steps with different emphasis.</p>
+  </div></div>
+  <div class="inset">
+    <div class="journey"><div class="jgrid">
+      <div class="rh">Stage</div>
+      <div class="stg"><small>01</small>Notice</div><div class="stg"><small>02</small>Understand</div><div class="stg"><small>03</small>Identify vehicle</div><div class="stg"><small>04</small>Find the part</div><div class="stg"><small>05</small>Trust it fits</div><div class="stg"><small>06</small>Get it</div><div class="stg"><small>07</small>After</div>
+      <div class="rh">Doing</div>
+      <div>Feels the steering shake when braking.</div><div>Googles the noise, watches a video, asks a friend.</div><div>Tries to find his exact variant in a dropdown.</div><div>Searches “brake disc Creta”, gets 200 results.</div><div>Reads specs, compares two discs that look identical.</div><div>Calls his mechanic, who has his own supplier.</div><div>Forgets when it was done until the next noise.</div>
+      <div class="rh">Thinking</div>
+      <div>“Is this dangerous?”</div><div>“Pads? Discs? Both?”</div><div>“Is mine 16-inch or 17-inch? Does it matter?”</div><div>“Why are these ₹3,400 to ₹7,200?”</div><div>“Will this actually fit my car?”</div><div>“Who's going to fit it, and when?”</div><div>“What else is due?”</div>
+      <div class="rh">Feeling</div>
+      <div class="curve">
+        <svg viewBox="0 0 980 110" preserveAspectRatio="none" style="width:100%;height:110px" aria-label="Emotion curve today versus with Fitwise">
+          <line x1="0" y1="55" x2="980" y2="55" stroke="#ECECE8" stroke-dasharray="3 4"/>
+          <path d="M70 60 C140 70 170 80 210 78 S330 96 350 98 S470 88 490 92 S610 100 630 96 S750 80 770 70 S890 60 910 62" fill="none" stroke="#C9353A" stroke-width="2.5"/>
+          <path d="M70 60 C140 52 170 40 210 38 S330 32 350 30 S470 26 490 24 S610 22 630 22 S750 18 770 16 S890 20 910 18" fill="none" stroke="#0B8A4C" stroke-width="2.5"/>
+          <g fill="#C9353A"><circle cx="350" cy="98" r="5"/><circle cx="630" cy="96" r="5"/></g>
+          <g fill="#0B8A4C"><circle cx="350" cy="30" r="5"/><circle cx="630" cy="22" r="5"/></g>
+          <text x="350" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#C9353A">variant confusion</text>
+          <text x="630" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#C9353A">“will it fit?”</text>
+        </svg>
+        <div class="legend"><span><i style="background:#C9353A"></i>Today</span><span><i style="background:#0B8A4C"></i>With Fitwise</span></div>
+      </div>
+      <div class="rh">Pain today</div>
+      <div class="pain">No way to judge urgency.</div><div class="pain">Generic content; nothing about <i>his</i> car.</div><div class="pain">Forms ask for things he doesn't know.</div><div class="pain">Catalogue names; no fitment filter by default.</div><div class="pain">“Fits” claims with no evidence.</div><div class="pain">Online and local are separate worlds.</div><div class="pain">No memory of the vehicle.</div>
+      <div class="rh">Design move</div>
+      <div class="move">Ask Fitwise: describe it in your words.<br><i>Home</i></div><div class="move">Reasoning steps and a grounded answer, with a disclaimer and a ₹199 check.<br><i>Home</i></div><div class="move">Number-plate lookup; ask about variants only when it matters.<br><i>Home · PLP</i></div><div class="move">Listing pre-filtered to his car, quick take on which type to pick.<br><i>PLP</i></div><div class="move">Fitment card with evidence: variant, OE cross-ref, real installs.<br><i>PDP</i></div><div class="move">Deliver, pick up or buy + fit, with live dealer stock nearby.<br><i>PDP</i></div><div class="move">My Garage tracks wear and nudges before the next failure.<br><i>Home</i></div>
+    </div></div>
+
+    <div class="moments">
+      <div class="moment"><span class="pg">Answered on Home</span><h4>“Is this my vehicle?”</h4><p>Everything downstream depends on getting the vehicle right once. So the Home page is a vehicle finder and a problem translator, not a banner carousel.</p></div>
+      <div class="moment"><span class="pg">Answered on Listing</span><h4>“Which of these is right for me?”</h4><p>A listing filtered to the vehicle by default, explaining the trade-off (plain vs drilled discs) instead of leaving people to decode specs.</p></div>
+      <div class="moment"><span class="pg">Answered on Product</span><h4>“Will it fit, and where do I get it today?”</h4><p>Fitment with evidence above the fold, then the three ways to get it and the dealers who have it in stock right now.</p></div>
+    </div>
+
+    <h3>The same flow, different emphasis</h3>
+    <div class="variants">
+      <div class="variant"><div class="who"><span style="background:#0B8A4C">RS</span><b>Ravi, mechanic</b></div><ol><li>Types or pastes a <b>part number</b>; gets every equivalent.</li><li>Switches the listing to <b>Pro list view</b>: stock, trade price, qty.</li><li>Orders to the counter with the most stock, on <b>credit</b>.</li><li>Shares the part number on <b>WhatsApp</b> to the customer.</li></ol></div>
+      <div class="variant"><div class="who"><span style="background:#A86400">GS</span><b>Gurpreet, farmer</b></div><ol><li>Speaks in <b>Punjabi or Hindi</b>; voice to text.</li><li>Tractor and size resolved; only <b>2–3 options</b> shown.</li><li>Picks a dealer by distance and <b>on-farm fitting</b>.</li><li>Reserves; <b>pays at the counter</b> in cash or UPI.</li></ol></div>
+      <div class="variant"><div class="who"><span style="background:#FF5B14">MI</span><b>Meena, fleet</b></div><ol><li>Garage holds <b>43 assets</b> with sizes and due dates.</li><li>Bulk-selects 12 tippers due; one basket, <b>approval</b> by owner.</li><li>Books <b>on-site fitting</b> for the excavator tracks.</li><li>Gets <b>one GST invoice</b> a month, cost per km tracked.</li></ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 06 PRINCIPLES ======================= -->
+<section class="s" id="principles">
+  <div class="sh"><div class="num"><b>06</b>Design principles</div><div>
+    <h2>Five rules I used <em>to settle arguments.</em></h2>
+    <p class="col">Every screen decision was checked against these. When two options looked equally good, the one that served a principle better won.</p>
+  </div></div>
+  <div class="inset">
+    <div class="princ">
+      <div><span class="n">1</span><h4>The vehicle is the context</h4><p>Set it once; every price, badge and filter reads from it. Never make people re-enter it.</p></div>
+      <div><span class="n">2</span><h4>Fitment is a promise, so show the evidence</h4><p>Green, amber or red, plus why. Never hide uncertainty to win a sale.</p></div>
+      <div><span class="n">3</span><h4>Speak human, resolve to part numbers</h4><p>Accept symptoms, slang, sizes and any language. Translate to the catalogue behind the scenes.</p></div>
+      <div><span class="n">4</span><h4>Online discovery, local fulfilment</h4><p>Dealers aren't competitors; they're the last mile, the fitting bay and the credit line.</p></div>
+      <div><span class="n">5</span><h4>Ask only when it changes the answer</h4><p>No 9-field forms. A question appears in context, only if the answer changes what fits.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 07 IA ======================= -->
+<section class="s" id="ia">
+  <div class="sh"><div class="num"><b>07</b>Information architecture</div><div>
+    <h2>Organised around a <em>fitment graph,</em> not a category tree.</h2>
+    <p class="col">Most stores start with categories. Here the categories matter less than the relationship between a vehicle and a part, so I started with the data model and built navigation on top of it.</p>
+  </div></div>
+  <div class="inset">
+    <h3>The object model</h3>
+    <div class="om">
+      <div><small>Who</small><b>Vehicle</b><p>Type → make → model → year → variant. Resolved from a plate, a form or a phrase.</p></div>
+      <div class="core"><small>The core asset</small><b>Fitment</b><p>Vehicle ↔ OE number ↔ every equivalent part, with a confidence level.</p></div>
+      <div><small>What</small><b>Part</b><p>System → category → product → SKU. Tyres add size; tracks add W×P×L.</p></div>
+      <div><small>How much</small><b>Offer</b><p>Price, stock, ETA, per seller. Online hub and each dealer.</p></div>
+      <div><small>Where</small><b>Dealer</b><p>Location, hours, services (fitting, alignment), credit terms, rating.</p></div>
+    </div>
+
+    <h3>Three ways in, one destination</h3>
+    <div class="entry">
+      <div class="e"><span class="k">Vehicle-first</span><b>“My car is a Creta.”</b><p>Plate, make/model, or a garage vehicle. Browse by system.</p></div>
+      <div class="e"><span class="k">Problem-first</span><b>“The steering shakes when I brake.”</b><p>Natural language, voice or photo. AI maps it to a system and part.</p></div>
+      <div class="e"><span class="k">Part-first</span><b>“51712-C9000” or “205/65 R16”</b><p>Part numbers, sizes, track codes. Cross-referenced instantly.</p></div>
+      <div class="dest"><b>→ A listing filtered to the vehicle</b><p>Whatever the entry, people land on the same place: parts that fit their vehicle, with the fitment contract stated at the top.</p></div>
+    </div>
+
+    <h3>Sitemap</h3>
+    <div class="tree">
+      <div class="col"><div class="hd a">Home</div><ul><li><b>Vehicle finder</b><small>Plate · make/model · part/size</small></li><li><b>Ask Fitwise</b><small>Symptom → part</small></li><li><b>My Garage</b><small>Due soon, wear estimates</small></li><li>Shop by vehicle</li><li>Shop by system</li><li>Tyre decoder · Track guide</li><li>Dealers near you</li></ul></div>
+      <div class="col"><div class="hd">Shop by vehicle</div><ul><li>Cars &amp; SUVs</li><li>Two-wheelers</li><li>Trucks &amp; buses</li><li>Tractors &amp; farm</li><li>Construction</li><li>Three-wheelers</li></ul></div>
+      <div class="col"><div class="hd">Catalogue</div><ul><li><b>Parts by system</b><small>Brakes, filters, engine, suspension, clutch, cooling, electrical, lighting, body…</small></li><li><b>Tyres</b><small>By vehicle · by size</small></li><li><b>Tracks</b><small>By machine · by size</small></li><li>Batteries · oils · accessories</li></ul></div>
+      <div class="col"><div class="hd">Buy &amp; fulfil</div><ul><li>Listing (PLP)</li><li>Product (PDP)</li><li>Compare</li><li>Cart · checkout</li><li>Reserve at dealer</li><li>Book fitting</li><li>Dealer locator</li></ul></div>
+      <div class="col"><div class="hd">Account &amp; business</div><ul><li>Orders · returns</li><li>Fitment promise</li><li><b>Fitwise Pro</b><small>Garages: credit, trade price, job cards</small></li><li><b>Fleet</b><small>Assets, approvals, invoices</small></li><li>Become a dealer</li></ul></div>
+    </div>
+
+    <h3>Same template, category-aware filters</h3>
+    <p class="col">One listing component, but filters change with the catalogue's shape. People filter by the things that matter for <i>that</i> part.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Category</th><th>Always on</th><th>Category-specific filters</th><th>Disambiguation question</th></tr></thead>
+      <tbody>
+        <tr><td>Brake discs</td><td>Fits my vehicle · pick up today · price · brand · rating</td><td>Disc type (plain, drilled, slotted) · quality</td><td>“Are your wheels 16-inch or 17-inch?”</td></tr>
+        <tr><td>Tyres</td><td>Fits my vehicle · pickup today · price · brand · rating</td><td>Size · driving use · speed rating · range</td><td>The same wheel-size question, answered once for discs and tyres</td></tr>
+        <tr><td>Rubber tracks</td><td>Fits my machine · pickup today · price · brand · rating</td><td>Size (W×P×L) · tread pattern · steel core</td><td>“How many links on your current track?”</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ======================= 08 SEARCH ======================= -->
+<section class="s" id="search">
+  <div class="sh"><div class="num"><b>08</b>Search and AI</div><div>
+    <h2>AI translates. <em>The catalogue decides.</em></h2>
+    <p class="col">Natural-language search is the most visible change AI brings to this category. It's also the riskiest: a confident wrong answer about brakes is worse than no answer. So I split the job in two.</p>
+  </div></div>
+  <div class="inset">
+    <div class="pipe">
+      <div class="ai"><b>Capture</b><p>Text, voice or photo (plate, part label, sidewall). Any of 9 languages.</p><span class="who">AI</span></div>
+      <div class="ai"><b>Understand</b><p>Extract entities: vehicle, year, fuel, system, position, symptom, size, part no.</p><span class="who">AI</span></div>
+      <div class="ai"><b>Clarify</b><p>Ask one question only if fitment depends on it (e.g. 16-inch or 17-inch wheels).</p><span class="who">AI + rules</span></div>
+      <div class="det"><b>Retrieve</b><p>Fitment database returns parts that fit. Deterministic and auditable.</p><span class="who">Catalogue</span></div>
+      <div class="det"><b>Rank</b><p>Fit confidence → local stock → rating → price band, within guardrails.</p><span class="who">Rules + ML</span></div>
+      <div class="ai"><b>Explain</b><p>Show what we understood, the steps, and a short grounded summary.</p><span class="who">AI</span></div>
+    </div>
+
+    <h3>What the user sees</h3>
+    <div class="grid g2">
+      <div class="parse-demo"><div class="q">steering shakes when I brake, 2024 creta diesel</div><div class="toks"><span class="tok"><i>Vehicle</i>Hyundai Creta</span><span class="tok"><i>Year</i>2024</span><span class="tok"><i>Fuel</i>Diesel</span><span class="tok"><i>System</i>Brakes</span><span class="tok"><i>Symptom</i>Shaking when braking</span></div><div class="out">→ Ask Fitwise explains it's likely warped discs, then <b>7 front discs that fit</b>.</div></div>
+      <div class="parse-demo"><div class="q">ट्रैक्टर का पिछला टायर 575</div><div class="toks"><span class="tok"><i>Vehicle</i>Mahindra 575 DI</span><span class="tok"><i>Category</i>Tyres</span><span class="tok"><i>Position</i>Rear</span></div><div class="out">→ Size resolved to <span class="mono">13.6-28</span> (some units run 14.9-28, so that is the one question if it matters), <b>2 tyres that fit</b>, 3 farm and truck dealers.</div></div>
+      <div class="parse-demo"><div class="q">51712-C9000</div><div class="toks"><span class="tok"><i>OE part no.</i>51712-C9000</span></div><div class="out">→ Exact OE part (Hyundai Mobis front disc), plus <b>6 equivalent brands</b> cross-referenced. Part numbers here are illustrative.</div></div>
+      <div class="parse-demo"><div class="q">300x52.5x80 track</div><div class="toks"><span class="tok"><i>Track size</i>300 × 52.5 × 80</span><span class="tok"><i>Machine</i>Mini excavator</span></div><div class="out">→ <b>4 tracks in that size</b> for mini excavators like the JCB 30 Plus, and a reminder to count links (80 or 84).</div></div>
+    </div>
+
+    <h3>Where the AI lives in the interface <span class="tag">researched, not assumed</span></h3>
+    <p class="col">I looked at how commerce products put AI in front of shoppers today, and what each placement costs.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Placement</th><th>Seen in</th><th>Good for</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Inside search</td><td>Amazon (Rufus), Flipkart</td><td>Questions arrive where people already type</td><td class="take">Use: the search box understands questions</td></tr>
+        <tr><td>Contextual prompts on product pages</td><td>Amazon (Rufus questions on product pages)</td><td>Answering the exact doubt at the moment of decision</td><td class="take">Use: “Ask about this part”</td></tr>
+        <tr><td>AI review summaries</td><td>Amazon “Customers say”</td><td>Turning hundreds of reviews into a 10-second read</td><td class="take">Use: “Customers say” by theme</td></tr>
+        <tr><td>Floating chat bubble</td><td>Retail assistants such as Jio Copilot, support widgets</td><td>Always available</td><td>Reads as customer support, fights the mobile buy bar, gets ignored. Not used.</td></tr>
+        <tr><td>Big chat on the home page</td><td>AI-first startups</td><td>Novelty</td><td>Costs a third of the fold for something most visitors don't need. Not used.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="col"><b>Decision:</b> AI shows up in four places (search, “Help me choose” on the listing, “Ask about this part” on the product page, and “Customers say” in reviews). All of them open one docked panel: a side panel on desktop, a bottom sheet on mobile. The panel already knows the vehicle and the product, so nobody has to explain their context twice.</p>
+
+    <h3>Guardrails</h3>
+    <div class="grid g3">
+      <div class="card"><h4>AI never claims fit</h4><p>Fit badges come only from the fitment database. The model can suggest a category; it can't say “this fits”.</p></div>
+      <div class="card"><h4>Show the working</h4><p>Parsed chips and reasoning steps let people catch a misunderstanding before they see results.</p></div>
+      <div class="card"><h4>Always a human exit</h4><p>“Not a diagnosis” plus a ₹199 inspection at a partner garage. The AI is a guide, not a mechanic.</p></div>
+      <div class="card"><h4>Learn from zero results</h4><p>Unmatched queries feed a synonym list: “liner” for brake shoes, “bush”, regional names for parts.</p></div>
+      <div class="card"><h4>Grounded summaries only</h4><p>Quick takes and review summaries are generated from catalogue data and verified reviews, with sources.</p></div>
+      <div class="card"><h4>Privacy by default</h4><p>Plates are looked up, not stored, unless the user saves the vehicle. Consent asked in plain words.</p></div>
+    </div>
+
+    <h3>Where else AI does the heavy lifting</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Use</th><th>Where</th><th>Instead of</th></tr></thead>
+      <tbody>
+        <tr><td>Symptom → part</td><td>Home, search</td><td>Expecting people to know part names</td></tr>
+        <tr><td>Photo lookup</td><td>Search (camera)</td><td>Typing a 10-character part number off a greasy label</td></tr>
+        <tr><td>Quick take</td><td>Listing</td><td>Leaving people to decode “semi-metallic” on their own</td></tr>
+        <tr><td>Review summary by theme</td><td>Product page</td><td>Scrolling 1,200 reviews</td></tr>
+        <tr><td>Wear prediction</td><td>My Garage</td><td>Waiting for the next failure</td></tr>
+        <tr><td>Translation and voice</td><td>Everywhere</td><td>English-only forms</td></tr>
+        <tr><td>Catalogue enrichment</td><td>Behind the scenes</td><td>Manually writing fitment notes for lakhs of SKUs</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">How AI changed my own process: I used it to speed up desk research, survey the component libraries and build the prototype quickly. The framing, trade-offs and decisions in this document are mine. I'd rather spend the time saved on talking to mechanics.</p>
+  </div>
+</section>
+
+<!-- ======================= 09 SCREENS ======================= -->
+<section class="s" id="screens">
+  <div class="sh"><div class="num"><b>09</b>The screens</div><div>
+    <h2>Three pages, <em>built to ship.</em></h2>
+    <p class="col">Everything below is the live prototype, not a picture: real Indian vehicles, real product photography, a real map. Try the number plate, search “steering shakes when I brake”, filter the listing, ask about a part, reserve at a store.</p>
+  </div></div>
+
+  <div class="inset">
+    <h3 style="margin-top:0">Home <span class="tag">“Is this my vehicle?”</span></h3>
+    <div class="screen-intro">
+      <p><b>Goal:</b> set the vehicle in one step, then route people by intent: they know the vehicle, they know the problem, or they know the part. The fold has one job, finding the vehicle. Offers and the garage follow.</p>
+      <ul class="qs"><li>What are we shopping for?</li><li>What's due on my vehicle?</li><li>Can I trust these parts?</li><li>Can I get it locally, today?</li></ul>
+    </div>
+  </div>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">fitwise.in</span><a href="prototype.html#home" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#home" data-w="1440" data-h="1180"></div></div>
+  <div class="inset">
+    <div class="screen-row">
+      <div class="phone"><div class="vp" data-src="prototype.html?embed=1#home" data-w="390" data-h="844"></div></div>
+      <ol class="anno">
+        <li><div><b>One job above the fold: find your vehicle</b><p>A calm studio hero, in the spirit of how Indian car sites present a car: a single-colour headline, the finder on the left, and the official Creta render on the right with three proof points. No auto-rotating carousel (in Baymard's testing, most people scroll past before the slides cycle). The finder with vehicle-type tabs and a number-plate field styled like a real Indian plate (a pattern apps like CRED use for vehicles, here in light mode) that formats itself as you type: <span class="mono">TN 09 BX 4821</span>.</p><span class="src">Pattern: number-plate vehicle input · UI Arc Segmented control</span></div></li>
+        <li><div><b>One way in without a number: your brand</b><p>The first version had two routes that said the same thing ("Don't know the number? Choose brand and model" and "Or choose your brand"). Now there is one: "No number handy? Pick your brand". The logo row changes with the vehicle type (Maruti, Hyundai, Tata… for cars; Hero, Bajaj, TVS… for bikes; Swaraj, Sonalika, John Deere… for tractors), and tapping a brand moves to model and year, similar to the brand-first fallback on used-car sites like Cars24 and Spinny. "Use number plate instead" appears only inside that step, as the way back.</p></div></li>
+        <li><div><b>Say what the number is for, and what the shortcut is</b><p>Two lines used to confuse: "We never store your number" and "Try TN 09 BX 4821". People ask: if you don't store it, why ask? Is that a real vehicle? Whose details will it fill? The shortcut now reads "Use my Creta, TN 09 BX 4821": it is the signed-in shopper's own saved vehicle, one per vehicle type they have, and it is absent for types they haven't saved. The privacy line states the purpose ("We use your number to look up the make, model and variant from the registration record") and makes no promise about storage. In India that lookup typically goes to the national VAHAN registry through a licensed data provider, so the number does leave the app, and signed-in apps usually keep the vehicle in the garage; promising "we never store it" would be a claim the build probably couldn't keep. The result also says where the details came from: "saved in your garage" for the shopper's own vehicle, "from the registration record" for any other number.</p></div></li>
+        <li><div><b>My garage, for signed-in users</b><p>A row of vehicle pills switches between saved vehicles. The selected one opens as a single large card, like a car-maker app: the official studio render (360° for the Creta), plate, odometer, last service, and what's coming up, each one tap from shopping.</p></div></li>
+        <li><div><b>Categories that don't look like products</b><p>Category tiles use large, angled part renders on warm gradient cards. Product cards sit on plain white with a hairline border, so the two are never confused while scrolling.</p></div></li>
+        <li><div><b>Offers as designed cards, not stock photos</b><p>Each offer is a clean tinted card with a product cut-out (discs and pads, a tyre stack, a tractor tyre) and one clear action. They're easy to scan and on-brand, and easy for a marketing team to swap.</p></div></li>
+        <li><div><b>Search that understands plain language</b><p>The header search accepts symptoms, sizes and part numbers, shows what it understood as chips, and hands questions to Ask Fitwise.</p><span class="src">Pattern: Kobra Command menu</span></div></li>
+      </ol>
+    </div>
+    <div class="iter">
+      <div><span>Option A · rejected</span><b>Banner carousel + finder side by side</b>My first version. The moving banner pulled attention away from the one thing that matters, setting the vehicle.</div>
+      <div><span>Option B · rejected</span><b>A big AI chat on the home page</b>Looks novel, takes a third of the screen, and most visitors already know what they want. AI should appear where questions arise.</div>
+      <div class="win"><span>Option C · chosen</span><b>Studio hero: finder left, real car right</b>One clear job above the fold, with the product (a real car render) as the visual. Then everything personalised to the vehicle. I also tried a centred finder over a dusk photo; it looked like a template, not a brand.</div></div>
+  </div>
+
+  <div class="inset">
+    <h3>Listing <span class="tag">“Which of these is right for me?”</span></h3>
+    <div class="screen-intro">
+      <p><b>Goal:</b> narrow down to the right part with confidence. The listing states what it's filtered for, asks the one question that changes the answer, and explains the trade-off between options in one line.</p>
+      <ul class="qs"><li>Are these all for my car?</li><li>What's the difference between these?</li><li>Can I get it today?</li><li>Which one should I pick?</li></ul>
+    </div>
+  </div>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">fitwise.in/brakes/front-discs?vehicle=creta-2024-crdi</span><a href="prototype.html#plp" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#plp" data-w="1440" data-h="1180"></div></div>
+  <div class="inset">
+    <div class="screen-row">
+      <div class="phone"><div class="vp" data-src="prototype.html?embed=1#plp" data-w="390" data-h="844"></div></div>
+      <ol class="anno">
+        <li><div><b>Filtered for the vehicle, and saying so</b><p>The title names the vehicle. One neutral context bar says “7 brake discs fit your Creta”, what that's based on, and offers a switch to see everything. Colour is kept for the check icon only.</p></div></li>
+        <li><div><b>One question, only when it matters</b><p>“Are your Creta's wheels 16-inch or 17-inch?” The 2024 SX manual comes on 16s and the automatic on 17s, and both the disc and the tyre size follow from it. Answered once, it updates discs and tyres together. Tracks ask the same way: 80 or 84 links. Until it's answered, the context bar turns amber and says how many parts depend on it. “Not sure” opens Ask Fitwise.</p></div></li>
+        <li><div><b>Help me choose, folded away</b><p>“Which brake disc should I choose?” is an AI answer grounded in the catalogue, collapsed by default so it never pushes products down. A follow-up opens the assistant.</p></div></li>
+        <li><div><b>Same template, three catalogues</b><p>Brake discs, tyres and tracks share the layout. Filters change with the category: disc type, tyre size and speed rating, track width × pitch × links. Filters only list values that apply to your vehicle, and the help card changes too: a brake inspection, a free tyre-size check, or an on-site undercarriage check.</p></div></li>
+        <li><div><b>Filters that never lead to zero</b><p>Live counts, disabled options that would empty the page, a price histogram, and removable chips for every applied filter.</p><span class="src">Pattern: UI Arc Range histogram slider · Filter toolbar</span></div></li>
+        <li><div><b>Cards built for Indian shoppers</b><p>White product well, brand, two-line name, a key-spec line (Baymard: show the attributes people compare on), green rating badge, price with MRP and discount, “Fits your Creta”, and pick-up availability. One badge at most. Add-to-cart and compare appear over the image on hover, so rows stay tight.</p></div></li>
+        <li><div><b>A list view for garages</b><p>One toggle switches to a dense table: part number, units nearby, trade price, quantity. Same data, different job.</p></div></li>
+      </ol>
+    </div>
+    <div class="iter">
+      <div><span>Option A · rejected</span><b>“Fits my vehicle” as one filter</b>Puts the most important filter in a long sidebar list. Easy to miss, and easy to forget it's on.</div>
+      <div><span>Option B · rejected</span><b>Hard gate: no vehicle, no listing</b>Blocks mechanics checking stock and anyone buying for someone else.</div>
+      <div class="win"><span>Option C · chosen</span><b>Filtered by default, stated loudly</b>Reversible in one tap, refined with one question only when the answer changes the result.</div>
+    </div>
+  </div>
+
+  <div class="inset">
+    <h3>Product <span class="tag">“Will it fit, and where do I get it today?”</span></h3>
+    <div class="screen-intro">
+      <p><b>Goal:</b> confirm fit with evidence, answer the questions people actually ask, then make getting it trivial: delivered, picked up, or fitted, with every nearby store's stock and price on the same page.</p>
+      <ul class="qs"><li>Does it definitely fit? How do you know?</li><li>Where does it go on my car?</li><li>Who near me has it, and at what price?</li><li>Can someone fit it today?</li></ul>
+    </div>
+  </div>
+  <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">fitwise.in/p/bosch-front-brake-disc-ventilated-pair</span><a href="prototype.html#pdp" target="_blank" rel="noopener">Open full screen ↗</a></div><div class="vp" data-src="prototype.html?embed=1#pdp" data-w="1440" data-h="1180"></div></div>
+  <div class="inset">
+    <div class="screen-row">
+      <div class="phone"><div class="vp" data-src="prototype.html?embed=1#pdp" data-w="390" data-h="844"></div></div>
+      <ol class="anno">
+        <li><div><b>A gallery that explains, not just shows</b><p>Product, back, fitted on a car, and “Where it goes”: a real photo with numbered hotspots for the disc, the caliper and pads, and the hub.</p><span class="src">Pattern: OEM parts catalogues · Bencho Spec inspector</span></div></li>
+        <li><div><b>The buy box reads in the order people decide</b><p>The first version listed everything at the same weight: four bullets, a price with five notes, evidence chips, three question pills, three large delivery cards, then two buttons. A shopper had to read all of it to work out whether to buy. Now each zone has one job, in this order: <b>what is it</b> (brand, title, one line of specs, rating), <b>does it fit my vehicle</b>, <b>what does it cost</b>, <b>how do I get it</b>, then <b>one button</b>. Anything that repeated was cut (pair, OE equivalent and warranty each appeared twice) and the part number stays beside the rating for mechanics.</p><span class="src">Principle: one job per zone · Baymard on scannable product pages</span></div></li>
+        <li><div><b>The fit verdict comes before the price</b><p>Fitment is the product, so the answer to "does it fit my car?" is the second thing on the page and the only tinted block: green with a tick, amber with a question, red with a way out. Evidence is one plain line (matches OE 51712-C9000 · 1,284 fitted on a Creta) instead of three chips. When fit depends on wheel size or link count, the question sits inside the amber block, and until it's answered the main button is disabled and says "Confirm fit to continue", so nobody reserves a part that may not fit. If the part is wrong for the vehicle, the purchase controls disappear and the button becomes "See parts that fit".</p></div></li>
+        <li><div><b>How do you want it? One switch, one line</b><p>Three tall radio cards became a three-way switch (Pick up today, Delivery, Get it fitted) with a single line under it: "In stock at 4 stores within 4 km", "Tomorrow before 9 PM, free", or the fitting slot and labour. It cuts the height by about two thirds. The main button follows the choice: Reserve at store, Buy now, Book fitting.</p><span class="src">Pattern: segmented control · UI Arc Segmented control</span></div></li>
+        <li><div><b>One primary action, everything else quieter</b><p>The quantity stepper sits beside a single full-width button; "or add to cart" is a text link; the reassurance is one line (free return if it doesn't fit, 12 months warranty). Two heavy buttons used to compete. The AI entry is one quiet row at the end, "Ask about this part", with one example question; the assistant panel still offers the full set of questions for that kind of part, so they are not repeated in the box. Reviews, Q&amp;A, specs, "bought together" and the store list change by part type: tractor and truck tyres and tracks come from farm, truck and earthmover dealers, with fitting on site.</p></div></li>
+        <li><div><b>Stores near you: two lines each, detail on demand</b><p>The decision is "where can I get it, and how far", so each store shows only that: name, price, distance and availability (in stock, only 2 left, ready tomorrow), plus a warning only when it's about to close. Everything else waits until a store is selected: rating, opening hours, "can fit it", one Reserve button and small call, WhatsApp and directions buttons. Stores that have it come first, nearest within each group, so a closer store with nothing in stock never sits above one that does. One card is open at a time, and selecting a store from the list or from a map pin opens the same card. "Verified" is true of every store, so it is a tick, not a label; only the Fitwise hub is marked. The map is drawn by the prototype itself from a small extract of OpenStreetMap roads, rail, water and parks, so it never depends on a map-tile server, and stores are numbered the same in the list and on the map, sit at their real locations, with distances measured from your PIN code. Picking a store draws a route from you, and zoom steps in on it. Reserving uses slide-to-confirm and returns a pickup code.</p><span class="src">Pattern: progressive disclosure · Bencho · Space UI Slide to confirm</span></div></li>
+        <li><div><b>Frequently bought together</b><p>Disc pair + pads + fitting, with live totals. The way mechanics actually do the job.</p></div></li>
+        <li><div><b>Compatibility and reviews that use the vehicle</b><p>A searchable compatibility table with your vehicle highlighted. Reviews show “Customers say”, an AI summary by theme, and put same-vehicle reviews first.</p></div></li>
+      </ol>
+    </div>
+    <div class="iter">
+      <div><span>Option A · rejected</span><b>A “Fits ✓” badge</b>The common pattern. It asks for trust without giving a reason, and it can't say “probably”.</div>
+      <div><span>Option B · rejected</span><b>Fit-check pop-up</b>An extra step and a form before people see the one answer they came for.</div>
+      <div class="win"><span>Option C · chosen</span><b>Fit box + contextual AI + local stock</b>The answer and its evidence above the fold, follow-up questions one tap away, then the stores.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 10 SYSTEM ======================= -->
+<section class="s" id="system">
+  <div class="sh"><div class="num"><b>10</b>Visual language</div><div>
+    <h2>Familiar to Indian car buyers, <em>quiet everywhere else.</em></h2>
+    <p class="col">The palette is taken from Cars24's sell-a-car page, the marketplace many Indian car owners already use to value and sell a vehicle: one indigo brand colour for actions, and a cool slate scale for text, surfaces and borders. Real photography and official studio renders carry the page; colour is reserved for actions and for fit state. Nothing decorative that a shopper would have to look past.</p>
+  </div></div>
+  <div class="inset">
+    <div class="sw">
+      <div><i style="background:#4736FE"></i><p><b>Indigo</b><code>#4736FE</code> Every primary action, links, active states, the AI orb, the IND plate strip</p></div>
+      <div><i style="background:#0F172B"></i><p><b>Slate 900</b><code>#0F172B</code> Main text</p></div>
+      <div><i style="background:#62748E"></i><p><b>Slate 500</b><code>#62748E</code> Secondary and helper text</p></div>
+      <div><i style="background:#F1F5F9;box-shadow:inset 0 0 0 1px #E2E8F0"></i><p><b>Slate 100</b><code>#F1F5F9</code> Surfaces, tiles, the map; borders <code>#E2E8F0</code></p></div>
+      <div><i style="background:#2F7A52"></i><p><b>Fit green</b><code>#2F7A52</code> Fits, in stock, ratings, savings</p></div>
+      <div><i style="background:#9A6A1E"></i><p><b>Check amber</b><code>#9A6A1E</code> Fits some variants; red <code>#C8343A</code> doesn't fit</p></div>
+    </div>
+    <div class="fitsem">
+      <div style="background:var(--ok-tint)"><b style="color:var(--ok)">✓ Fits your Creta</b>Matched on variant and original part number. Safe to buy.</div>
+      <div style="background:var(--warn-tint)"><b style="color:var(--warn)">! Check your variant</b>Fits some versions. We say which, and ask one question.</div>
+      <div style="background:var(--bad-tint)"><b style="color:var(--bad)">✕ Doesn't fit</b>Only shown when “Show only parts that fit” is off. Greyed out, never sold by accident.</div>
+    </div>
+    <p class="note">One primary style: every main action is a solid indigo button (hover <code>#4031E5</code>), secondary actions are white with an outline, and links are indigo text. That follows Baymard's guidance that buttons and links must never be confused and that colour should carry meaning, not decoration. Indigo is the only brand colour, so it always means “you can act here” (including offer tags and due-soon items, in a light <code>#EEEDFF</code> tint). Green, amber and red are not taken from Cars24: they are kept because fitment needs a clear yes / check / no signal, and they appear only for that.</p>
+    <p class="note">One AI mark: a small indigo orb, in the same colour as every primary action. It appears wherever Ask Fitwise can help (the search bar button, “Ask about this part”, the listing's AI answer, the assistant header) and nowhere else, so it reads as one feature rather than decoration. It slowly turns only while answering, and stops under reduced motion.</p>
+    <p class="note">Accessibility: helper text uses a grey that passes WCAG AA contrast (4.5:1) on white and slate surfaces. Search is a proper combobox: <kbd>/</kbd> or <kbd>⌘K</kbd> opens it, arrow keys move through suggestions, Enter opens one, Escape closes it. Search, the assistant and drawers are modal dialogs: focus moves in when they open, Tab stays inside, and Escape returns focus to the button that opened them. Fit states are announced as status messages, and colour is never the only signal (each state also has an icon and a sentence).</p>
+    <div class="type">
+      <div><span class="mono" style="color:var(--ink-3)">Typeface · Inter</span><div class="spec" style="font-weight:800;letter-spacing:-.04em">Aa ₹4,650</div><p>One family for everything. Tight tracking on headlines, tabular numbers for prices, and Indian lakh formatting.</p></div>
+      <div><span class="mono" style="color:var(--ink-3)">Data · JetBrains Mono</span><div class="spec" style="font-family:var(--f-mono);font-weight:500;font-size:2rem;margin-top:.8rem">51712-C9000</div><p>Part numbers and sizes. People copy these into WhatsApp, so 0 and O must never be confused.</p></div>
+      <div><span class="mono" style="color:var(--ink-3)">Icons · Lucide</span><div class="spec" style="font-size:2rem;margin-top:.8rem;letter-spacing:.2em">⌕ ♡ ⛟</div><p>One consistent 1.75 px outline set across the product. Noto Sans covers Hindi and Tamil.</p></div>
+    </div>
+
+    <h3>Imagery</h3>
+    <div class="grid g3">
+      <div class="card"><h4>Your actual vehicle, as the maker shows it</h4><p>The garage uses the manufacturer's own studio render of the saved model: Hyundai's 360° frames for the Creta (drag to rotate), and Mahindra's and JCB's official images for the tractor and excavator.</p></div>
+      <div class="card"><h4>One background for every product</h4><p>Photos were cut out with on-device subject lifting (macOS Vision) and placed on the same neutral well, the way large catalogues keep thousands of SKUs consistent.</p></div>
+      <div class="card"><h4>Light enough for 4G</h4><p>Cut-outs ship as AVIF (about 40 KB each, against roughly 900 KB as PNG) and photos are compressed and lazy-loaded.</p></div>
+    </div>
+
+    <h3>Component inventory <span class="tag">from the libraries surveyed</span></h3>
+    <p class="col">The libraries are React and Tailwind. I rebuilt each pattern in plain HTML, CSS and JavaScript, so the prototype is one file plus images. A pattern stayed only if it solved a specific moment in the journey.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Component</th><th>Inspired by</th><th>Where</th><th>Why it earns its place</th></tr></thead>
+      <tbody>
+        <tr><td>Number-plate slots</td><td>Kobra · Input OTP</td><td>Home finder</td><td>Chunking matches the printed plate. Characters spring in and a sweep confirms the number.</td></tr>
+        <tr><td>Search with parsed chips</td><td>Kobra · Command menu · UI Arc Combobox</td><td>Header search</td><td>Shows what was understood before results load.</td></tr>
+        <tr><td>Docked assistant panel</td><td>Beautiful UI · Thinking, Streaming text · Kobra Reasoning steps</td><td>Ask Fitwise</td><td>Visible working builds trust in an AI answer, and the page stays visible.</td></tr>
+        <tr><td>Segmented control</td><td>UI Arc · Segmented control</td><td>Vehicle type</td><td>Mutually exclusive choice with a sliding indicator.</td></tr>
+        <tr><td>Nav underline</td><td>Lightswind · Tubelight navbar</td><td>Category nav</td><td>Clear hover state across 12 items, without a heavy menu bar.</td></tr>
+        <tr><td>Skeleton reveal</td><td>Spectrum UI · Skeleton reveal</td><td>Plate lookup</td><td>Honest loading for a network call.</td></tr>
+        <tr><td>Usage meter</td><td>UI Arc · Usage meter</td><td>My vehicle</td><td>Wear at a glance.</td></tr>
+        <tr><td>Range histogram slider</td><td>UI Arc · Range histogram slider</td><td>Price filter</td><td>Shows where options cluster before you drag.</td></tr>
+        <tr><td>Filter chips, switch</td><td>Kobra · Filter chips · Spectrum Animated switch</td><td>Listing</td><td>Applied state always visible and one tap to undo.</td></tr>
+        <tr><td>Toast + undo</td><td>UI Arc · Toast stack · Spectrum Undo pill</td><td>Cart, wishlist</td><td>Confirms without blocking. Mistakes are reversible.</td></tr>
+        <tr><td>Radio cards</td><td>UI Arc · Radio cards</td><td>Fulfilment</td><td>Compares time and cost side by side.</td></tr>
+        <tr><td>Hotspot inspector</td><td>Bencho · Spec inspector</td><td>Where it goes</td><td>Explains an assembly, not just a product.</td></tr>
+        <tr><td>Slide to confirm</td><td>Bencho · Space UI · Slide to confirm</td><td>Reserve</td><td>A deliberate gesture for a real-world commitment.</td></tr>
+        <tr><td>Drawer, bottom sheet</td><td>UI Arc · Drawer, Bottom sheet</td><td>Compare, mobile filters, assistant</td><td>Keeps context visible behind the task.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Rules I held myself to</h3>
+    <div class="grid g3">
+      <div class="card"><h4>One primary action per view</h4><p>Indigo fills one button per decision. Everything else is an outline or text.</p></div>
+      <div class="card"><h4>Motion only for feedback</h4><p>Springs confirm input, shimmer means “working”. Prices and stock never animate. Reduced motion is respected.</p></div>
+      <div class="card"><h4>Familiar before clever</h4><p>Rating badges, MRP strike-through, “% off” and sticky mobile buy bars are patterns Indian shoppers already read without thinking.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 11 METRICS ======================= -->
+<section class="s" id="metrics">
+  <div class="sh"><div class="num"><b>11</b>Measuring it</div><div>
+    <h2>One number for the customer <em>and the business.</em></h2>
+  </div></div>
+  <div class="inset">
+    <div class="ns">
+      <div><span class="k">North star</span><h4>First-time-right fitment rate</h4><p>The share of orders fitted on the intended vehicle without a return, exchange or complaint. It measures the customer's real job and the business's biggest cost.</p></div>
+      <div class="formula">orders fitted OK<br>÷ orders delivered or picked up<br><span style="color:#8D8D88">— excluding change-of-mind returns</span><br><br><span style="color:#9DB0FF">target ≥ 98% · today's industry norm unknown, baseline first</span></div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Stage</th><th>Metric</th><th>Why it matters</th><th>Screen</th></tr></thead>
+      <tbody>
+        <tr><td>Context</td><td>Vehicle-set rate</td><td>% of sessions with a vehicle in the garage. Everything else depends on it.</td><td>Home</td></tr>
+        <tr><td>Discovery</td><td>Search success, zero-result rate</td><td>Did the query reach a relevant listing or PDP?</td><td>Search, PLP</td></tr>
+        <tr><td>Discovery</td><td>Ask Fitwise → listing click-through</td><td>Is the AI answer useful enough to act on?</td><td>Home</td></tr>
+        <tr><td>Confidence</td><td>Disambiguation answer rate</td><td>Do people answer the one question, or bounce?</td><td>PLP</td></tr>
+        <tr><td>Conversion</td><td>PDP → local action</td><td>Reserve, call, WhatsApp or directions. Local intent counts as success.</td><td>PDP</td></tr>
+        <tr><td>Fulfilment</td><td>Reservation pickup rate</td><td>Do reservations turn into sales at the counter?</td><td>Dealer</td></tr>
+        <tr><td>Retention</td><td>Garage reminder → repeat purchase</td><td>Does the garage create the next order?</td><td>Home</td></tr>
+        <tr><td>Guardrail</td><td>AI suggestion reported wrong</td><td>Must stay near zero; any rise pauses the feature.</td><td>All AI</td></tr>
+        <tr><td>Guardrail</td><td>Dealer price spread vs online</td><td>Keeps the “one honest price” promise.</td><td>PDP</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ======================= 12 NEXT ======================= -->
+<section class="s" id="next">
+  <div class="sh"><div class="num"><b>12</b>What I'd do next</div><div>
+    <h2>Validate the riskiest assumptions <em>before polishing pixels.</em></h2>
+  </div></div>
+  <div class="inset">
+    <div class="grid g3">
+      <div class="card"><span class="k">Week 1 · Research</span><h4>Go where the part changes hands</h4><p>Shadow two parts counters for a morning. Interview 6 mechanics, 5 owners, 3 farmers (through a dealer) and 2 fleet managers. Test the four proto-personas against reality.</p></div>
+      <div class="card"><span class="k">Week 2 · Test</span><h4>Test the three moments</h4><p>Unmoderated tests on the prototype: find your vehicle, pick a part, reserve locally. Measure time and confidence, not just completion.</p></div>
+      <div class="card"><span class="k">In parallel · Data</span><h4>Audit the fitment data</h4><p>Sample 200 SKUs and check fitment accuracy by hand. If the data is weak, that's the first product to build, before any UI.</p></div>
+    </div>
+    <h3>Risks I'm watching</h3>
+    <div class="diff">
+      <div><b>Catalogue quality is the real product</b><p>A beautiful fitment card on bad data is worse than none. Confidence levels must be earned per SKU.</p></div>
+      <div><b>Channel conflict with dealers</b><p>Online prices and dealer prices must coexist without undercutting the network that does the fitting.</p></div>
+      <div><b>AI overconfidence</b><p>Symptom matching is probabilistic. Guardrails, visible reasoning and a human exit are non-negotiable.</p></div>
+      <div><b>Plate lookups and consent</b><p>Vehicle registration data is sensitive. Lookups need clear consent, a legitimate data source, and no silent storage.</p></div>
+    </div>
+
+    <h3>Questions I'd love to discuss when we meet</h3>
+    <ol class="qlist">
+      <li>Is the brand a manufacturer selling its own range plus others, or a marketplace?<span>It changes how neutral the “best match” ranking can be.</span></li>
+      <li>What fitment data exists today, and who maintains it?<span>The UI's honesty depends on this more than on any screen.</span></li>
+      <li>How exclusive is the dealer network, and who owns the customer after a counter sale?<span>Decides whether “Reserve at dealer” is a sale, a lead, or both.</span></li>
+      <li>What's the B2C vs B2B mix, and which is growing?<span>I've designed for both; the Pro view could easily become its own app.</span></li>
+      <li>Which vehicle category leads: cars, tractors, trucks or equipment?<span>It changes what the Home page leads with by default.</span></li>
+      <li>How far should AI go: suggest, or also diagnose with a partner garage?<span>Product, legal and brand trust all have a say here.</span></li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <p><b style="color:var(--ink)">G Chaitanya Sai</b> · Design assignment, October 2026. “Fitwise” is a placeholder brand. Product names and brands are used for realism; prices, part numbers, dealers and statistics inside the prototype are illustrative.</p>
+  <p style="margin-top:1rem"><b style="color:var(--ink)">Sources</b></p>
+  <ul class="srcs">
+    <li><a href="https://www.businesstoday.in/auto/story/domestic-auto-component-industry-grows-10-in-fy25-acma-483592-2025-07-08" target="_blank" rel="noopener">ACMA FY25 industry review, Business Today</a></li>
+    <li><a href="https://www.republicworld.com/business/despite-tariffs-and-wars-india-s-auto-component-industry-grows-nearly-10-in-fy25-post-trade-surplus-of-453-million" target="_blank" rel="noopener">Auto component industry FY25, Republic World</a></li>
+    <li><a href="https://www.motorindiaonline.in/indian-auto-component-sector-nearly-doubles-in-5-years-hits-%e2%82%b96-73-lakh-crore-turnover-in-fy25/" target="_blank" rel="noopener">Auto component sector FY25, Motor India</a></li>
+    <li><a href="https://maquinac.com/english/india-set-new-record-with-1-09-million-tractor-sales-in-2025/" target="_blank" rel="noopener">India tractor sales 2025 (TMA data), MaquinAC</a></li>
+    <li><a href="https://www.mahindra.com/news-room/press-release/en/mahindra-farm-equipment-sector-registers-highest-ever-yearly-domestic-sales-of-407094-units-in-f25" target="_blank" rel="noopener">Mahindra Farm Equipment FY25 sales</a></li>
+    <li><a href="https://www.autocarpro.in/news-national/acma-study-36-percent-aftermarket-components-fake-1519" target="_blank" rel="noopener">ACMA study on fake components, Autocar Pro</a></li>
+    <li><a href="https://www.business-standard.com/article/companies/40-of-auto-parts-sold-are-fake-114061200885_1.html" target="_blank" rel="noopener">“40% of auto parts sold are fake”, Business Standard (2014)</a></li>
+    <li><a href="https://www.autocarpro.in/news/counting-the-cost-how-counterfeit-car-parts-are-draining-the-auto-industry-123221" target="_blank" rel="noopener">Counterfeit parts and the industry, Autocar Pro (2024)</a></li>
+    <li><a href="https://help.boodmo.com/knowledge/article/7" target="_blank" rel="noopener">Boodmo help centre: part number and number plate search</a></li>
+    <li><a href="https://autocarpro.in/news-national/indian-automotive-aftermarket-targets-usd13-billion-revenues-2019-24092" target="_blank" rel="noopener">ACMA “Road Ahead” aftermarket report (2017), Autocar Pro</a></li>
+    <li><a href="https://autocarindia.com/auto-features/hyundai-creta-facelift-price-variants-features-explained-430371" target="_blank" rel="noopener">Hyundai Creta facelift variants and wheel sizes, Autocar India</a></li>
+    <li><a href="https://www.ceat.com/blog/car-tyres/tyres-for-hyundai-creta-sizes-and-prices-for-all-variants.html" target="_blank" rel="noopener">Tyre sizes for the Hyundai Creta, CEAT</a></li>
+    <li><a href="https://baymard.com/blog/homepage-carousel" target="_blank" rel="noopener">Homepage carousels, Baymard Institute</a></li>
+    <li><a href="https://jio.copilot.live/" target="_blank" rel="noopener">Jio Copilot</a></li>
+  </ul>
+  <p style="margin-top:1rem"><b style="color:var(--ink)">Image credits</b></p>
+  <ul class="srcs">
+    <li>Photos via <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash</a> (Unsplash License): Creta, brake discs, tractors, tyre shop, mechanics, tracks.</li>
+    <li>Wikimedia Commons, CC BY-SA 4.0: Gold Metallic Honda Activa; EXCON 2025 Bangalore (Tata Signa); Mahindra tractor at Kukatpally; Indian JCB; Auto-rickshaw Bajaj; 2024 Mahindra Scorpio; Bosch Oil Filter; MRF Tyres and Tubes, Marthadam; Apollo Tyre 01; Lead-acid automotive battery 55 Ah; Worn metallic disc brake pads.</li>
+    <li>Wikimedia Commons, CC BY 4.0: Ventilated brake rotor series (plain, drilled, slotted). CC BY-SA 3.0: Rubber track. CC0: Deere excavator with rubber treads.</li>
+    <li>"Shop by vehicle" renders (Royal Enfield Classic, TVS King auto-rickshaw, Mahindra Thar ROXX, Eicher Pro 5016, SDJK mini excavator, Sonalika DI 450) are the manufacturers' own images, used here only to show vehicle types in a concept. They are the makers' copyright and would be licensed or replaced before any public launch.</li>
+    <li>Cut-outs are derivatives of the CC BY-SA originals and are shared under the same licence. Map data © OpenStreetMap contributors (ODbL), drawn from a bundled extract. Icons: Lucide (ISC). Vehicle brand logos: Wikimedia Commons; trademarks belong to their owners and are used only to identify vehicle makes. Garage vehicle renders: Hyundai Motor India (Creta 360° frames), Mahindra Tractors and JCB India official websites. These are manufacturer copyright, used here for a design concept only, and would need licensing or replacement before launch. Hero photo: Unsplash.</li>
+  </ul>
+</footer>
+</div>
+
+<script>
+/* lazy, scaled prototype embeds */
+(() => {
+  const fit = vp => { const w = +vp.dataset.w, h = +vp.dataset.h, s = vp.clientWidth / w; vp.style.height = h * s + 'px'; const f = vp.querySelector('iframe'); if (f) { f.style.width = w + 'px'; f.style.height = h + 'px'; f.style.transform = `scale(${s})`; } };
+  const vps = [...document.querySelectorAll('.vp[data-src]')];
+  vps.forEach(fit);
+  const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const vp = e.target; io.unobserve(vp); const f = document.createElement('iframe'); f.loading = 'lazy'; f.title = 'Fitwise prototype'; f.src = vp.dataset.src; vp.appendChild(f); fit(vp); }), { rootMargin: '600px' });
+  vps.forEach(v => io.observe(v));
+  addEventListener('resize', () => vps.forEach(fit));
+})();
+/* masthead progress + active section */
+(() => {
+  const prog = document.getElementById('prog'), links = [...document.querySelectorAll('#mhnav a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  addEventListener('scroll', () => {
+    const h = document.documentElement; prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+    let cur = 0; secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < 140) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === cur && scrollY > 400));
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
