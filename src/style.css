@@ -81,7 +81,7 @@ img{display:block;max-width:100%}
 .util{background:var(--soft);font-size:12.5px;color:var(--ink-2);border-bottom:1px solid var(--line)}
 .util .wrap{display:flex;align-items:center;height:30px;gap:20px}
 .util .sp{flex:1}
-.util a,.util button{display:inline-flex;align-items:center;gap:5px}
+.util a,.util button,.util>.wrap>span.hide-m{display:inline-flex;align-items:center;gap:5px}
 .util a:hover,.util button:hover{color:var(--ink)}
 .util .lucide{width:14px;height:14px}
 .util b{font-weight:600;color:var(--ink)}
