@@ -324,6 +324,7 @@ td.take::before{content:"→ ";color:var(--accent)}
 .ba figcaption span{display:block;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.3rem}
 .ba figure.after{border:1.5px solid var(--ink)}
 .ba figure.after figcaption span{color:var(--accent-ink)}
+.ba i{display:block;height:64px}
 @media(max-width:760px){.ba{grid-template-columns:1fr}}
 
 /* system */
@@ -822,7 +823,13 @@ footer a{color:var(--ink-2)}
           <p>The list wasn't wrong, it just asked people to read three lines to find the one that mattered. Putting the same status on the vehicle means the part that's actually due is the thing your eye catches first, not the third row down, and it reuses a mental model every driver already has from their own dashboard. For the business, that's a shorter path from “something's due” to “Shop parts for this car” at the exact moment attention is highest, instead of competing with it.</p>
         </div></li>
         <li><div><b>Categories that don't look like products</b><p>Category tiles use large, angled part renders on warm gradient cards. Product cards sit on plain white with a hairline border, so the two are never confused while scrolling.</p></div></li>
-        <li><div><b>Offers as designed cards, not stock photos</b><p>Each offer is a clean tinted card with a product cut-out (discs and pads, a tyre stack, a tractor tyre) and one clear action. They're easy to scan and on-brand, and easy for a marketing team to swap.</p></div></li>
+        <li><div><b>Offers as designed cards, not stock photos</b><p>Each offer is a clean tinted card with a product cut-out (discs and pads, a tyre stack, a tractor tyre) and one clear action. They're easy to scan and on-brand, and easy for a marketing team to swap.</p>
+          <div class="ba">
+            <figure><i style="background:#EDEDEA"></i><figcaption><span>Before</span>A light card buried the discount inside a sentence: label, two-line headline, then “up to 25% off… plus a free brake check” as one more line of body copy. The number people actually came for had to be read for, not seen.</figcaption></figure>
+            <figure class="after"><i style="background:linear-gradient(135deg,#171310,#2A211B)"></i><figcaption><span>After</span>Near-black card, display-sized “25% OFF”, a countdown chip next to the label, and a code to copy before the CTA. Everything else is still text; the one thing meant to move the cart gets the one visual jump.</figcaption></figure>
+          </div>
+          <p>The old layout treated an offer like a category tile: a headline and a paragraph, same weight as anything else on the page. But an offer's only job is to lift cart value, so it has to win the half-second someone spends scanning that row, not read like the rest of the page. Making the number the loudest thing on the card, pairing it with urgency ("Ends Sunday") instead of a sentence, and turning the discount into a code to copy rather than a promise to remember, is what should move it from "noticed" to "used" at checkout. The darker card also reads as a time-boxed promotion rather than another product category, so it doesn't compete with the AI and category tiles above it for the same kind of attention.</p>
+        </div></li>
         <li><div><b>Search that understands plain language</b><p>The header search accepts symptoms, sizes and part numbers, shows what it understood as chips, and hands questions to Ask Vrom.</p><span class="src">Pattern: Kobra Command menu</span></div></li>
       </ol>
     </div>
