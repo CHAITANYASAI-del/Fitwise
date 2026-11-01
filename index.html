@@ -728,7 +728,7 @@ footer a{color:var(--ink-2)}
   </div></div>
   <div class="inset">
     <div class="pipe">
-      <div class="ai"><b>Capture</b><p>Text, voice or photo (plate, part label, sidewall). Any of 9 languages.</p><span class="who">AI</span></div>
+      <div class="ai"><b>Capture</b><p>Text, voice or photo (plate, part label, sidewall). A photo only suggests a possible match from what's visible; it never confirms fit on its own. Any of 9 languages.</p><span class="who">AI</span></div>
       <div class="ai"><b>Understand</b><p>Extract entities: vehicle, year, fuel, system, position, symptom, size, part no.</p><span class="who">AI</span></div>
       <div class="ai"><b>Clarify</b><p>Ask one question only if fitment depends on it (e.g. 16-inch or 17-inch wheels).</p><span class="who">AI + rules</span></div>
       <div class="det"><b>Retrieve</b><p>Fitment database returns parts that fit. Deterministic and auditable.</p><span class="who">Catalogue</span></div>
@@ -760,9 +760,9 @@ footer a{color:var(--ink-2)}
 
     <h3>Guardrails</h3>
     <div class="grid g3">
-      <div class="card"><h4>AI never claims fit</h4><p>Fit badges come only from the fitment database. The model can suggest a category; it can't say “this fits”.</p></div>
+      <div class="card"><h4>AI never claims fit, not even from a photo</h4><p>Fit badges come only from the fitment database. A photo of a part, label or sidewall only identifies what it might be; it still has to be matched against the customer's actual vehicle, by the catalogue or a person, before anything is called a fit.</p></div>
       <div class="card"><h4>Show the working</h4><p>Parsed chips and reasoning steps let people catch a misunderstanding before they see results.</p></div>
-      <div class="card"><h4>Always a human exit</h4><p>“Not a diagnosis” plus a ₹199 inspection at a partner garage. The AI is a guide, not a mechanic.</p></div>
+      <div class="card"><h4>Say plainly it can be wrong</h4><p>“Ask Vrom can make mistakes. Suggestions, not a diagnosis” sits under every answer, plus a ₹199 inspection at a partner garage. The AI is a guide, not a mechanic.</p></div>
       <div class="card"><h4>Learn from zero results</h4><p>Unmatched queries feed a synonym list: “liner” for brake shoes, “bush”, regional names for parts.</p></div>
       <div class="card"><h4>Grounded summaries only</h4><p>Quick takes and review summaries are generated from catalogue data and verified reviews, with sources.</p></div>
       <div class="card"><h4>Privacy by default</h4><p>Plates are looked up, not stored, unless the user saves the vehicle. Consent asked in plain words.</p></div>

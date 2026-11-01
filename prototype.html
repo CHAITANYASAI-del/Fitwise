@@ -1629,7 +1629,7 @@ body.embed .dock,body.embed .util{display:none}
   <div class="cp-h"><span class="orb" aria-hidden="true"></span><span><b>Ask Vrom</b><small>Parts expert · replies instantly</small></span><span class="acts"><button id="cpNew" title="New chat" aria-label="New chat">${I('rotate-ccw')}</button><button id="cpX" title="Close" aria-label="Close Ask Vrom">${I('x')}</button></span></div>
   <div class="cp-ctx" id="cpCtx"></div>
   <div class="cp-b" id="cpB" aria-live="polite"></div>
-  <form class="cp-f" id="cpF"><div class="ai-in"><input id="cpIn" aria-label="Ask Vrom a question" placeholder="Ask about a problem, a part or a fit"><button type="button" class="tb" data-act="voice" aria-label="Ask by voice" style="width:36px;height:36px;display:grid;place-items:center;color:var(--ink-3)">${I('mic')}</button><button class="send" aria-label="Send">${I('arrow-up')}</button></div><div class="cp-legal">Suggestions, not a diagnosis. Fitment is checked against the parts catalogue.</div></form>
+  <form class="cp-f" id="cpF"><div class="ai-in"><input id="cpIn" aria-label="Ask Vrom a question" placeholder="Ask about a problem, a part or a fit"><button type="button" class="tb" data-act="voice" aria-label="Ask by voice" style="width:36px;height:36px;display:grid;place-items:center;color:var(--ink-3)">${I('mic')}</button><button class="send" aria-label="Send">${I('arrow-up')}</button></div><div class="cp-legal">Ask Vrom can make mistakes. Suggestions, not a diagnosis — fitment is always checked against the parts catalogue.</div></form>
 </aside>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Details"></aside>
 <div class="tray" id="tray"></div>
@@ -1825,7 +1825,7 @@ document.addEventListener('click', e => {
   const pl = t.closest('[data-plp]'); if (pl) { e.preventDefault(); closeMega(); toPLP(pl.dataset.plp, pl.dataset.v); return; }
   const pd = t.closest('[data-pdp]'); if (pd && !t.closest('[data-add],[data-cmp],[data-wish]')) { e.preventDefault(); closeCmd(); toPDP(pd.dataset.pdp); return; }
   const ak = t.closest('[data-ask]'); if (ak) { e.preventDefault(); e.stopPropagation(); closeMega(); closeCmd(true); openCopilot(ak.dataset.ask); return; }
-  const ac = t.closest('[data-act]'); if (ac) { e.preventDefault(); e.stopPropagation(); toast(ac.dataset.act === 'scan' ? 'Camera opens: point at a number plate, a part label or a tyre sidewall' : 'Listening… speak in English, Hindi, Tamil or 6 other languages'); return; }
+  const ac = t.closest('[data-act]'); if (ac) { e.preventDefault(); e.stopPropagation(); toast(ac.dataset.act === 'scan' ? 'Camera opens: point at a number plate, a part label or a tyre sidewall — we\'ll suggest a possible match, then confirm it against your vehicle' : 'Listening… speak in English, Hindi, Tamil or 6 other languages'); return; }
   const an = t.closest('[data-ans]'); if (an) { e.preventDefault(); if (an.dataset.ans === 'ns') { openCopilot(an.dataset.ns); return; } const [k, x] = an.dataset.ans.split(':'); S.ans[k] = +x; S.view === 'plp' ? refresh() : go(S.view, true); toast('Thanks. Fit updated for your vehicle'); return; }
   const ad = t.closest('[data-add]'); if (ad) { e.preventDefault(); e.stopPropagation(); addToCart(P(ad.dataset.add)); return; }
   const wi = t.closest('[data-wish]'); if (wi) { e.preventDefault(); e.stopPropagation(); const id = wi.dataset.wish; S.wish.has(id) ? S.wish.delete(id) : S.wish.add(id); wi.classList.toggle('on', S.wish.has(id)); toast(S.wish.has(id) ? 'Saved to your wishlist' : 'Removed from wishlist'); return; }
