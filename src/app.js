@@ -7,6 +7,8 @@ const icons = () => {};
 const params = new URLSearchParams(location.search);
 $('#app').innerHTML = new Function('return `' + $('#shell').textContent + '`')();
 if (params.get('embed')) document.body.classList.add('embed');
+/* sticky bars below the header (section tabs, filters, gallery) follow its real height, which changes with screen width */
+{ const hd = $('header.top'), set = () => document.documentElement.style.setProperty('--hdr', hd.offsetHeight + 'px'); set(); new ResizeObserver(set).observe(hd); }
 
 const S = {
   view: 'home', vehicle: params.get('v') || 'creta', cat: params.get('cat') || 'brakes', pdp: params.get('p') || 'd1',
