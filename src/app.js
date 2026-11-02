@@ -931,18 +931,28 @@ function openReserve(p) {
     <div><h5>Store</h5><div class="store on" style="cursor:default"><div class="n"><b>${d.name}</b></div><div class="pr"><small>${d.km} km</small></div><div class="m"><span>${I('map-pin')}${d.area}</span><span class="ok">${d.open}</span></div></div></div>
     <div><h5>${fit ? 'Fitting slot' : 'Pick up by'}, today</h5><div class="slots-t" id="sl">${['3:00 PM', '4:30 PM', '5:30 PM', '6:30 PM', '7:30 PM', 'Tomorrow 10 AM', 'Tomorrow 12 PM', 'Tomorrow 4 PM'].map((s, i) => `<button ${i ? '' : 'disabled'} class="${i === 1 ? 'on' : ''}">${s}</button>`).join('')}</div></div>
     <label class="swl" id="addFit" role="switch" aria-checked="${fit}" tabindex="0" style="justify-content:space-between;padding:12px 14px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--line)"><span><b style="font-weight:600">Get it fitted at the store</b><div class="muted" style="font-weight:400;font-size:12.5px">${lab}</div></span><span class="sw ${fit ? 'on' : ''}"></span></label>
-    <div class="slider" id="slide"><div class="fill" id="sfill"></div><div class="lbl">Slide to reserve</div><div class="knob" id="knob">${I('chevrons-right')}</div></div>
+    <div class="slider" id="slide"><div class="fill" id="sfill"></div><div class="lbl" id="slbl"><span>Slide to reserve</span></div><div class="knob" id="knob" role="button" tabindex="0" aria-label="Slide to reserve, or press Enter">${I('chevrons-right')}</div></div>
   </div>
-  <div class="done-st" id="done"><span class="ck">${I('check')}</span><h3 style="font-size:20px;font-weight:700;margin-top:6px">Reserved at ${d.name}</h3><p class="muted" style="max-width:340px">Show this code at the counter. We've sent it to your WhatsApp with directions.</p><div class="qr">${qrSvg()}</div><b class="mono" style="font-size:18px;letter-spacing:.06em">FW-CBE-48213</b><span class="tag fit">Ready by 4:30 PM · held until 8:30 PM</span><div style="display:flex;gap:8px;margin-top:10px"><button class="btn line sm">${I('navigation')} Directions</button><button class="btn line sm">${I('message-circle')} Message store</button></div></div></div>`);
+  <div class="done-st" id="done"><div class="ck-anim" aria-hidden="true"><span class="burst">${Array.from({ length: 12 }, (_, i) => `<i style="--a:${i * 30}deg;--d:${i % 2 ? 34 : 48}px"></i>`).join('')}</span><svg viewBox="0 0 72 72"><circle class="ring" cx="36" cy="36" r="33"/><circle class="disc" cx="36" cy="36" r="33"/><path class="tick" d="M22 37.5l9.5 9.5L51 27.5"/></svg></div><h3 style="font-size:20px;font-weight:700;margin-top:6px">Reserved at ${d.name}</h3><p class="muted" style="max-width:340px">Show this code at the counter. We've sent it to your WhatsApp with directions.</p><div class="qr">${qrSvg()}</div><b class="mono" style="font-size:18px;letter-spacing:.06em">FW-CBE-48213</b><span class="tag fit">Ready by 4:30 PM · held until 8:30 PM</span><div style="display:flex;gap:8px;margin-top:10px"><button class="btn line sm">${I('navigation')} Directions</button><button class="btn line sm">${I('message-circle')} Message store</button></div></div></div>`);
   $('#sl').onclick = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; $$('#sl button').forEach(x => x.classList.toggle('on', x === b)); };
   $('#addFit').onclick = e => { e.preventDefault(); $('#addFit').setAttribute('aria-checked', $('#addFit .sw').classList.toggle('on')); };
   $('#addFit').onkeydown = e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); $('#addFit').click(); } };
-  const sl = $('#slide'), kn = $('#knob'), fl = $('#sfill'); let x0 = null, max = 0;
-  kn.onpointerdown = e => { x0 = e.clientX; max = sl.offsetWidth - 56; kn.setPointerCapture(e.pointerId); sl.classList.remove('done'); };
-  kn.onpointermove = e => { if (x0 === null) return; const dx = Math.max(0, Math.min(max, e.clientX - x0)); kn.style.left = 4 + dx + 'px'; fl.style.width = 56 + dx + 'px'; };
-  kn.onpointerup = e => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; sl.classList.add('done');
-    if (dx > max * .85) { kn.style.left = 4 + max + 'px'; fl.style.width = '100%'; setTimeout(() => { $('#rf').style.display = 'none'; $('#done').classList.add('on'); toast('Reserved. Code <span class="mono">FW-CBE-48213</span> sent to WhatsApp'); }, 250); }
-    else { kn.style.left = '4px'; fl.style.width = '56px'; } };
+  const sl = $('#slide'), kn = $('#knob'), fl = $('#sfill'), lb = $('#slbl'), tx = $('#slbl span'); let x0 = null, max = 0, done = false, t0 = 0, tw = 1;
+  // the label stays whole until the knob reaches it, then is wiped and fades as the knob crosses it
+  const at = dx => {
+    const edge = 52 + dx; kn.style.left = 4 + dx + 'px'; fl.style.width = 56 + dx + 'px';
+    lb.style.clipPath = `inset(0 0 0 ${edge}px)`; lb.style.opacity = 1 - Math.min(1, Math.max(0, (edge - t0) / tw));
+  };
+  const finish = () => {
+    if (done) return; done = true; max = max || sl.offsetWidth - 56; sl.classList.add('done', 'ok'); at(max); fl.style.width = '100%';
+    kn.innerHTML = I('check'); navigator.vibrate?.(18);
+    setTimeout(() => { $('#rf').style.display = 'none'; $('#done').classList.add('on'); }, 160); // straight to the success screen, which is the confirmation; no toast on top
+  };
+  kn.onpointerdown = e => { if (done) return; x0 = e.clientX; max = sl.offsetWidth - 56; t0 = tx.offsetLeft; tw = tx.offsetWidth; kn.setPointerCapture(e.pointerId); sl.classList.remove('done'); sl.classList.add('drag'); };
+  kn.onpointermove = e => { if (x0 === null) return; at(Math.max(0, Math.min(max, e.clientX - x0))); };
+  kn.onpointerup = e => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; sl.classList.remove('drag'); sl.classList.add('done');
+    if (dx > max * .85) finish(); else at(0); };
+  kn.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); finish(); } };
 }
 function qrSvg() {
   let s = ''; for (let y = 0; y < 25; y++) for (let x = 0; x < 25; x++) { if ((x < 8 && y < 8) || (x > 16 && y < 8) || (x < 8 && y > 16)) continue; if ((x * 7 + y * 13 + x * y * 3) % 5 < 2) s += `<rect x="${x}" y="${y}" width="1" height="1"/>`; }
