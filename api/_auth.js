@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 // Blob store's token, which is already a server-only secret, so connecting the store is enough. Never in the repo.
 const secret = () => process.env.STATS_KEY || (process.env.BLOB_READ_WRITE_TOKEN ? crypto.createHash('sha256').update('vroom-stats-key:' + process.env.BLOB_READ_WRITE_TOKEN).digest('hex') : '');
 // what still needs switching on in Vercel; the lock screen shows it instead of failing silently
-export const setup = () => ({ blob: !!process.env.BLOB_READ_WRITE_TOKEN, password: !!String(process.env.STATS_PASSWORD || '').trim() });
+export const setup = () => ({ blob: !!process.env.BLOB_READ_WRITE_TOKEN, password: true });
 export const sha256 = (b) => crypto.createHash('sha256').update(b).digest();
 export const sign = (s) => crypto.createHmac('sha256', secret()).update(s).digest('base64url');
 const eq = (a, b) => a.length === b.length && crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
@@ -35,11 +35,16 @@ export function checkChallenge(ch) {
   return age >= 0 && age < 120000;
 }
 
+// The password is never in the repo. STATS_PASSWORD (Vercel env) wins when set; otherwise the given password is
+// checked against this salted scrypt hash, so /track works straight after merging with no setup.
+const PW = { salt: 'a6f7f62eb4cf2205f4986d23e64d4887', hash: '8273d78600d9cd0efb26c64a56c9ca2f300b55e9b8b2f98374c6281942e75627' };
 export const passwordOk = (given) => {
+  const g = String(given || '').trim().toLowerCase();
   const want = String(process.env.STATS_PASSWORD || '').trim().toLowerCase();
-  if (!want) return false;
-  const a = sha256(String(given || '').trim().toLowerCase()), b = sha256(want);
-  return crypto.timingSafeEqual(a, b);
+  if (want) return crypto.timingSafeEqual(sha256(g), sha256(want));
+  if (!g || g.length > 128) return false;
+  const a = crypto.scryptSync(g, PW.salt, 32, { N: 32768, r: 8, p: 1, maxmem: 64 * 1024 * 1024 });
+  return crypto.timingSafeEqual(a, Buffer.from(PW.hash, 'hex'));
 };
 
 export const clientHash = (req) => {

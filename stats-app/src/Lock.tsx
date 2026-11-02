@@ -134,7 +134,7 @@ export function Lock({ onUnlocked }: { onUnlocked: () => void }) {
 
       <div className="mt-auto mb-[12vh] flex w-full max-w-[290px] flex-col items-center">
         <div className={`yd-avatar relative ${mode === 'touch' ? 'yd-scan' : ''}`}>
-          <img src="/assets/track/avatar.gif" alt="" className="size-24 rounded-full object-cover shadow-[0_10px_30px_rgba(11,42,85,.35)] ring-2 ring-white/70" />
+          <img src="/assets/track/avatar.jpg" alt="" className="size-24 rounded-full object-cover shadow-[0_10px_30px_rgba(11,42,85,.35)] ring-2 ring-white/70" />
           {mode === 'success' && <span className="yd-pop absolute -bottom-1 -right-1 grid size-8 place-items-center rounded-full bg-emerald-500 text-white ring-2 ring-white"><Check className="size-4" strokeWidth={3} aria-hidden="true" /></span>}
         </div>
         <div className="mt-3 text-xl font-semibold drop-shadow-[0_1px_8px_rgba(11,42,85,.4)]">Chaitanya Sai</div>
