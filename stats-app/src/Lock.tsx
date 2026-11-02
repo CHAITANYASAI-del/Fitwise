@@ -74,6 +74,10 @@ export function Lock({ onUnlocked }: { onUnlocked: () => void }) {
   useEffect(() => {
     let live = true
     ;(async () => {
+      // right after a merge: say what still needs switching on in Vercel instead of failing silently
+      const st = await fetch('/api/auth').then((r) => r.json()).catch(() => null)
+      const todo = st?.setup ? [!st.setup.blob && 'connect a Blob store', !st.setup.password && 'add STATS_PASSWORD'].filter(Boolean) : []
+      if (live && todo.length) { setMsg(`Almost ready: in Vercel, ${todo.join(' and ')}, then redeploy.`); return }
       const ok = !!window.PublicKeyCredential && await touchIdSupported()
       if (!live) return
       setCanTid(ok)

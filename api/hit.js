@@ -50,6 +50,7 @@ function clean(b) {
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return res.status(204).end(); // storage not connected yet: stay silent
   const h = req.headers, ua = String(h['user-agent'] || '');
   if (/bot|crawl|spider|preview|headless|lighthouse|monitor|facebookexternalhit|slackbot|whatsapp\/|linkedinbot|embedly|vercel-screenshot/i.test(ua)) return res.status(204).end();
   let body = {};

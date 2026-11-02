@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { put, list } from '@vercel/blob';
-import { isAuthed, makeSession, sessionCookie, makeChallenge, checkChallenge, passwordOk, sha256, clientHash } from './_auth.js';
+import { isAuthed, makeSession, sessionCookie, makeChallenge, checkChallenge, passwordOk, sha256, clientHash, setup } from './_auth.js';
 
 // Login for the private /track dashboard (Fitwise reader and shopper stats).
 //  - password: checked here on the server (STATS_PASSWORD env var), never in the page.
@@ -31,12 +31,13 @@ export default async function handler(req, res) {
   const action = req.method === 'GET' ? 'status' : b.action;
   const h = clientHash(req);
 
-  if (action === 'status') return res.status(200).json({ authed: isAuthed(req), passkeys: (await creds().catch(() => [])).length });
+  if (action === 'status') return res.status(200).json({ authed: isAuthed(req), setup: setup(), passkeys: (await creds().catch(() => [])).length });
   if (req.method !== 'POST') return res.status(405).end();
 
   if (action === 'logout') { res.setHeader('Set-Cookie', sessionCookie('', 0)); return res.status(200).json({ ok: true }); }
 
   if (action === 'login') {
+    if (!setup().password) return res.status(503).json({ error: 'Add STATS_PASSWORD in Vercel, then redeploy.' });
     if (await tooMany(h).catch(() => false)) return res.status(429).json({ error: 'Too many attempts. Try again in a few minutes.' });
     if (passwordOk(b.password)) return ok(res);
     await fail(h); await new Promise((r) => setTimeout(r, 700));
