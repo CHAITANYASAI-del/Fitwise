@@ -2774,6 +2774,8 @@ syncGarage();
 const start = (location.hash || '#home').slice(1);
 go(['home', 'plp', 'pdp'].includes(start) ? start : 'home');
 if (params.get('ask')) setTimeout(() => openCopilot(params.get('ask')), 500);
+// ?compare=d1,d6,d2 opens the compare drawer with those products (used by the case study)
+if (params.get('compare')) setTimeout(() => { S.compare = params.get('compare').split(',').filter(id => P(id)).slice(0, 3); go('plp'); renderTray(); if (S.compare.length > 1) openCompare(); }, 600);
 
 
 </script>
