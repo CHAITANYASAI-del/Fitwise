@@ -363,10 +363,21 @@ function fitLine(p) {
   return f === 'ok' ? `<div class="fit">${I('circle-check')}Fits your ${v.short}</div>` : f === 'warn' ? `<div class="fit warn">${I('circle-alert')}Check your variant</div>` : `<div class="fit bad">${I('circle-x')}Doesn't fit your ${v.short}</div>`;
 }
 const specLine = p => p.cat === 'brakes' ? `${p.style} · Ventilated · ${p.tier}` : p.cat === 'tyres' ? `${p.size} · ${p.use}` : `${p.pattern} tread · ${p.core}`;
-/* Airbnb "Guest favourite"-style badge: one per card, the most specific claim wins, emoji + two words. Parts that don't fit get none */
-const TOPSOLD = {}; PRODUCTS.forEach(p => { if (!TOPSOLD[p.cat] || p.reviews > TOPSOLD[p.cat].reviews) TOPSOLD[p.cat] = p; });
-const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', 'Best match'] : TOPSOLD[p.cat] === p ? ['shopping-cart', 'Most bought'] : p.rating >= 4.6 ? ['star', 'Driver favourite'] : off(p) >= 20 ? ['badge-percent', 'Great price'] : null;
-const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge">${I(b[0])}${b[1]}</span>` : ''; };
+/* Badges in three tiers, at most two on the images of any list, each in its own voice:
+   1. a recommendation for YOUR vehicle (solid ink, the one pill that leads),
+   2. proof from other buyers, with a number (quiet white pill),
+   3. a rating fact, said beside the rating it refers to instead of on the photo.
+   Discounts already show in the price, so they get no badge. Parts that don't fit get none. */
+const TOPSOLD = {}, TOPRATED = {};
+PRODUCTS.forEach(p => {
+  if (!TOPSOLD[p.cat] || p.reviews > TOPSOLD[p.cat].reviews) TOPSOLD[p.cat] = p;
+  const r = TOPRATED[p.cat]; if (!r || p.rating > r.rating || (p.rating === r.rating && p.reviews > r.reviews)) TOPRATED[p.cat] = p;
+});
+const kNum = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k' : String(n);
+// [icon, full copy, short copy for narrow cards, tier class]
+const badgeOf = p => fitOf(p) === 'bad' ? null : p.best ? ['badge-check', `Best for your ${V().short}`, 'Best fit', 'top'] : TOPSOLD[p.cat] === p ? ['shopping-cart', `Bought by ${kNum(p.reviews)} drivers`, `${kNum(p.reviews)} bought`, ''] : null;
+const badge = p => { const b = badgeOf(p); return b ? `<span class="gbadge ${b[3]}">${I(b[0])}<span class="gb-l">${b[1]}</span><span class="gb-s">${b[2]}</span></span>` : ''; };
+const topRated = p => fitOf(p) !== 'bad' && TOPRATED[p.cat] === p && p.rating >= 4.6 ? `<span class="toprated">Highest rated</span>` : '';
 function cardHTML(p) {
   return `<article class="pc ${fitOf(p) === 'bad' ? 'nofit' : ''}" data-pdp="${p.id}">
     <div class="im">${img(p)}<div class="tl">${badge(p)}</div>
@@ -377,7 +388,7 @@ function cardHTML(p) {
       <span class="brand">${p.brand}</span>
       <h3>${p.name}</h3>
       <div class="spec">${specLine(p)}</div>
-      <div class="rt"><span class="rating">${p.rating}${I('star')}</span>${p.reviews.toLocaleString('en-IN')}</div>
+      <div class="rt"><span class="rating">${p.rating}${I('star')}</span>${p.reviews.toLocaleString('en-IN')}${topRated(p)}</div>
       <div class="price"><b>${fmt(p.price)}</b>${off(p) ? `<s>${fmt(p.mrp)}</s><em>${off(p)}% off</em>` : ''}</div>
       ${fitLine(p)}
       <div class="av">${p.dealers ? `${I('store')}Pick up today · ${p.dealers} store${p.dealers > 1 ? 's' : ''}` : `${I('truck')}Delivery ${p.eta.toLowerCase()}`}</div>
